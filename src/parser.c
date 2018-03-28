@@ -53,8 +53,7 @@ int parsePost(char *docname){
 	cur = cur -> xmlChildrenNode;
 	while(cur != NULL){
 		if ((!xmlStrcmp(cur->name, (const xmlChar *)"row"))) {
-			printf("ANTES DO IF CARALHO \n");
-			if((xmlStrcmp(xmlGetProp(cur , "PostTypeId"), (const xmlChar *) "1"))){
+			if((!xmlStrcmp(xmlGetProp(cur , "PostTypeId"), (const xmlChar *) "1"))){
 				id = xmlGetProp(cur, "Id");
 				date = xmlGetProp(cur, "CreationDate");
 				score = xmlGetProp(cur, "Score");
@@ -71,7 +70,6 @@ int parsePost(char *docname){
 				printf("Title : %s\n", title);
 				printf("Tags: %s\n", tags);
 				printf("AnswerCount: %s\n", aCount);
-				printf("FavoriteCount: %s\n", fCount);
 				xmlFree(id);
 				xmlFree(date);
 				xmlFree(score);
@@ -79,7 +77,6 @@ int parsePost(char *docname){
 				xmlFree(title);
 				xmlFree(tags);
 				xmlFree(aCount);
-				xmlFree(fCount);
 			}else{
 				id = xmlGetProp(cur, "Id");
 				pid = xmlGetProp(cur, "ParentId");
@@ -100,9 +97,9 @@ int parsePost(char *docname){
 				xmlFree(score);
 				xmlFree(oid);
 				xmlFree(cCount);
-			}
-		cur = cur -> next;
+			}	
 		}
+	cur = cur -> next;
 	}	
 }
 

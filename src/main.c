@@ -7,7 +7,7 @@ int main(int argc, char **argv){
   //for(i=1;i<argc;i++){
   	//parseXml(argv[i]);
   //}
-  parseUser(argv[1]);
+  //parseUser("Users.xml");
   parsePost("Posts.xml");
   return 0;
 
