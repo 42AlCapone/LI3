@@ -4,9 +4,11 @@
 
 int main(int argc, char **argv){
   int i;
-  for(i=1;i<argc;i++){
-  	parseXml(argv[i]);
-  }
+  //for(i=1;i<argc;i++){
+  	//parseXml(argv[i]);
+  //}
+  parseUser(argv[1]);
+  parsePost("Posts.xml");
   return 0;
 
 
