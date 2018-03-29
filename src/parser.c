@@ -1,3 +1,4 @@
+#include "./headers/user.h"
 #include <libxml/parser.h>
 #include <libxml/xmlmemory.h>
 #include <stdio.h>
@@ -104,7 +105,7 @@ int parsePost(char *docname){
 }
 
 
-
+// esta função ainda está em testes
 int parseUser(char *docname){
 
 	xmlDocPtr doc = xmlParseFile(docname);
@@ -118,23 +119,33 @@ int parseUser(char *docname){
 		xmlFreeDoc(doc);
 		return 0;
 	}
-
-	xmlChar *id, *rep, *name, *views, *up, *down;
+	int id, rep, views, up, down; votDif;
+	char* name;
+	xmlChar *idx, *repx, *namex, *viewsx, *upx, *downx;
 	cur = cur -> xmlChildrenNode;
 	while(cur != NULL){
 		if ((!xmlStrcmp(cur->name, (const xmlChar *)"row"))) {
-		   	id = xmlGetProp(cur, "Id");
-		   	rep = xmlGetProp(cur, "Reputation");
-		   	name = xmlGetProp(cur , "DisplayName");
-		   	views = xmlGetProp(cur, "Views");
-		   	up = xmlGetProp(cur, "UpVotes");
-		   	down = xmlGetProp(cur, "DownVotes");
-		    printf("ID: %s\n", id);
-		    printf("Reputation: %s\n", rep);
-		    printf("Name: %s\n", name);
-		    printf("Views: %s\n", views);
-		    printf("UpVotes: %s\n", up);
-		    printf("DownVotes: %s\n", down);
+		   	idx = xmlGetProp(cur, "Id");
+		   	repx = xmlGetProp(cur, "Reputation");
+		   	namex = xmlGetProp(cur , "DisplayName");
+		   	viewsx = xmlGetProp(cur, "Views");
+		   	upx = xmlGetProp(cur, "UpVotes");
+		   	downx = xmlGetProp(cur, "DownVotes");
+		   	id = atoi((char*) idx);
+		   	rep = atoi((char*) repx);
+		   	name = (char*) namex;
+		   	views = atoi((char*) viewsx);
+		   	up = atoi((char*) upx);
+		   	down = atoi((char*) downx);
+		   	votDif = up - down;
+		   	User u = initUser(id, rep, name, views,votDif);
+		   	// função para inserir user na hash
+		    printf("ID: %s\n", u-> id);
+		    printf("Reputation: %s\n", u-> rep);
+		    printf("Name: %s\n", u-> name);
+		    printf("Views: %s\n", u-> views);
+		    printf("votDif: %s\n", u-> votDif);
+		    freeUser(u);
 		    xmlFree(id);
 		    xmlFree(rep);
 		    xmlFree(name);
