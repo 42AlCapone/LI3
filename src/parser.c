@@ -2,7 +2,6 @@
 #include <libxml/parser.h>
 #include <libxml/xmlmemory.h>
 #include <stdio.h>
-//"/usr/local/opt/libxml2/include/libxml2/libxml/parser.h"
 
 int parseXml(char *docname){
 
@@ -119,8 +118,9 @@ int parseUser(char *docname){
 		xmlFreeDoc(doc);
 		return 0;
 	}
-	int id, rep, views, up, down; votDif;
-	char* name;
+
+	int id, rep, views, up, down, votDif, nrPosts = 0;
+	char *name;
 	xmlChar *idx, *repx, *namex, *viewsx, *upx, *downx;
 	cur = cur -> xmlChildrenNode;
 	while(cur != NULL){
@@ -131,6 +131,7 @@ int parseUser(char *docname){
 		   	viewsx = xmlGetProp(cur, "Views");
 		   	upx = xmlGetProp(cur, "UpVotes");
 		   	downx = xmlGetProp(cur, "DownVotes");
+		   	//em baixo meto os tipos certos
 		   	id = atoi((char*) idx);
 		   	rep = atoi((char*) repx);
 		   	name = (char*) namex;
@@ -138,20 +139,20 @@ int parseUser(char *docname){
 		   	up = atoi((char*) upx);
 		   	down = atoi((char*) downx);
 		   	votDif = up - down;
-		   	User u = initUser(id, rep, name, views,votDif);
+		   	User u = initUser(id, rep, name, views,votDif, nrPosts);
 		   	// função para inserir user na hash
-		    printf("ID: %s\n", u-> id);
-		    printf("Reputation: %s\n", u-> rep);
+		    printf("ID: %d\n", u-> id);
+		    printf("Reputation: %d\n", u-> reputation);
 		    printf("Name: %s\n", u-> name);
-		    printf("Views: %s\n", u-> views);
-		    printf("votDif: %s\n", u-> votDif);
+		    printf("Views: %d\n", u-> views);
+		    printf("votDif: %d\n", u-> voteDif);
 		    freeUser(u);
-		    xmlFree(id);
-		    xmlFree(rep);
-		    xmlFree(name);
-		    xmlFree(views);
-		    xmlFree(up);
-		    xmlFree(down);
+		    xmlFree(idx);
+		    xmlFree(repx);
+		    xmlFree(namex);
+		    xmlFree(viewsx);
+		    xmlFree(upx);
+		    xmlFree(downx);
 	    }
 	    cur = cur->next;
 	}

@@ -1,25 +1,14 @@
 #include "./headers/user.h"
-#include <stdlib.h>
-#include <string.h>
-#include <stdio.h>
 
-typedef struct User{
-	int id;
-	int reputation;
-	char *name;
-	int views;
-	int voteDif:
-	int nrPosts;
-};
 
-User initUser(int newId, int newRep, char *newName, int newViews, int newVoteDif){
+User initUser(int newId, int newRep, char *newName, int newViews, int newVoteDif, int newNrPosts){
 	User new = (User)malloc(sizeof(struct User));
-	User-> id = newId;
-	User-> reputation = newRep;
-	User-> name = strdup(newName);
-	User-> vews = newViews;
-	User-> voteDif= newVoteDif;
-	User-> nrPosts = 0;
+	u-> id = newId;
+	u-> reputation = newRep;
+	u-> name = strdup(newName);
+	u-> vews = newViews;
+	u-> voteDif= newVoteDif;
+	u-> nrPosts = newNrPosts;
 }
 
 void getName(User u, char *new){

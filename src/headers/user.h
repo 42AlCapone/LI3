@@ -1,11 +1,24 @@
 #ifndef _user_h_
 #define _user_h_
 
+#include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
+
+struct user{
+	int id;
+	int reputation;
+	char *name;
+	int views;
+	int voteDif;
+	int nrPosts;
+};
+
 //Declaração da estrutura User
 typedef struct user *User;
 
 /* Função que inicializa toda uma nova estrutura User com todas a variveis preenchidas*/
-User initUser (int newId, int newRep, char *newName, int newViews, int newVoteDif);
+User initUser(int newId, int newRep, char *newName, int newViews, int newVoteDif, int newNrPosts);
 
 /* recebe um User e um char* new e copia o name do User para o new*/ 
 void getName(User u,char* new);
