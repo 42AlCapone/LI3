@@ -121,38 +121,25 @@ int parseUser(char *docname){
 
 	int id, rep, views, up, down, votDif, nrPosts = 0;
 	char *name;
-	xmlChar *idx, *repx, *namex, *viewsx, *upx, *downx;
 	cur = cur -> xmlChildrenNode;
 	while(cur != NULL){
 		if ((!xmlStrcmp(cur->name, (const xmlChar *)"row"))) {
-		   	idx = xmlGetProp(cur, "Id");
-		   	repx = xmlGetProp(cur, "Reputation");
-		   	namex = xmlGetProp(cur , "DisplayName");
-		   	viewsx = xmlGetProp(cur, "Views");
-		   	upx = xmlGetProp(cur, "UpVotes");
-		   	downx = xmlGetProp(cur, "DownVotes");
-		   	//em baixo meto os tipos certos
-		   	id = atoi((char*) idx);
-		   	rep = atoi((char*) repx);
-		   	name = (char*) namex;
-		   	views = atoi((char*) viewsx);
-		   	up = atoi((char*) upx);
-		   	down = atoi((char*) downx);
+		   	id = atoi((char*) xmlGetProp(cur, "Id"));
+		   	rep = atoi((char*) xmlGetProp(cur, "Reputation"));
+		   	name = (char*) xmlGetProp(cur , "DisplayName");
+		   	views = atoi((char*) xmlGetProp(cur, "Views"));
+		   	up = atoi((char*) xmlGetProp(cur, "UpVotes"));
+		   	down = atoi((char*) xmlGetProp(cur, "DownVotes"));
 		   	votDif = up - down;
-		   	User u = initUser(id, rep, name, views,votDif, nrPosts);
+		   	User u = initUser();
+		   	u = newUser(u, id, rep, name, views, votDif);
 		   	// função para inserir user na hash
-		    printf("ID: %d\n", u-> id);
-		    printf("Reputation: %d\n", u-> reputation);
-		    printf("Name: %s\n", u-> name);
-		    printf("Views: %d\n", u-> views);
-		    printf("votDif: %d\n", u-> voteDif);
+		    printf("ID: %d\n", id);
+		    printf("Reputation: %d\n", rep);
+		    printf("Name: %s\n", name);
+		    printf("Views: %d\n", views);
+		    printf("votDif: %d\n", votDif);
 		    freeUser(u);
-		    xmlFree(idx);
-		    xmlFree(repx);
-		    xmlFree(namex);
-		    xmlFree(viewsx);
-		    xmlFree(upx);
-		    xmlFree(downx);
 	    }
 	    cur = cur->next;
 	}
