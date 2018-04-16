@@ -1,17 +1,18 @@
 #include<stdlib.h>
+#include "datetime.h"
 //#include<stdio.h>
 
-typedef struct time{
+struct datetime{
   int day;
   int month;
   int year;
   int hour;
   int minute;
-} Time;
+};
 
 
-Time* initTime(int d, int m, int y, int h, int min){
-  Time* temp = malloc(sizeof(struct time));
+DateTime initDateTime(int d, int m, int y, int h, int min){
+  DateTime temp = malloc(sizeof(struct datetime));
   temp->day = d;
   temp->month = m;
   temp->year = y;
@@ -21,11 +22,11 @@ Time* initTime(int d, int m, int y, int h, int min){
   return temp;
 }
 
-void freeTime(Time* d){
+void freeDateTime(DateTime d){
   free(d);
 }
 
-int compareTimes(Time* d1, Time*  d2){
+int compareDateTimes(DateTime d1, DateTime  d2){
   /*
   Return values:
     - return 1 if date 1 happened before date 2;

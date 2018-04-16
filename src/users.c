@@ -25,9 +25,9 @@ User initUser(int id, int rep, char* name, int views, int voteDif, int nrPosts){
 }
 
 User copyUser(User u){
-  User u1 = initUser(u->id,u->rep,u->name,u->views,u->voteDif,u->nrPosts);
+  	User new = initUser(getId(u),getRep(u),getName(u),getViews(u),getVoteDif(u),getNrPosts(u));
 
-  return u1;
+  	return new;	
 }
 	
 void freeUser(User u){
@@ -35,35 +35,31 @@ void freeUser(User u){
 	free(u);
 }
 
-
-
-/*
-Cria e insere user
-User newUser(int nId, int nRep, char* nName, int nViews, int nVoteDif, int nPosts){
-	User u = initUser();
-	u->id = nId;
-	u->rep = nRep;
-	u->name = strdup(nName);
-	u->views = nViews;
-	u->voteDif = nVoteDif;
-	u->nrPosts = nPosts;
-	return u;
+//gets
+long getId(User u){
+	return u->id;
 }
-*/
 
+int getRep(User u){
+	return u->rep;
+}
 
+char* getName(User u){
+	return u->name;
+}
 
-void getName(User u, char *new){
-	strcpy(new, u-> name);
+int getViews(User u){
+	return u->views;
+}
+
+int getVoteDif(User u){
+	return u->voteDif;
 }
 
 int getNrPosts(User u){
-	return u-> nrPosts;
+	return u->nrPosts;
 }
 
 void incrNrPosts(User u){
 	u-> nrPosts++;
 }
-int getId(User u){
- 	return u->id;
- }

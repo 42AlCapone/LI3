@@ -1,7 +1,21 @@
-#include"time.c"
+#ifndef _DATETIME_H_
+#define _DATETIME_H_
 
-Time* initTime();
-void inserTime(Time*, int, int, int, int, int);
-void deleteTime(Time*);
-int compareTimes(Time*, Time*);
+typedef struct datetime *DateTime;
 
+
+DateTime initDateTime();
+
+
+void inserDateTime(DateTime, int, int, int, int, int);
+
+
+void deleteDateTime(DateTime);
+
+
+void freeDateTime(DateTime);
+
+
+int compareDateTimes(DateTime, DateTime);
+
+#endif
