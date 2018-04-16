@@ -10,7 +10,6 @@ struct datetime{
   int minute;
 };
 
-
 DateTime initDateTime(int d, int m, int y, int h, int min){
   DateTime temp = malloc(sizeof(struct datetime));
   temp->day = d;

@@ -1,22 +1,24 @@
+#include "resposta.h"
 #include<stdlib.h>
 #include<string.h>
-#include"time.h"
+#include"datetime.h"
 
 
-typedef struct resposta{
+
+struct resposta{
   long id;
   long parentID;
-  struct time* creationTime;
+  DateTime creationTime;
   int score;
   long ownerUserID;
   int commentCount;
   int rate;
-}Resposta;
+};
 
-Resposta* initResposta(long mainID, long parentID, int dy, int mnth, int yr, int hr, int min, int scr, long userID, int cmmtcount, int rt){
-  Resposta* temp = malloc(sizeof(struct resposta));
+Resposta initResposta(long mainID, long parentID, int dy, int mnth, int yr, int hr, int min, int scr, long userID, int cmmtcount, int rt){
+  Resposta temp = malloc(sizeof(struct resposta));
 
-  temp->creationTime = initTime(dy, mnth, yr, hr, min);
+  temp->creationTime = initDateTime(dy, mnth, yr, hr, min);
 
   temp->id = mainID;
   temp->parentID = parentID;
@@ -28,7 +30,7 @@ Resposta* initResposta(long mainID, long parentID, int dy, int mnth, int yr, int
   return temp;
 }
 
-int compareRespostas(Resposta* p1, Resposta* p2){
+int compareRespostas(Resposta p1, Resposta p2){
   /*
   Return values:
     - return 1 if date 1 happened before date 2;
@@ -38,13 +40,13 @@ int compareRespostas(Resposta* p1, Resposta* p2){
   return compareTimes(p1->creationTime, p2->creationTime);
 }
 
-Resposta* copyResposta(Resposta* r){
-    Resposta* a = initResposta(r->id, r->parentID, r->creationTime->day, r->creationTime->month, r->creationTime->year, r->creationTime->hour, r->creationTime->minute, r->score, r->ownerUserID, r->commentCount, r->rate);
+Resposta copyResposta(Resposta r){
+    Resposta a = initResposta(r->id, r->parentID, r->creationTime->day, r->creationTime->month, r->creationTime->year, r->creationTime->hour, r->creationTime->minute, r->score, r->ownerUserID, r->commentCount, r->rate);
 
   return a;
 }
 
-void freeResposta(Resposta* r){
+void freeResposta(Resposta r){
   freeTime(r->creationTime);
   free(r);
 }

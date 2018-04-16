@@ -1,10 +1,14 @@
-#include "./headers/user.h"
+#include "parser.h"
+#include "user.h"
+#include "resposta.h"
+#include "pergunta.h"
 #include <libxml/parser.h>
 #include <libxml/xmlmemory.h>
 #include <stdio.h>
+#include <glib.h>
 
-int parseXml(char *docname){
 
+void parsePost(GHashTable* structPosts ,char *docname){
 	xmlDocPtr doc = xmlParseFile(docname);
 	if (doc == NULL) {
 		printf("Document not parsed. \n");
@@ -17,51 +21,21 @@ int parseXml(char *docname){
 		return 0;
 	}
 
-	xmlNodePtr cur2 = cur->xmlChildrenNode;
-	xmlAttr *atr;
-	for(;cur2;cur2=cur2->next){
-		atr = cur2->properties;
-		if (!xmlStrcmp(cur2->name, (const xmlChar *)"row")){
-			for(;atr;atr=atr->next){
-				xmlChar* value = xmlNodeListGetString(doc,atr->children, 1);
-				printf("%s|%s\n",atr->name,value);
-				xmlFree(value); 
-
-			}
-		}
-	}
-	
-	xmlFreeDoc(doc);
-	return 0;
-
-}
-
-int parsePost(char *docname){
-	xmlDocPtr doc = xmlParseFile(docname);
-	if (doc == NULL) {
-		printf("Document not parsed. \n");
-		return -1;
-	}
-	xmlNodePtr cur = xmlDocGetRootElement(doc);
-	if(!cur){
-		printf("empty document\n");
-		xmlFreeDoc(doc);
-		return 0;
-	}
-
-	xmlChar *id, /*type,*/ *title, *pid, *date, *score, *oid, *tags, *aCount, *cCount, *fCount;
+	int score , aCount, cCount, fCount;
+	long id , pid , oid;
+	char *title, *tags, *date;
 	cur = cur -> xmlChildrenNode;
 	while(cur != NULL){
 		if ((!xmlStrcmp(cur->name, (const xmlChar *)"row"))) {
 			if((!xmlStrcmp(xmlGetProp(cur , "PostTypeId"), (const xmlChar *) "1"))){
-				id = xmlGetProp(cur, "Id");
-				date = xmlGetProp(cur, "CreationDate");
-				score = xmlGetProp(cur, "Score");
-				oid = xmlGetProp(cur, "OwnerUserId");
-				title = xmlGetProp(cur, "Title");
-				tags = xmlGetProp(cur, "Tags");
-				aCount = xmlGetProp(cur, "AnswerCount");
-				fCount = xmlGetProp(cur, "FavoriteCount");
+				id = atol((char*)xmlGetProp(cur, "Id"));
+				date = (char*)xmlGetProp(cur, "CreationDate");
+				score = atoi((char*)xmlGetProp(cur, "Score"));
+				oid = atol((char*)xmlGetProp(cur, "OwnerUserId"));
+				title = (char*)xmlGetProp(cur, "Title");
+				tags = (char*)xmlGetProp(cur, "Tags");
+				aCount = atoi((char*)xmlGetProp(cur, "AnswerCount"));
+				fCount = atoi((char*)xmlGetProp(cur, "FavoriteCount"));
 				printf("--------Question----------\n");
 				printf("ID: %s\n", id);
 				printf("Date: %s\n", date);
@@ -70,20 +44,13 @@ int parsePost(char *docname){
 				printf("Title : %s\n", title);
 				printf("Tags: %s\n", tags);
 				printf("AnswerCount: %s\n", aCount);
-				xmlFree(id);
-				xmlFree(date);
-				xmlFree(score);
-				xmlFree(oid);
-				xmlFree(title);
-				xmlFree(tags);
-				xmlFree(aCount);
 			}else{
-				id = xmlGetProp(cur, "Id");
-				pid = xmlGetProp(cur, "ParentId");
-				date = xmlGetProp(cur, "CreationDate");
-				score = xmlGetProp(cur, "Score");
-				oid = xmlGetProp(cur, "OwnerUserId");
-				cCount = xmlGetProp(cur, "CommentCount");
+				id = atol((char*)xmlGetProp(cur, "Id"));
+				pid = atol((char*)xmlGetProp(cur, "ParentId"));
+				date = (char*)xmlGetProp(cur, "CreationDate");
+				score = atoi((char*)xmlGetProp(cur, "Score"));
+				oid = atol((char*)xmlGetProp(cur, "OwnerUserId"));
+				cCount = atoi((char*)xmlGetProp(cur, "CommentCount"));
 				printf("---------Response--------\n");
 				printf("ID: %s\n", id);
 				printf("ParentId: %s\n", pid);
@@ -91,12 +58,6 @@ int parsePost(char *docname){
 				printf("Score: %s\n", score);
 				printf("OwnerUserId: %s\n", oid);
 				printf("CommentCount: %s\n", cCount);
-				xmlFree(id);
-				xmlFree(pid);
-				xmlFree(date);
-				xmlFree(score);
-				xmlFree(oid);
-				xmlFree(cCount);
 			}	
 		}
 	cur = cur -> next;
@@ -104,8 +65,7 @@ int parsePost(char *docname){
 }
 
 
-// esta função ainda está em testes
-int parseUser(char *docname){
+void parseUser(GHashTable* structUsers,char *docname){
 
 	xmlDocPtr doc = xmlParseFile(docname);
 	if (doc == NULL) {
@@ -119,27 +79,22 @@ int parseUser(char *docname){
 		return 0;
 	}
 
-	int id, rep, views, up, down, votDif, nrPosts = 0;
+	int rep, views, up, down, votDif, nrPosts = 0;
+	long id;
 	char *name;
+
 	cur = cur -> xmlChildrenNode;
 	while(cur != NULL){
 		if ((!xmlStrcmp(cur->name, (const xmlChar *)"row"))) {
-		   	id = atoi((char*) xmlGetProp(cur, "Id"));
+		   	id = atol((char*) xmlGetProp(cur, "Id"));
 		   	rep = atoi((char*) xmlGetProp(cur, "Reputation"));
 		   	name = (char*) xmlGetProp(cur , "DisplayName");
 		   	views = atoi((char*) xmlGetProp(cur, "Views"));
 		   	up = atoi((char*) xmlGetProp(cur, "UpVotes"));
 		   	down = atoi((char*) xmlGetProp(cur, "DownVotes"));
 		   	votDif = up - down;
-		   	User u = initUser();
-		   	u = newUser(u, id, rep, name, views, votDif);
-		   	// função para inserir user na hash
-		    printf("ID: %d\n", id);
-		    printf("Reputation: %d\n", rep);
-		    printf("Name: %s\n", name);
-		    printf("Views: %d\n", views);
-		    printf("votDif: %d\n", votDif);
-		    freeUser(u);
+		   	User u = initUser(u, id, rep, name, views, votDif);
+		    g_hash_table_insert( structUsers, GSIZE_TO_POINTER(id), u);
 	    }
 	    cur = cur->next;
 	}

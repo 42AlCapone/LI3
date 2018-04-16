@@ -1,12 +1,13 @@
 #include<stdlib.h>
 #include<string.h>
-//#include"time.h"
-#include"avlRespostas.h"
+#include "datetime.h"
+#include "pergunta.h"
+#include "avlRespostas.h"
+#include "resposta.h"
 
-
-typedef struct pergunta{
+struct pergunta{
   long id;
-  struct time* creationTime;
+  DateTime creationTime;
   int score;
   long ownerUserID;
   char* title;
@@ -14,11 +15,13 @@ typedef struct pergunta{
   int favoriteCount;
   int answerCount;
   int commentCount;
-  struct avlrespostas* respostas;
-}Pergunta;
+  AVLRespostas respostas;
+};
 
-Pergunta* initPergunta(long mainID, int dy, int mnth, int yr, int hr, int min, int scr, long userID, char* ttl, char* tgs, int favcnt, int anscnt, int cmmtCnt){
-  Pergunta* temp = malloc(sizeof(struct pergunta));
+
+
+Pergunta initPergunta(long mainID, int dy, int mnth, int yr, int hr, int min, int scr, long userID, char* ttl, char* tgs, int favcnt, int anscnt, int cmmtCnt){
+  Pergunta temp = malloc(sizeof(struct pergunta));
 
   temp->title = malloc(sizeof(ttl));
   strcpy(temp->title, ttl);
@@ -26,7 +29,7 @@ Pergunta* initPergunta(long mainID, int dy, int mnth, int yr, int hr, int min, i
   temp->tags = malloc(sizeof(tgs));
   strcpy(temp->tags, tgs);
 
-  temp->creationTime = initTime(dy, mnth, yr, hr, min);
+  temp->creationTime = initDateTime(dy, mnth, yr, hr, min);
 
   temp->id = mainID;
   temp->score = scr;
@@ -40,25 +43,62 @@ Pergunta* initPergunta(long mainID, int dy, int mnth, int yr, int hr, int min, i
   return temp;
 }
 
-int comparePerguntas(Pergunta* p1, Pergunta* p2){
+
+long getId(Pergunta p){
+  return p-> id;
+}
+
+DateTime getCreationDate(Pergunta p){
+  return p-> creationTime;
+}
+
+int getScore(Pergunta p){
+  return p-> score;
+}
+
+long getOwnerUserID(Pergunta p){
+  return p-> ownerUserID;
+}
+
+void getTitle(Pergunta p, char* new){
+  strcpy(new , p-> title);
+}
+
+void getTags(Pergunta p, char* new){
+  strcpy(new , p-> tags);
+}
+
+int getFavoriteCount(Pergunta p){
+  return p-> favoriteCount;
+}
+
+int getAnswerCount(Pergunta p){
+  return p-> answerCount ;
+}
+
+int getcommentCount(Pergunta p){
+  return p-> commentCount;
+}
+
+int comparePerguntas(Pergunta p1, Pergunta p2){
   /*
   Return values:
     - return 1 if date 1 happened before date 2;
     - return 2 if date 2 happened before date 1;
     - return 0 if they are the same;
   */
-  return compareTimes(p1->creationTime, p2->creationTime);
+  return compareDateTimes(p1->creationTime, p2->creationTime);
 }
 
-Pergunta* copyPergunta(Pergunta* p){
-  Pergunta* a = initPergunta(p->id, p->creationTime->day, p->creationTime->month, p->creationTime->year, p->creationTime->hour, p->creationTime->minute, p->score, p->ownerUserID, p->title, p->tags, p->favoriteCount, p->answerCount, p->commentCount);
+Pergunta copyPergunta(Pergunta p){
+  Pergunta a = initPergunta(p->id, p->creationTime->day, p->creationTime->month, p->creationTime->year, p->creationTime->hour, p->creationTime->minute, p->score, p->ownerUserID, p->title, p->tags, p->favoriteCount, p->answerCount, p->commentCount);
   a->respostas = copyAVL(p->respostas);
 
   return a;
 }
 
-void freePergunta(Pergunta* p){
-  freeTime(p->creationTime);
+void freePergunta(Pergunta p){
+  freeDateTime(p->creationTime);
   free(p->title);
   free(p->tags);
   freeAVL(p->respostas);

@@ -1,9 +1,16 @@
-#include"resposta.c"
+#ifndef _RESPOSTA_H_
+#define _RESPOSTA_H_
 
-Resposta* initResposta(long, long, int, int, int, int, int, int, long, int, int);
 
-int compareResposta(Resposta*, Resposta*);
+typedef struct resposta *Resposta;
 
-Resposta* copyResposta(Resposta*);
+Resposta initResposta(long, long, int, int, int, int, int, int, long, int, int);
 
-void freeResposta(Resposta*);
+int compareResposta(Resposta, Resposta);
+
+Resposta copyResposta(Resposta);
+
+void freeResposta(Resposta);
+
+#endif
+
