@@ -6,7 +6,7 @@
 typedef struct user *User;
 
 /* Função que inicializa toda uma nova estrutura User com todas a variveis preenchidas*/
-User initUser(int id, int rep, char* name, int views, int voteDif, int nrPosts);
+User initUser(long id, int rep, char* name, int views, int voteDif, int nrPosts);
 
 // Função que copia um user e retorna-o
 User copyUser(User u);

@@ -1,10 +1,11 @@
-#include "headers/users.h"
+#include "users.h"
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
+#include <string.h>
 
 struct user{
-	int id;
+	long id;
 	int rep;
 	char *name;
 	int views;
@@ -13,11 +14,11 @@ struct user{
 };
 
 
-User initUser(int id, int rep, char* name, int views, int voteDif, int nrPosts){
+User initUser(long id, int rep, char* name, int views, int voteDif, int nrPosts){
 	User u = malloc(sizeof(struct user));
 	u-> id = id;
 	u-> rep = rep;
-	u-> name = malloc(sizeof(name));
+	u-> name = strdup(name);
 	u-> views = views;
 	u-> voteDif= voteDif;
 	u-> nrPosts = nrPosts;
@@ -61,5 +62,5 @@ int getNrPosts(User u){
 }
 
 void incrNrPosts(User u){
-	u-> nrPosts++;
+	u->nrPosts++;
 }

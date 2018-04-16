@@ -1,13 +1,17 @@
 //#include <date.h>
-#include <stdio.h>
-#include "parser.c"
+#include "../include/interface.h"
+
+
+
+
 
 int main(int argc, char **argv){
-  int i;
-  //for(i=1;i<argc;i++){
-  	//parseXml(argv[i]);
-  //}
-  parseUser("Users.xml");
+  
+  TAD_community com = init();
+  load(com,argv[1]);
+
+  clean(com);
+  //parseUser("Users.xml");
   //parsePost("Posts.xml");
   return 0;
 
@@ -18,3 +22,4 @@ int main(int argc, char **argv){
   printf("Dia: %i\n", get_day(d));
   return 0;*/
 } 
+
