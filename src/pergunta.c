@@ -3,7 +3,6 @@
 #include<glib.h>
 #include "datetime.h"
 #include "pergunta.h"
-#include "avlRespostas.h"
 #include "resposta.h"
 
 struct pergunta{
@@ -111,10 +110,6 @@ void freePergunta(Pergunta p1){
     free(p1->tags);
     freeTime(p1->creationTime);
     free(p1);
-}
-
-int main(){
-	return 0;
 }
 
 /*
