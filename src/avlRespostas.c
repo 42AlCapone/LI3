@@ -1,16 +1,21 @@
 #include<stdlib.h>
 #include<string.h>
 #include<stdio.h>
-#include"resposta.h"
+//#include"avlRespostas.h"
+#include"resposta.c"
 
-typedef struct avlrespostas{
-  struct resposta* r;
+struct avlrespostas{
+  Resposta r;
   int height;
   struct avlrespostas *left, *right;
-} AVLRespostas;
+};
+
+typedef struct avlrespostas* AVLRespostas;
+
 //___________________________________________________________
-AVLRespostas* init(){
-  AVLRespostas* t = malloc(sizeof(struct avlrespostas));
+
+AVLRespostas init(){
+  AVLRespostas t = malloc(sizeof(struct avlrespostas));
   t->r = NULL;
   t->height = 0;
   t->left = NULL;
@@ -19,7 +24,17 @@ AVLRespostas* init(){
   return t;
 }
 
-int totalHeight(AVLRespostas* t)
+
+Resposta getResposta(AVLRespostas t){
+	return t->r;
+}
+
+
+int getHeight(AVLRespostas t){
+	return t->height;
+}
+
+int totalHeight(AVLRespostas t)
 {
     int lh,rh;
     if(t==NULL)
@@ -28,12 +43,12 @@ int totalHeight(AVLRespostas* t)
     if(t->left==NULL)
         lh=0;
     else
-        lh=1+t->left->height;
+        lh=1+getHeight(t->left);
 
     if(t->right==NULL)
         rh=0;
     else
-        rh=1+t->right->height;
+        rh=1+getHeight(t->right);
 
     if(lh>rh)
         return(lh);
@@ -41,9 +56,9 @@ int totalHeight(AVLRespostas* t)
     return(rh);
 }
 
-AVLRespostas* rotateright(AVLRespostas* x)
+AVLRespostas rotateright(AVLRespostas x)
 {
-    AVLRespostas* y;
+    AVLRespostas y;
     y=x->left;
     x->left=y->right;
     y->right=x;
@@ -52,9 +67,9 @@ AVLRespostas* rotateright(AVLRespostas* x)
     return(y);
 }
 
-AVLRespostas* rotateleft(AVLRespostas* x)
+AVLRespostas rotateleft(AVLRespostas x)
 {
-    AVLRespostas *y;
+    AVLRespostas y;
     y = x->right;
     x->right = y->left;
     y->left = x;
@@ -64,19 +79,19 @@ AVLRespostas* rotateleft(AVLRespostas* x)
     return(y);
 }
 
-AVLRespostas* rr(AVLRespostas* t)
+AVLRespostas rr(AVLRespostas t)
 {
     t = rotateleft(t);
     return(t);
 }
 
-AVLRespostas* ll(AVLRespostas* t)
+AVLRespostas ll(AVLRespostas t)
 {
     t = rotateright(t);
     return(t);
 }
 
-AVLRespostas* lr(AVLRespostas* t)
+AVLRespostas lr(AVLRespostas t)
 {
     t->left = rotateleft(t->left);
     t = rotateright(t);
@@ -84,14 +99,14 @@ AVLRespostas* lr(AVLRespostas* t)
     return(t);
 }
 
-AVLRespostas* rl(AVLRespostas* t)
+AVLRespostas rl(AVLRespostas t)
 {
     t->right = rotateright(t->right);
     t = rotateleft(t);
     return(t);
 }
 
-int bf(AVLRespostas* t)
+int bf(AVLRespostas t)
 {
     int lh,rh;
     if(t == NULL)
@@ -100,40 +115,48 @@ int bf(AVLRespostas* t)
     if(t->left==NULL)
         lh=0;
     else
-        lh=1+t->left->height;
+        lh=1+getHeight(t->left);
 
     if(t->right==NULL)
         rh=0;
     else
-        rh=1+t->right->height;
+        rh=1+getHeight(t->right);
 
     return(lh-rh);
 }
 
-AVLRespostas* insert(AVLRespostas* t, Resposta* r1)
+AVLRespostas insert(AVLRespostas t, Resposta r1)
 {
     if(t==NULL)
     {
-        t=(AVLRespostas*)malloc(sizeof(struct avlrespostas));
+        t=(AVLRespostas)malloc(sizeof(struct avlrespostas));
         t->r = copyResposta(r1);
         t->left=NULL;
         t->right=NULL;
     }
-    else if(compareRespostas(t->r, r1) == 2)        // insert in right subtree
+/*
+    else if(getHeight(t) == 0){
+	t->r = copyResposta(r1);
+	t->height++;
+	t->left = NULL;
+	t->right = NULL;
+    }
+*/
+    else if(compareRespostas(t->r, r1) == 1)        // insert in right subtree
         {
             t->right=insert(t->right, r1);
             if(bf(t)==-2){
-                if(compareRespostas(r1, t->right->r) == 2)
+                if(compareRespostas(r1, getResposta(t->right)) == 1)
                     t = rr(t);
                 else
                     t = rl(t);
 	    }
         }
-        else if(compareRespostas(r1, t->r) == 1)
+        else if(compareRespostas(r1, t->r) == -1)
         {
              t->left=insert(t->left, r1);
              if(bf(t) == 2){
-                    if(compareRespostas(r1, t->left->r) == 1)
+                    if(compareRespostas(r1, getResposta(t->left)) == -1)
                         t = ll(t);
                     else
                         t = lr(t);
@@ -145,15 +168,15 @@ AVLRespostas* insert(AVLRespostas* t, Resposta* r1)
         return(t);
 }
 
-AVLRespostas* delete(AVLRespostas* t, Resposta* r1)
+AVLRespostas delete(AVLRespostas t, Resposta r1)
 {
-    AVLRespostas* paux;
+    AVLRespostas paux;
 
     if(t==NULL)
     {
         return NULL;
     }
-    else if(compareRespostas(r1, t->r) == 2)        // delete in right subtree
+    else if(compareRespostas(r1, t->r) == 1)        // delete in right subtree
         {
             t->right = delete(t->right, r1);
             if(bf(t) == 2){
@@ -163,7 +186,7 @@ AVLRespostas* delete(AVLRespostas* t, Resposta* r1)
                     t = lr(t);
 	    }
         }
-        else if(compareRespostas(r1, t->r) == 1)
+        else if(compareRespostas(r1, t->r) == -1)
         {
                 t->left = delete(t->left, r1);
 	     if(bf(t) == -2){    //Rebalance during windup
@@ -200,8 +223,8 @@ AVLRespostas* delete(AVLRespostas* t, Resposta* r1)
     return(t);
 }
 
-AVLRespostas* copyAVL(AVLRespostas* t){
-    AVLRespostas* temp;
+AVLRespostas copyAVL(AVLRespostas t){
+    AVLRespostas temp;
 
     if(t == NULL){
         return NULL;
@@ -215,7 +238,7 @@ AVLRespostas* copyAVL(AVLRespostas* t){
     return temp;
 }
 
-void freeAVL(AVLRespostas* t){
+void freeAVL(AVLRespostas t){
   if(!t){
 	return;
   }
@@ -226,6 +249,38 @@ void freeAVL(AVLRespostas* t){
   free(t);
 }
 
+
+int main(){
+	Resposta r1 = initResposta(1, 1, 9, 1, 1994, 21, 35, 100, 1, 10, 5);
+	Resposta r2 = initResposta(2, 1, 6, 1, 1990, 12, 20, 43, 2, 6, 1);
+	Resposta r3 = copyResposta(r1);
+	Resposta r4 = initResposta(4, 1, 20, 3, 1964, 10, 22, 53, 4, 4, 2);
+	Resposta r5 = initResposta(5, 1, 20, 3, 1989, 15, 12, 9, 5, 4, 2);
+	Resposta r6 = initResposta(6, 1, 20, 3, 1918, 15, 12, 24, 6, 4, 2);
+
+	AVLRespostas t1 = NULL;
+
+	t1 = insert(t1, r1);
+
+	t1 = insert(t1, r2);
+
+	t1 = insert(t1, r3);
+
+	t1 = insert(t1, r4);
+
+	t1 = insert(t1, r5);
+
+	t1 = insert(t1, r6);
+
+	AVLRespostas t2 = copyAVL(t1);
+
+	printf("T1 height = %d\n", getHeight(t1));
+
+	printf("T1 height = %d\n", getHeight(t2));
+
+	return 0;
+	
+}
 
 //___________________________________________________________
 /*

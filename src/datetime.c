@@ -1,6 +1,5 @@
 #include<stdlib.h>
 #include "datetime.h"
-//#include<stdio.h>
 
 struct datetime{
   int day;

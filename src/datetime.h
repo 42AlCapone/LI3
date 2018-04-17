@@ -6,6 +6,20 @@ typedef struct datetime *DateTime;
 
 DateTime initDateTime();
 
+int getDay(DateTime);
+
+
+int getMonth(DateTime);
+
+
+int getYear(DateTime);
+
+
+int getHour(DateTime);
+
+
+int getMinute(DateTime);
+
 
 void inserDateTime(DateTime, int, int, int, int, int);
 
