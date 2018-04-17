@@ -1,5 +1,6 @@
 #include<stdlib.h>
 #include<string.h>
+#include<glib.h>
 #include "datetime.h"
 #include "pergunta.h"
 #include "avlRespostas.h"
@@ -15,13 +16,13 @@ struct pergunta{
   int favoriteCount;
   int answerCount;
   int commentCount;
-  AVLRespostas respostas;
+  GTree* respostas;
 };
 
 
 
-Pergunta initPergunta(long mainID, int dy, int mnth, int yr, int hr, int min, int scr, long userID, char* ttl, char* tgs, int favcnt, int anscnt, int cmmtCnt){
-  Pergunta temp = malloc(sizeof(struct pergunta));
+Pergunta* initPergunta(long mainID, int dy, int mnth, int yr, int hr, int min, int scr, long userID, char* ttl, char* tgs, int favcnt, int anscnt, int cmmtCnt){
+  Pergunta* temp = malloc(sizeof(struct pergunta));
 
   temp->title = malloc(sizeof(ttl));
   strcpy(temp->title, ttl);
@@ -29,7 +30,7 @@ Pergunta initPergunta(long mainID, int dy, int mnth, int yr, int hr, int min, in
   temp->tags = malloc(sizeof(tgs));
   strcpy(temp->tags, tgs);
 
-  temp->creationTime = initDateTime(dy, mnth, yr, hr, min);
+  temp->creationTime = initTime(dy, mnth, yr, hr, min);
 
   temp->id = mainID;
   temp->score = scr;
@@ -38,7 +39,7 @@ Pergunta initPergunta(long mainID, int dy, int mnth, int yr, int hr, int min, in
   temp->answerCount = anscnt;
   temp->commentCount = cmmtCnt;
 
-  temp->respostas = NULL;
+  temp->respostas = g_tree_new_full((GCompareFunc)compareTimes, (GDestroyNotify)freeTime, (GDestroyNotify)freeResposta);
 
   return temp;
 }
@@ -90,19 +91,30 @@ int comparePerguntas(Pergunta p1, Pergunta p2){
   return compareDateTimes(p1->creationTime, p2->creationTime);
 }
 
+/*
 Pergunta copyPergunta(Pergunta p){
   Pergunta a = initPergunta(p->id, p->creationTime->day, p->creationTime->month, p->creationTime->year, p->creationTime->hour, p->creationTime->minute, p->score, p->ownerUserID, p->title, p->tags, p->favoriteCount, p->answerCount, p->commentCount);
   a->respostas = copyAVL(p->respostas);
 
   return a;
 }
+*/
 
-void freePergunta(Pergunta p){
-  freeDateTime(p->creationTime);
-  free(p->title);
-  free(p->tags);
-  freeAVL(p->respostas);
-  free(p);
+Pergunta insertResposta(Pergunta p1, Resposta r1){
+    p1->respostas = g_tree_insert(p1->respostas, (gpointer)r1->creationTime, r1);
+    return p1;
+}
+
+void freePergunta(Pergunta p1){
+    g_tree_destroy(p1->respostas);
+    free(p1->title);
+    free(p1->tags);
+    freeTime(p1->creationTime);
+    free(p1);
+}
+
+int main(){
+	return 0;
 }
 
 /*

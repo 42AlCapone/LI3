@@ -26,7 +26,6 @@ void getTitle(Pergunta p, char* new);
 
 void getTags(Pergunta p, char* new);
 
-
 int getFavoriteCount(Pergunta p);
 
 
@@ -39,8 +38,9 @@ int getcommentCount(Pergunta p);
 int comparePerguntas(Pergunta p1, Pergunta p2);
 
 
-Pergunta copyPergunta(Pergunta p);
+//Pergunta copyPergunta(Pergunta p);
 
+Pergunta insertResposta(Pergunta, Resposta);
 
 void freePergunta(Pergunta p);
 
