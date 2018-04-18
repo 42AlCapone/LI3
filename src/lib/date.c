@@ -1,5 +1,6 @@
 #include <stdlib.h>
-#include "date.h"
+#include "../../include/date.h"
+
 
 struct date {
   int day;
@@ -13,6 +14,30 @@ Date createDate(int day, int month, int year) {
     d->month = month;
     d->year = year;
     return d;
+}
+
+int compare_dates (Date d1, Date d2)
+{
+    if (d1->year < d2->year)
+       return -1;
+
+    else if (d1->year > d2->year)
+       return 1;
+
+    if (d1->year == d2->year)
+    {
+         if (d1->month < d2->month)
+              return -1;
+         else if (d1->month > d2->month)
+              return 1;
+         else if (d1->day < d2->day)
+              return -1;
+         else if(d1->day > d2->day)
+              return 1;
+         else
+              return 0;
+    }
+    return 0;
 }
 
 int get_day(Date d) {

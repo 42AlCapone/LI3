@@ -1,22 +1,25 @@
-#include<stdlib.h>
-#include<string.h>
-#include"resposta.h"
-#include"datetime.c"
+#include <stdlib.h>
+#include <string.h>
+#include "resposta.h"
+//#include "datetime.c"
+//#include "pergunta.h"
+#include <glib.h>
+#include "../include/date.h"
 
 struct resposta{
   long id;
   long parentID;
-  DateTime creationTime;
+  Date creationTime;
   int score;
   long ownerUserID;
   int commentCount;
   int rate;
 };
 
-Resposta initResposta(long mainID, long parentID, int dy, int mnth, int yr, int hr, int min, int scr, long userID, int cmmtcount, int rt){
+Resposta initResposta(long mainID, long parentID, int dy, int mnth, int yr, int scr, long userID, int cmmtcount, int rt){
   Resposta temp = malloc(sizeof(struct resposta));
 
-  temp->creationTime = initDateTime(dy, mnth, yr, hr, min);
+  temp->creationTime = createDate(dy, mnth, yr);
 
   temp->id = mainID;
   temp->parentID = parentID;
@@ -35,10 +38,11 @@ long getId(Resposta r){
 long getParentID(Resposta r){
 	return r->parentID;
 }
-
+/*
 DateTime getTime(Resposta r){
 	return r->creationTime;
 }
+*/
 
 int getScore(Resposta r){
 	return r->score;
@@ -63,17 +67,20 @@ int compareRespostas(Resposta p1, Resposta p2){
     - return 1 if date 2 happened before date 1;
     - return 0 if they are the same;
   */
-  return compareDateTimes(p1->creationTime, p2->creationTime);
+  return compare_dates(p1->creationTime, p2->creationTime);
 }
 
 Resposta copyResposta(Resposta r){
-    Resposta a = initResposta(r->id, r->parentID, getDay(r->creationTime), getMonth(r->creationTime), getYear(r->creationTime), getHour(r->creationTime), getMinute(r->creationTime), r->score, r->ownerUserID, r->commentCount, r->rate);
+    Resposta a = initResposta(r->id, r->parentID, get_day(r->creationTime), get_month(r->creationTime), get_year(r->creationTime), r->score, r->ownerUserID, r->commentCount, r->rate);
 
   return a;
 }
 
+
+
+
 void freeResposta(Resposta r){
-  freeDateTime(r->creationTime);
+  free_date(r->creationTime);
   free(r);
 }
 /*

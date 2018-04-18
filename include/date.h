@@ -3,6 +3,7 @@
 
 typedef struct date* Date;
 
+int compare_dates (Date d1, Date d2);
 Date createDate(int day, int month, int year);
 int get_day(Date d);
 int get_month(Date d); // must return a value between 0 and 11 

@@ -1,24 +1,26 @@
 #ifndef _PERGUNTA_H_
 #define _PERGUNTA_H_
-#include "datetime.h"
+//#include "datetime.h"
+#include "../include/date.h"
 
 typedef struct pergunta *Pergunta;
 
 
 
-Pergunta initPergunta(long mainID, int dy, int mnth, int yr, int hr, int min, int scr, long userID, char* ttl, char* tgs, int favcnt, int anscnt, int cmmtCnt);
+Pergunta initPergunta(long mainID, int dy, int mnth, int yr, int scr, long userID, char* ttl, 
+	char* tgs, int favcnt, int anscnt, int cmmtCnt, GTree* resp);
 
 
-long getId(Pergunta p);
+long getIdp(Pergunta p);
 
 
-DateTime getCreationDate(Pergunta p);
+//DateTime getCreationDate(Pergunta p);
 
 
-int getScore(Pergunta p);
+int getScorep(Pergunta p);
 
 
-long getOwnerUserID(Pergunta p);
+long getOwnerUserIDp(Pergunta p);
 
 
 void getTitle(Pergunta p, char* new);
@@ -40,7 +42,7 @@ int comparePerguntas(Pergunta p1, Pergunta p2);
 
 //Pergunta copyPergunta(Pergunta p);
 
-Pergunta insertResposta(Pergunta, Resposta);
+//Pergunta insertResposta(Pergunta p1, Resposta r1);
 
 void freePergunta(Pergunta p);
 
