@@ -26,15 +26,14 @@ Pergunta insertResposta(Pergunta p1, Resposta r1){
 }
 */
 
-Pergunta initPergunta(long mainID, int dy, int mnth, int yr, int scr, 
-  long userID, char* ttl, char* tgs, int favcnt, int anscnt, int cmmtCnt, GTree* resp){
+Pergunta initPergunta(long mainID, Date date, int scr, long userID, char* ttl, char* tgs, int favcnt, int anscnt, int cmmtCnt){
 
   Pergunta temp = malloc(sizeof(struct pergunta));
 
   temp->title = strdup(ttl);
 
   temp->tags = strdup(tgs);
-  temp->creationTime = createDate(dy, mnth, yr);
+  temp->creationTime = date;
 
   temp->id = mainID;
   temp->score = scr;
@@ -46,6 +45,10 @@ Pergunta initPergunta(long mainID, int dy, int mnth, int yr, int scr,
   temp->resp = g_tree_new((GCompareFunc)compare_dates);
 
   return temp;
+}
+
+void insertResposta(Pergunta p, Resposta r){
+  g_tree_insert(p->resp, r->creationTime, r);
 }
 
 

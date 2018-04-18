@@ -6,7 +6,7 @@
 
 typedef struct resposta *Resposta;
 
-Resposta initResposta(long mainID, long parentID, int dy, int mnth, int yr, int scr, long userID, int cmmtcount, int rt);
+Resposta initResposta(long mainID, long parentID, Date date, int scr, long userID, int cmmtcount, int rt);
 
 long getId(Resposta);
 

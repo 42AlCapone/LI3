@@ -40,6 +40,18 @@ int compare_dates (Date d1, Date d2)
     return 0;
 }
 
+Date stringToDate(char* date){
+  *(date + 10) = '\0';
+  char* d = date+8;
+  *(date +7) = '\0';
+  char* m = date+5;
+  *(date +4) = '\0';
+  char* y = date;
+
+  Date a = createDate(atoi(d),atoi(m),atoi(y));
+  return a;
+}
+
 int get_day(Date d) {
     return d->day; 
 }

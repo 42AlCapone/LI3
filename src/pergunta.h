@@ -2,14 +2,17 @@
 #define _PERGUNTA_H_
 //#include "datetime.h"
 #include "../include/date.h"
+#include "resposta.h"
 
 typedef struct pergunta *Pergunta;
 
 
 
-Pergunta initPergunta(long mainID, int dy, int mnth, int yr, int scr, long userID, char* ttl, 
-	char* tgs, int favcnt, int anscnt, int cmmtCnt, GTree* resp);
+Pergunta initPergunta(long mainID, Date date, int scr, long userID, char* ttl, 
+	char* tgs, int favcnt, int anscnt, int cmmtCnt);
 
+
+void insertResposta(Pergunta p, Resposta r);
 
 long getIdp(Pergunta p);
 
