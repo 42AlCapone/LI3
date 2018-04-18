@@ -23,12 +23,19 @@ TAD_community init(){
 
 
 TAD_community load(TAD_community com, char* dump_path){
-	char* postFile = "/Posts.xml";
-	char* userFile = "/Users.xml";
-	char* pathPosts = strcat(dump_path, postFile);
-	char* pathUsers = strcat(dump_path, userFile);
-	parseUser(com-> users, pathUsers);
-	parsePost(com-> posts, pathPosts);
+	int l = strlen(dump_path);
+	char* postFile = malloc(10+l);
+	char* userFile = malloc(10+l);
+
+
+	postFile = strcpy(postFile,dump_path);
+	userFile = strcpy(userFile, dump_path);
+
+	postFile = strcat(postFile, "/Posts.xml");
+	userFile = strcat(userFile, "/Users.xml");
+
+	parseUser(com-> users, userFile);
+	parsePost(com-> posts,com-> users, postFile);
 	
 	User u = g_hash_table_lookup(com->users,GSIZE_TO_POINTER(21));
 	char *nome = getName(u);

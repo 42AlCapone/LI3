@@ -16,10 +16,10 @@ struct resposta{
   int rate;
 };
 
-Resposta initResposta(long mainID, long parentID, Date date, int scr, long userID, int cmmtcount, int rt){
+Resposta initResposta(long mainID, long parentID, char* date, int scr, long userID, int cmmtcount, int rt){
   Resposta temp = malloc(sizeof(struct resposta));
 
-  temp->creationTime = date;
+  temp->creationTime = stringToDate(date);
 
   temp->id = mainID;
   temp->parentID = parentID;
@@ -31,18 +31,18 @@ Resposta initResposta(long mainID, long parentID, Date date, int scr, long userI
   return temp;
 }
 
-long getId(Resposta r){
+long getIdr(Resposta r){
 	return r->id;
 }
 
 long getParentID(Resposta r){
 	return r->parentID;
 }
-/*
-DateTime getTime(Resposta r){
+
+Date getDate(Resposta r){
 	return r->creationTime;
 }
-*/
+
 
 int getScore(Resposta r){
 	return r->score;
@@ -60,21 +60,21 @@ int getRate(Resposta r){
 	return r->rate;
 }
 
-int compareRespostas(Resposta p1, Resposta p2){
+int compareRespostas(Resposta r1, Resposta r2){
   /*
   Return values:
     - return -1 if date 1 happened before date 2;
     - return 1 if date 2 happened before date 1;
     - return 0 if they are the same;
   */
-  return compare_dates(p1->creationTime, p2->creationTime);
+  return compare_dates(r1->creationTime, r2->creationTime);
 }
-
+/*
 Resposta copyResposta(Resposta r){
-    Resposta a = initResposta(r->id, r->parentID, get_day(r->creationTime), get_month(r->creationTime), get_year(r->creationTime), r->score, r->ownerUserID, r->commentCount, r->rate);
+    Resposta a = initResposta(r->id, r->parentID, , r->score, r->ownerUserID, r->commentCount, r->rate);
 
   return a;
-}
+}*/
 
 
 

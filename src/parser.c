@@ -21,24 +21,25 @@ void parsePost(GHashTable* structPosts , GHashTable* structUsers ,char *docname)
 		xmlFreeDoc(doc);
 	}
 
-	int score , aCount, cCount, fCount;
+	int score, cCount; //aCount, cCount, fCount;
 	long id , pid , oid;
-	char *title, *tags;
-	Date date;
+	char *title, *tags, *date;
+	
 	cur = cur -> xmlChildrenNode;
 	User u;
 	while(cur != NULL){
 		if ((!xmlStrcmp(cur->name, (const xmlChar *)"row"))) {
 			if((!xmlStrcmp(xmlGetProp(cur , "PostTypeId"), (const xmlChar *) "1"))){
 				id = atol((char*)xmlGetProp(cur, "Id"));
-				date = stringToDate((char*)xmlGetProp(cur, "CreationDate"));
+				date = (char*)xmlGetProp(cur, "CreationDate");
 				score = atoi((char*)xmlGetProp(cur, "Score"));
 				oid = atol((char*)xmlGetProp(cur, "OwnerUserId"));
 				title = (char*)xmlGetProp(cur, "Title");
 				tags = (char*)xmlGetProp(cur, "Tags");
-				aCount = atoi((char*)xmlGetProp(cur, "AnswerCount"));
+				//aCount = atoi((char*)xmlGetProp(cur, "AnswerCount"));
 				cCount = atoi((char*)xmlGetProp(cur, "CommentCount"));
-				fCount = atoi((char*)xmlGetProp(cur, "FavoriteCount"));
+				//fCount = atoi((char*)xmlGetProp(cur, "FavoriteCount"));
+				
 			/*	printf("--------Question----------\n");
 				printf("ID: %ld\n", id);
 				printf("Date: %s\n", date);
@@ -48,7 +49,7 @@ void parsePost(GHashTable* structPosts , GHashTable* structUsers ,char *docname)
 				printf("Tags: %s\n", tags);
 				printf("AnswerCount: %d\n", aCount); */
 
-				Pergunta p = initPergunta(id, date, score, oid, title, tags, aCount, fCount, cCount);
+				Pergunta p = initPergunta(id, date, score, oid, title, tags, cCount);
 		    	g_hash_table_insert(structPosts, GSIZE_TO_POINTER(id), p);
 		    	u = g_hash_table_lookup(structUsers, GSIZE_TO_POINTER(oid));
 		    	incrNrPosts(u);
@@ -56,7 +57,7 @@ void parsePost(GHashTable* structPosts , GHashTable* structUsers ,char *docname)
 			}else{
 				id = atol((char*)xmlGetProp(cur, "Id"));
 				pid = atol((char*)xmlGetProp(cur, "ParentId"));
-				date = stringToDate((char*)xmlGetProp(cur, "CreationDate"));
+				date = (char*)xmlGetProp(cur, "CreationDate");
 				score = atoi((char*)xmlGetProp(cur, "Score"));
 				oid = atol((char*)xmlGetProp(cur, "OwnerUserId"));
 				cCount = atoi((char*)xmlGetProp(cur, "CommentCount"));
@@ -68,9 +69,9 @@ void parsePost(GHashTable* structPosts , GHashTable* structUsers ,char *docname)
 				printf("OwnerUserId: %ld\n", oid);
 				printf("CommentCount: %d\n", cCount); */
 				
-				Resposta r = initResposta(id, pid, date, score, oid, cCount);
+				Resposta r = initResposta(id, pid, date, score, oid, cCount, 0);
 		    	Pergunta p = g_hash_table_lookup(structPosts,GSIZE_TO_POINTER(pid));
-		    	insertPergunta( p, r);
+		    	insertResposta( p, r);
 		    	u = g_hash_table_lookup(structUsers, GSIZE_TO_POINTER(oid));
 		    	incrNrPosts(u);
 

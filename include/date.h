@@ -3,6 +3,7 @@
 
 typedef struct date* Date;
 
+Date stringToDate(char* date);
 int compare_dates (Date d1, Date d2);
 Date createDate(int day, int month, int year);
 int get_day(Date d);

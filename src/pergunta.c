@@ -12,8 +12,8 @@ struct pergunta{
   long ownerUserID;
   char* title;
   char* tags;
-  int favoriteCount;
-  int answerCount;
+  //int favoriteCount;
+  //int answerCount;
   int commentCount;
   GTree* resp;
 };
@@ -26,7 +26,7 @@ Pergunta insertResposta(Pergunta p1, Resposta r1){
 */
 
 
-Pergunta initPergunta(long mainID, Date date, int scr, long userID, char* ttl, char* tgs, int favcnt, int anscnt, int cmmtCnt){
+Pergunta initPergunta(long mainID, char* date, int scr, long userID, char* ttl, char* tgs, int cCount){
 
 
   Pergunta temp = malloc(sizeof(struct pergunta));
@@ -34,14 +34,14 @@ Pergunta initPergunta(long mainID, Date date, int scr, long userID, char* ttl, c
   temp->title = strdup(ttl);
 
   temp->tags = strdup(tgs);
-  temp->creationTime = date;
+  temp->creationTime = stringToDate(date);
 
   temp->id = mainID;
   temp->score = scr;
   temp->ownerUserID = userID;
-  temp->favoriteCount = favcnt;
-  temp->answerCount = anscnt;
-  temp->commentCount = cmmtCnt;
+  //temp->favoriteCount = favcnt;
+  //temp->answerCount = anscnt;
+  temp->commentCount = cCount;
 
   temp->resp = g_tree_new((GCompareFunc)compare_dates);
 
@@ -49,7 +49,7 @@ Pergunta initPergunta(long mainID, Date date, int scr, long userID, char* ttl, c
 }
 
 void insertResposta(Pergunta p, Resposta r){
-  g_tree_insert(p->resp, r->creationTime, r);
+  g_tree_insert(p->resp, getDate(r), r);
 }
 
 
@@ -57,11 +57,11 @@ long getIdp(Pergunta p){
   return p-> id;
 }
 
-/*
-DateTime getCreationDate(Pergunta p){
+
+Date getDatep(Pergunta p){
   return p-> creationTime;
 }
-*/
+
 
 int getScorep(Pergunta p){
   return p-> score;
@@ -79,6 +79,7 @@ void getTags(Pergunta p, char* new){
   strcpy(new , p-> tags);
 }
 
+/*
 int getFavoriteCount(Pergunta p){
   return p-> favoriteCount;
 }
@@ -90,6 +91,7 @@ int getAnswerCount(Pergunta p){
 int getcommentCount(Pergunta p){
   return p-> commentCount;
 }
+*/
 
 int comparePerguntas(Pergunta p1, Pergunta p2){
   /*

@@ -6,26 +6,26 @@
 
 typedef struct resposta *Resposta;
 
-Resposta initResposta(long mainID, long parentID, Date date, int scr, long userID, int cmmtcount, int rt);
+Resposta initResposta(long mainID, long parentID, char* date, int scr, long userID, int cmmtcount, int rt);
 
-long getId(Resposta);
+long getIdr(Resposta r);
 
-long getParentID(Resposta);
+long getParentID(Resposta r);
 
-Date getTime(Resposta);
+Date getDate(Resposta r);
 
-int getScore(Resposta);
+int getScore(Resposta r);
 
-long getOwnerUserID(Resposta);
+long getOwnerUserID(Resposta r);
 
-int getCommentCount(Resposta);
+int getCommentCount(Resposta r);
 
-int getRate(Resposta);
+int getRate(Resposta r);
 
-int compareRespostas(Resposta, Resposta);
+int compareRespostas(Resposta r1, Resposta r2);
 
-Resposta copyResposta(Resposta);
+Resposta copyResposta(Resposta r);
 
-void freeResposta(Resposta);
+void freeResposta(Resposta r);
 
 #endif

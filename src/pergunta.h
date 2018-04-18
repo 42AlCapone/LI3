@@ -8,8 +8,7 @@ typedef struct pergunta *Pergunta;
 
 
 
-Pergunta initPergunta(long mainID, Date date, int scr, long userID, char* ttl, 
-	char* tgs, int favcnt, int anscnt, int cmmtCnt);
+Pergunta initPergunta(long mainID, char* date, int scr, long userID, char* ttl, char* tgs, int cCount);
 
 
 void insertResposta(Pergunta p, Resposta r);
