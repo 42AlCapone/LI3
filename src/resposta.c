@@ -16,7 +16,7 @@ struct resposta{
   int rate;
 };
 
-Resposta initResposta(long mainID, long parentID, Date date, int dy, int mnth, int yr, int scr, long userID, int cmmtcount, int rt){
+Resposta initResposta(long mainID, long parentID, Date date, int scr, long userID, int cmmtcount, int rt){
   Resposta temp = malloc(sizeof(struct resposta));
 
   temp->creationTime = date;

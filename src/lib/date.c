@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <string.h>
 #include "../../include/date.h"
 
 
@@ -53,7 +54,7 @@ Date stringToDate(char* date){
 }
 
 int get_day(Date d) {
-    return d->day; 
+    return d->day;
 }
 
 int get_month(Date d) {
@@ -63,8 +64,21 @@ int get_month(Date d) {
 int get_year(Date d) {
     return d->year;
 }
+/*
+Date parse_date(Date d, char* timestamp){
 
+    int day, month, year;
+    day = atoi(strtok(timestamp, "/"));
+    month = atoi(strtok(timestamp+3, "/"));
+    year = atoi(strtok(timestamp+6, "/"));
+
+    d->day = day;
+    d->month = month;
+    d->year = year;
+
+    return d;
+}
+*/
 void free_date(Date d) {
     free(d);
 }
-
