@@ -12,7 +12,7 @@ long getId(Resposta);
 
 long getParentID(Resposta);
 
-//DateTime getTime(Resposta);
+Date getTime(Resposta);
 
 int getScore(Resposta);
 
@@ -24,10 +24,8 @@ int getRate(Resposta);
 
 int compareRespostas(Resposta, Resposta);
 
-
 Resposta copyResposta(Resposta);
 
 void freeResposta(Resposta);
 
 #endif
-

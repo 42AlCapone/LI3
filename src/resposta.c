@@ -2,7 +2,6 @@
 #include <string.h>
 #include "resposta.h"
 //#include "datetime.c"
-//#include "pergunta.h"
 #include <glib.h>
 #include "../include/date.h"
 
@@ -38,11 +37,11 @@ long getId(Resposta r){
 long getParentID(Resposta r){
 	return r->parentID;
 }
-/*
-DateTime getTime(Resposta r){
+
+Date getTime(Resposta r){
 	return r->creationTime;
 }
-*/
+
 
 int getScore(Resposta r){
 	return r->score;
@@ -67,7 +66,8 @@ int compareRespostas(Resposta p1, Resposta p2){
     - return 1 if date 2 happened before date 1;
     - return 0 if they are the same;
   */
-  return compare_dates(p1->creationTime, p2->creationTime);
+  int i = compare_dates(p1->creationTime, p2->creationTime);
+  return i;
 }
 
 Resposta copyResposta(Resposta r){
@@ -83,21 +83,3 @@ void freeResposta(Resposta r){
   free_date(r->creationTime);
   free(r);
 }
-/*
-int main(){
-
-	Resposta r1 = initResposta(1, 1, 9, 1, 1994, 21, 35, 100, 1, 10, 5);
-	Resposta r2 = initResposta(2, 1, 6, 1, 1990, 12, 20, 43, 2, 6, 1);
-	Resposta r3 = copyResposta(r1);
-
-	printf("compareRespostas = %d\n", compareRespostas(r1, r2));
-	printf("compareRespostas = %d\n", compareRespostas(r1, r3));
-	printf("compareRespostas = %d\n", compareRespostas(r2, r1));
-
-	freeResposta(r1);
-	freeResposta(r2);
-	freeResposta(r3);
-
-	return 0;
-}
-*/
