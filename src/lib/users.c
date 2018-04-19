@@ -3,6 +3,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <string.h>
+#include "../../include/common.h"
 
 struct user{
 	long id;
@@ -18,7 +19,7 @@ User initUser(long id, int rep, char* name, int views, int voteDif, int nrPosts)
 	User u = malloc(sizeof(struct user));
 	u-> id = id;
 	u-> rep = rep;
-	u-> name = strdup(name);
+	u-> name = mystrdup(name);
 	u-> views = views;
 	u-> voteDif= voteDif;
 	u-> nrPosts = nrPosts;

@@ -55,6 +55,7 @@ void parsePost(GHashTable* structPosts , GHashTable* structUsers ,char *docname)
 		    	incrNrPosts(u);
 
 			}else{
+				if((!xmlStrcmp(xmlGetProp(cur ,(const xmlChar*) "PostTypeId"), (const xmlChar *) "2"))){
 				id = atol((char*)xmlGetProp(cur,(const xmlChar *) "Id"));
 				pid = atol((char*)xmlGetProp(cur,(const xmlChar *) "ParentId"));
 				date = (char*)xmlGetProp(cur,(const xmlChar *) "CreationDate");
@@ -76,16 +77,18 @@ void parsePost(GHashTable* structPosts , GHashTable* structUsers ,char *docname)
 		    	GTree* respostas = getTree(p);
 		    	Date d = getDate(r);
 		    	g_tree_insert(respostas, d, r);
+		    	//printf("Resposta Inserida!\n");
 		    	}
 
-		    	//tResposta( t, r);
+		    	
 		    	u = g_hash_table_lookup(structUsers, GSIZE_TO_POINTER(oid));
 		    	incrNrPosts(u);
-
+		    	}
 			}	
 		}
 	cur = cur -> next;
-	}	
+	}
+	printf("Posts inseridos\n");	
 }
 
 

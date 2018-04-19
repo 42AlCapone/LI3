@@ -4,6 +4,7 @@
 #include "../../include/pergunta.h"
 #include "../../include/resposta.h"
 #include "../../include/date.h"
+#include "../../include/common.h"
 
 struct pergunta{
   long id;
@@ -31,9 +32,9 @@ Pergunta initPergunta(long mainID, char* date, int scr, long userID, char* ttl, 
 
   Pergunta temp = malloc(sizeof(struct pergunta));
 
-  temp->title = strdup(ttl);
+  temp->title = mystrdup(ttl);
 
-  temp->tags = strdup(tgs);
+  temp->tags = mystrdup(tgs);
   temp->creationTime = stringToDate(date);
 
   temp->id = mainID;
@@ -58,6 +59,12 @@ void insertResposta(Pergunta p, Resposta r){
 GTree* getTree(Pergunta p){
   GTree* tree = (GTree*) p->resp;
   return tree;
+}
+
+Resposta getResp(Pergunta p, Date d){
+  GTree* t = getTree(p);
+  Resposta r = g_tree_lookup(t,d);
+  return r;
 }
 
 long getIdp(Pergunta p){
@@ -113,6 +120,7 @@ int comparePerguntas(Pergunta p1, Pergunta p2){
 
 
 void freePergunta(Pergunta p1){
+    //g_tree_foreach(p1->resp,(*GTraverseFunc) freeResposta(p1),getResp(p1));
     g_tree_destroy(p1->resp);
     free(p1->title);
     free(p1->tags);

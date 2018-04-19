@@ -14,7 +14,10 @@ void insertResposta(Pergunta p, Resposta r);
 
 GTree* getTree(Pergunta p);
 
+Resposta getResp(Pergunta p, Date d);
+
 long getIdp(Pergunta p);
+
 
 
 //DateTime getCreationDate(Pergunta p);

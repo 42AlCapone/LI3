@@ -5,6 +5,10 @@
 #include "../../include/parser.h"
 #include <string.h>
 #include "../../include/users.h"
+#include "../../include/pergunta.h"
+#include "../../include/resposta.h"
+#include "../../include/date.h"
+#include "../../include/common.h"
 
 
 struct TCD_community{
@@ -37,11 +41,20 @@ TAD_community load(TAD_community com, char* dump_path){
 	parseUser(com-> users, userFile);
 	parsePost(com-> posts,com-> users, postFile);
 	
+	return com;
+	
+	/*
+	char* date = mystrdup("2010-09-13T19:22:39.290");
+	Pergunta p = g_hash_table_lookup(com->posts,GSIZE_TO_POINTER(1));
+	Date d = stringToDate(date);
+	Resposta r = getResp(p,d);
+	printf("%d\n",getScore(r));
+	*/
+	/*
 	User u = g_hash_table_lookup(com->users,GSIZE_TO_POINTER(21));
 	char *nome = getName(u);
 	printf("%s\n",nome); 
-	
-	return com;
+	*/
 }
 
 
