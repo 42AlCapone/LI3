@@ -2,7 +2,7 @@
 #define _RESPOSTA_H_
 
 //#include"datetime.h"
-#include "../include/date.h"
+#include "date.h"
 
 typedef struct resposta *Resposta;
 

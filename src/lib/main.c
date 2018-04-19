@@ -1,5 +1,5 @@
 //#include <date.h>
-#include "../include/interface.h"
+#include "../../include/interface.h"
 
 
 
@@ -22,4 +22,3 @@ int main(int argc, char **argv){
   printf("Dia: %i\n", get_day(d));
   return 0;*/
 } 
-

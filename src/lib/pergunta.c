@@ -1,9 +1,9 @@
 #include<stdlib.h>
 #include<string.h>
 #include<glib.h>
-#include "pergunta.h"
-#include "resposta.h"
-#include "../include/date.h"
+#include "../../include/pergunta.h"
+#include "../../include/resposta.h"
+#include "../../include/date.h"
 
 struct pergunta{
   long id;

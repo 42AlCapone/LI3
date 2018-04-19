@@ -1,10 +1,10 @@
-#include "../include/interface.h"
+#include "../../include/interface.h"
 #include <glib.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "parser.h"
+#include "../../include/parser.h"
 #include <string.h>
-#include "users.h"
+#include "../../include/users.h"
 
 
 struct TCD_community{

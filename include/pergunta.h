@@ -1,6 +1,6 @@
 #ifndef _PERGUNTA_H_
 #define _PERGUNTA_H_
-#include "../include/date.h"
+#include "date.h"
 #include "resposta.h"
 
 typedef struct pergunta *Pergunta;

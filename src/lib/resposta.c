@@ -1,10 +1,10 @@
 #include <stdlib.h>
 #include <string.h>
-#include "resposta.h"
+#include "../../include/resposta.h"
 //#include "datetime.c"
 //#include "pergunta.h"
 #include <glib.h>
-#include "../include/date.h"
+#include "../../include/date.h"
 
 struct resposta{
   long id;

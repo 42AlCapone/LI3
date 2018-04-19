@@ -1,13 +1,13 @@
-#include "parser.h"
-#include "users.h"
-#include "resposta.h"
-#include "pergunta.h"
-#include "../include/date.h"
+#include "../../include/parser.h"
+#include "../../include/users.h"
+#include "../../include/resposta.h"
+#include "../../include/pergunta.h"
+#include "../../include/date.h"
 #include <libxml/parser.h>
 #include <libxml/xmlmemory.h>
 #include <stdio.h>
 #include <glib.h>
-#include "../include/interface.h"
+#include "../../include/interface.h"
 
 
 void parsePost(GHashTable* structPosts , GHashTable* structUsers ,char *docname){
