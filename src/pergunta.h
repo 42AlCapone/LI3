@@ -1,6 +1,5 @@
 #ifndef _PERGUNTA_H_
 #define _PERGUNTA_H_
-//#include "datetime.h"
 #include "../include/date.h"
 #include "resposta.h"
 
@@ -12,6 +11,8 @@ Pergunta initPergunta(long mainID, char* date, int scr, long userID, char* ttl, 
 
 
 void insertResposta(Pergunta p, Resposta r);
+
+GTree* getTree(Pergunta p);
 
 long getIdp(Pergunta p);
 

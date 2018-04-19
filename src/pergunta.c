@@ -49,9 +49,16 @@ Pergunta initPergunta(long mainID, char* date, int scr, long userID, char* ttl, 
 }
 
 void insertResposta(Pergunta p, Resposta r){
-  g_tree_insert(p->resp, getDate(r), r);
+  Date d = getDate(r);
+  GTree* t= getTree(p);
+  g_tree_insert(t,d, r);
+
 }
 
+GTree* getTree(Pergunta p){
+  GTree* tree = (GTree*) p->resp;
+  return tree;
+}
 
 long getIdp(Pergunta p){
   return p-> id;

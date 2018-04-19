@@ -29,15 +29,15 @@ void parsePost(GHashTable* structPosts , GHashTable* structUsers ,char *docname)
 	User u;
 	while(cur != NULL){
 		if ((!xmlStrcmp(cur->name, (const xmlChar *)"row"))) {
-			if((!xmlStrcmp(xmlGetProp(cur , "PostTypeId"), (const xmlChar *) "1"))){
-				id = atol((char*)xmlGetProp(cur, "Id"));
-				date = (char*)xmlGetProp(cur, "CreationDate");
-				score = atoi((char*)xmlGetProp(cur, "Score"));
-				oid = atol((char*)xmlGetProp(cur, "OwnerUserId"));
-				title = (char*)xmlGetProp(cur, "Title");
-				tags = (char*)xmlGetProp(cur, "Tags");
+			if((!xmlStrcmp(xmlGetProp(cur ,(const xmlChar*) "PostTypeId"), (const xmlChar *) "1"))){
+				id = atol((char*)xmlGetProp(cur,(const xmlChar*) "Id"));
+				date = (char*)xmlGetProp(cur,(const xmlChar*) "CreationDate");
+				score = atoi((char*)xmlGetProp(cur,(const xmlChar*) "Score"));
+				oid = atol((char*)xmlGetProp(cur,(const xmlChar*) "OwnerUserId"));
+				title = (char*)xmlGetProp(cur,(const xmlChar*) "Title");
+				tags = (char*)xmlGetProp(cur,(const xmlChar*) "Tags");
 				//aCount = atoi((char*)xmlGetProp(cur, "AnswerCount"));
-				cCount = atoi((char*)xmlGetProp(cur, "CommentCount"));
+				cCount = atoi((char*)xmlGetProp(cur,(const xmlChar*) "CommentCount"));
 				//fCount = atoi((char*)xmlGetProp(cur, "FavoriteCount"));
 				
 			/*	printf("--------Question----------\n");
@@ -55,12 +55,12 @@ void parsePost(GHashTable* structPosts , GHashTable* structUsers ,char *docname)
 		    	incrNrPosts(u);
 
 			}else{
-				id = atol((char*)xmlGetProp(cur, "Id"));
-				pid = atol((char*)xmlGetProp(cur, "ParentId"));
-				date = (char*)xmlGetProp(cur, "CreationDate");
-				score = atoi((char*)xmlGetProp(cur, "Score"));
-				oid = atol((char*)xmlGetProp(cur, "OwnerUserId"));
-				cCount = atoi((char*)xmlGetProp(cur, "CommentCount"));
+				id = atol((char*)xmlGetProp(cur,(const xmlChar *) "Id"));
+				pid = atol((char*)xmlGetProp(cur,(const xmlChar *) "ParentId"));
+				date = (char*)xmlGetProp(cur,(const xmlChar *) "CreationDate");
+				score = atoi((char*)xmlGetProp(cur,(const xmlChar *) "Score"));
+				oid = atol((char*)xmlGetProp(cur,(const xmlChar *) "OwnerUserId"));
+				cCount = atoi((char*)xmlGetProp(cur,(const xmlChar *) "CommentCount"));
 			/*	printf("---------Response--------\n");
 				printf("ID: %ld\n", id);
 				printf("ParentId: %ld\n", pid);
@@ -71,7 +71,14 @@ void parsePost(GHashTable* structPosts , GHashTable* structUsers ,char *docname)
 				
 				Resposta r = initResposta(id, pid, date, score, oid, cCount, 0);
 		    	Pergunta p = g_hash_table_lookup(structPosts,GSIZE_TO_POINTER(pid));
-		    	insertResposta( p, r);
+		    	
+		    	if(p!=NULL){
+		    	GTree* respostas = getTree(p);
+		    	Date d = getDate(r);
+		    	g_tree_insert(respostas, d, r);
+		    	}
+
+		    	//tResposta( t, r);
 		    	u = g_hash_table_lookup(structUsers, GSIZE_TO_POINTER(oid));
 		    	incrNrPosts(u);
 
@@ -101,14 +108,14 @@ void parseUser(GHashTable* structUsers,char *docname){
 	cur = cur -> xmlChildrenNode;
 	while(cur != NULL){
 		if ((!xmlStrcmp(cur->name, (const xmlChar *)"row"))) {
-		   	id = atol((char*) xmlGetProp(cur, "Id"));
-		   	rep = atoi((char*) xmlGetProp(cur, "Reputation"));
-		   	name = (char*) xmlGetProp(cur , "DisplayName");
-		   	views = atoi((char*) xmlGetProp(cur, "Views"));
-		   	up = atoi((char*) xmlGetProp(cur, "UpVotes"));
-		   	down = atoi((char*) xmlGetProp(cur, "DownVotes"));
+		   	id = atol((char*) xmlGetProp(cur,(const xmlChar*) "Id"));
+		   	rep = atoi((char*) xmlGetProp(cur,(const xmlChar*) "Reputation"));
+		   	name = (char*) xmlGetProp(cur ,(const xmlChar*) "DisplayName");
+		   	views = atoi((char*) xmlGetProp(cur,(const xmlChar *) "Views"));
+		   	up = atoi((char*) xmlGetProp(cur,(const xmlChar *) "UpVotes"));
+		   	down = atoi((char*) xmlGetProp(cur,(const xmlChar *) "DownVotes"));
 		   	votDif = up - down;
-		   	User u = initUser(id, rep, name, views, votDif,0);
+		   	User u = initUser(id, rep, name, views, votDif,nrPosts);
 		    g_hash_table_insert(structUsers, GSIZE_TO_POINTER(id), u);
 	    }
 	    cur = cur->next;
