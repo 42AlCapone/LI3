@@ -20,7 +20,7 @@ struct pergunta{
 
 /*
 Pergunta insertResposta(Pergunta p1, Resposta r1){
-    p1->resp = g_tree_insert(p1->resp, GSIZE_TO_POINTER(r1->creationDate), r1);
+    p1->resp = g_tree_insert(p1->resp, (gpointer)r1->creationDate, r1);
     return p1;
 }
 */
