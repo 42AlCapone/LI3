@@ -85,8 +85,8 @@ long getOwnerUserIDp(Pergunta p){
   return p-> ownerUserID;
 }
 
-void getTitle(Pergunta p, char* new){
-  strcpy(new , p-> title);
+char* getTitle(Pergunta p){
+  return p-> title;
 }
 
 void getTags(Pergunta p, char* new){

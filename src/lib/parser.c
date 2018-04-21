@@ -10,7 +10,7 @@
 #include "../../include/interface.h"
 
 
-void parsePost(GHashTable* structPosts , GHashTable* structUsers ,char *docname){
+void parsePost(GHashTable* structPerguntas , GHashTable* structRespostas, GHashTable* structUsers ,char *docname){
 	xmlDocPtr doc = xmlParseFile(docname);
 	if (doc == NULL) {
 		printf("Document not parsed. \n");
@@ -50,7 +50,7 @@ void parsePost(GHashTable* structPosts , GHashTable* structUsers ,char *docname)
 				printf("AnswerCount: %d\n", aCount); */
 
 				Pergunta p = initPergunta(id, date, score, oid, title, tags, cCount);
-		    	g_hash_table_insert(structPosts, GSIZE_TO_POINTER(id), p);
+		    	g_hash_table_insert(structPerguntas, GSIZE_TO_POINTER(id), p);
 		    	u = g_hash_table_lookup(structUsers, GSIZE_TO_POINTER(oid));
 		    	incrNrPosts(u);
 
@@ -71,7 +71,8 @@ void parsePost(GHashTable* structPosts , GHashTable* structUsers ,char *docname)
 				printf("CommentCount: %d\n", cCount); */
 				
 				Resposta r = initResposta(id, pid, date, score, oid, cCount, 0);
-		    	Pergunta p = g_hash_table_lookup(structPosts,GSIZE_TO_POINTER(pid));
+		    	Pergunta p = g_hash_table_lookup(structPerguntas,GSIZE_TO_POINTER(pid));
+		    	g_hash_table_insert(structRespostas, GSIZE_TO_POINTER(id),r);
 		    	
 		    	if(p!=NULL){
 		    	GTree* respostas = getTree(p);

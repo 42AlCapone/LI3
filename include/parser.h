@@ -6,6 +6,6 @@
 void parseUser(GHashTable* structUsers,char *docname);
 
 /*Parsa o dump do tipo Posts.xml e insere os dados extraidos na estrutura */
-void parsePost(GHashTable* structPosts, GHashTable* structUsers, char *docname);
+void parsePost(GHashTable* structPerguntas, GHashTable* structRespostas ,GHashTable* structUsers, char *docname);
 
 #endif

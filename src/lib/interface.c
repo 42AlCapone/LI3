@@ -12,14 +12,16 @@
 
 
 struct TCD_community{
-    GHashTable* posts;
+    GHashTable* perguntas;
+    GHashTable* respostas;
     GHashTable* users;
 };
 
 
 TAD_community init(){
 	TAD_community comunidade = malloc(sizeof(struct TCD_community));
-	comunidade->posts = g_hash_table_new(g_direct_hash, g_direct_equal);
+	comunidade->perguntas = g_hash_table_new(g_direct_hash, g_direct_equal);
+	comunidade->respostas = g_hash_table_new(g_direct_hash, g_direct_equal);
 	comunidade->users = g_hash_table_new(g_direct_hash, g_direct_equal);
 	return comunidade;
 }
@@ -39,7 +41,7 @@ TAD_community load(TAD_community com, char* dump_path){
 	userFile = strcat(userFile, "/Users.xml");
 
 	parseUser(com-> users, userFile);
-	parsePost(com-> posts,com-> users, postFile);
+	parsePost(com-> perguntas, com-> respostas, com-> users, postFile);
 	
 	return com;
 	
@@ -58,10 +60,36 @@ TAD_community load(TAD_community com, char* dump_path){
 }
 
 
+
+STR_pair info_from_post(TAD_community com, long id){
+	char *title , *name;
+	STR_pair pair = NULL;
+	Pergunta p = g_hash_table_lookup(com->perguntas, GSIZE_TO_POINTER(id));
+	if(p != NULL){
+		User u = g_hash_table_lookup (com->users, GSIZE_TO_POINTER(getOwnerUserIDp(p)));
+		title = getTitle( p );
+		name = getName( u );
+		printf("Title:%s\n", title);
+		printf("User Name: %s\n", name);
+		pair = create_str_pair( title , name );
+	}else{
+		Resposta r = g_hash_table_lookup(com->respostas, GSIZE_TO_POINTER(id));
+		Pergunta p = g_hash_table_lookup(com->perguntas, GSIZE_TO_POINTER(getParentID(r)));
+		User u = g_hash_table_lookup(com->users, GSIZE_TO_POINTER(getOwnerUserID(r)));
+		title = getTitle( p );
+		name = getName( u );
+		printf("Title: %s\n", title );
+		printf("User Name: %s\n", name );
+		pair = create_str_pair( title, name );
+	}
+	return pair;
+}
+
 TAD_community clean(TAD_community com){
 	if(!com)
 		return com;
-	g_hash_table_destroy(com-> posts);
+	g_hash_table_destroy(com-> perguntas);
+	g_hash_table_destroy(com-> respostas);
 	g_hash_table_destroy(com-> users);
 	free(com);
 	return NULL;

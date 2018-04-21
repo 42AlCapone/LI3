@@ -29,7 +29,7 @@ int getScorep(Pergunta p);
 long getOwnerUserIDp(Pergunta p);
 
 
-void getTitle(Pergunta p, char* new);
+char* getTitle(Pergunta p);
 
 
 void getTags(Pergunta p, char* new);
