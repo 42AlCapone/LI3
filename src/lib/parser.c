@@ -9,6 +9,7 @@
 #include <glib.h>
 #include "../../include/interface.h"
 
+static float calcRate(GHashTable* structUsers, long oid, int score, int cCount);
 
 void parsePost(GHashTable* structPerguntas , GHashTable* structRespostas, GHashTable* structUsers ,char *docname){
 	xmlDocPtr doc = xmlParseFile(docname);
@@ -21,7 +22,8 @@ void parsePost(GHashTable* structPerguntas , GHashTable* structRespostas, GHashT
 		xmlFreeDoc(doc);
 	}
 
-	int score, cCount; //aCount, cCount, fCount;
+	int score, cCount;
+	float rate; 
 	long id , pid , oid;
 	char *title, *tags, *date;
 	
@@ -62,6 +64,8 @@ void parsePost(GHashTable* structPerguntas , GHashTable* structRespostas, GHashT
 				score = atoi((char*)xmlGetProp(cur,(const xmlChar *) "Score"));
 				oid = atol((char*)xmlGetProp(cur,(const xmlChar *) "OwnerUserId"));
 				cCount = atoi((char*)xmlGetProp(cur,(const xmlChar *) "CommentCount"));
+				rate = calcRate(structUsers,oid,score,cCount);
+
 			/*	printf("---------Response--------\n");
 				printf("ID: %ld\n", id);
 				printf("ParentId: %ld\n", pid);
@@ -70,7 +74,7 @@ void parsePost(GHashTable* structPerguntas , GHashTable* structRespostas, GHashT
 				printf("OwnerUserId: %ld\n", oid);
 				printf("CommentCount: %d\n", cCount); */
 				
-				Resposta r = initResposta(id, pid, date, score, oid, cCount, 0);
+				Resposta r = initResposta(id, pid, date, score, oid, cCount, rate);
 		    	Pergunta p = g_hash_table_lookup(structPerguntas,GSIZE_TO_POINTER(pid));
 		    	g_hash_table_insert(structRespostas, GSIZE_TO_POINTER(id),r);
 		    	
@@ -90,6 +94,12 @@ void parsePost(GHashTable* structPerguntas , GHashTable* structRespostas, GHashT
 	cur = cur -> next;
 	}
 	printf("Posts inseridos\n");	
+}
+
+float calcRate(GHashTable* structUsers, long oid, int score, int cCount){
+  User u = g_hash_table_lookup(structUsers,GSIZE_TO_POINTER(oid));
+  int repUser = getRep(u);
+  return (float) (score*0.45) + (repUser*25) + (score*0.2) + (cCount*0.1);
 }
 
 

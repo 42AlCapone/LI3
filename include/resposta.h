@@ -3,10 +3,13 @@
 
 //#include"datetime.h"
 #include "date.h"
+#include <stdio.h>
 
 typedef struct resposta *Resposta;
 
-Resposta initResposta(long mainID, long parentID, char* date, int scr, long userID, int cmmtcount, int rt);
+Resposta initResposta(long mainID, long parentID, char* date, int scr, long userID, int cmmtcount, float rt);
+
+Resposta genResposta();
 
 long getIdr(Resposta r);
 
@@ -20,7 +23,11 @@ long getOwnerUserID(Resposta r);
 
 int getCommentCount(Resposta r);
 
-int getRate(Resposta r);
+float getRate(Resposta r);
+
+void setId(long id, Resposta r);
+
+void setRate(float rate, Resposta r);
 
 int compareRespostas(Resposta r1, Resposta r2);
 

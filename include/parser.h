@@ -8,4 +8,5 @@ void parseUser(GHashTable* structUsers,char *docname);
 /*Parsa o dump do tipo Posts.xml e insere os dados extraidos na estrutura */
 void parsePost(GHashTable* structPerguntas, GHashTable* structRespostas ,GHashTable* structUsers, char *docname);
 
+//int calcRate(GHashTable* structUsers, long oid, int score, int cCount);
 #endif

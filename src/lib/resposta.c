@@ -5,6 +5,9 @@
 //#include "pergunta.h"
 #include <glib.h>
 #include "../../include/date.h"
+#include "../../include/users.h"
+#include "../../include/interface.h"
+#include <stdio.h>
 
 struct resposta{
   long id;
@@ -13,10 +16,25 @@ struct resposta{
   int score;
   long ownerUserID;
   int commentCount;
-  int rate;
+  float rate;
 };
 
-Resposta initResposta(long mainID, long parentID, char* date, int scr, long userID, int cmmtcount, int rt){
+Resposta genResposta(){
+  Resposta temp = (Resposta) malloc(sizeof(struct resposta));
+
+  temp->creationTime = NULL;
+
+  temp->id = 0;
+  temp->parentID = 0;
+  temp->score = 0;
+  temp->ownerUserID = 0;
+  temp->commentCount = 0;
+  temp->rate = 0;
+
+  return temp;
+}
+
+Resposta initResposta(long mainID, long parentID, char* date, int scr, long userID, int cmmtcount, float rt){
   Resposta temp = malloc(sizeof(struct resposta));
 
   temp->creationTime = stringToDate(date);
@@ -30,6 +48,8 @@ Resposta initResposta(long mainID, long parentID, char* date, int scr, long user
 
   return temp;
 }
+
+
 
 long getIdr(Resposta r){
 	return r->id;
@@ -56,8 +76,15 @@ int getCommentCount(Resposta r){
 	return r->commentCount;
 }
 
-int getRate(Resposta r){
+float getRate(Resposta r){
 	return r->rate;
+}
+
+void setId(long id,Resposta r){
+  r->id = id; 
+}
+void setRate(float rate, Resposta r){
+  r->rate = rate;
 }
 
 int compareRespostas(Resposta r1, Resposta r2){

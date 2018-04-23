@@ -18,6 +18,7 @@ struct TCD_community{
 };
 
 
+
 TAD_community init(){
 	TAD_community comunidade = malloc(sizeof(struct TCD_community));
 	comunidade->perguntas = g_hash_table_new(g_direct_hash, g_direct_equal);
@@ -26,7 +27,7 @@ TAD_community init(){
 	return comunidade;
 }
 
-
+static gboolean iterateRate(Date d, Resposta r, Resposta best);
 
 TAD_community load(TAD_community com, char* dump_path){
 	int l = strlen(dump_path);
@@ -37,8 +38,8 @@ TAD_community load(TAD_community com, char* dump_path){
 	postFile = strcpy(postFile,dump_path);
 	userFile = strcpy(userFile, dump_path);
 
-	postFile = strcat(postFile, "/Posts.xml");
-	userFile = strcat(userFile, "/Users.xml");
+	postFile = strcat(postFile, "Posts.xml");
+	userFile = strcat(userFile, "Users.xml");
 
 	parseUser(com-> users, userFile);
 	parsePost(com-> perguntas, com-> respostas, com-> users, postFile);
@@ -85,6 +86,27 @@ STR_pair info_from_post(TAD_community com, long id){
 	return pair;
 }
 
+long better_answer(TAD_community com, long id){
+	Pergunta p = g_hash_table_lookup(com->perguntas, GSIZE_TO_POINTER(id));
+	GTree* t = getTree(p);
+	Resposta r = genResposta();
+	g_tree_foreach(t,(GTraverseFunc)iterateRate,r);
+	long idResp = getIdr(r);
+	return idResp;
+}
+
+gboolean iterateRate(Date d, Resposta r, Resposta best){
+	float rateR, rateBest;
+	rateR = getRate(r);
+	rateBest = getRate(best);
+	if (rateR>rateBest){
+		setId(getIdr(r),best);
+		setRate(rateR,best);	
+	}
+	return FALSE;
+}
+
+
 TAD_community clean(TAD_community com){
 	if(!com)
 		return com;
@@ -92,7 +114,7 @@ TAD_community clean(TAD_community com){
 	g_hash_table_destroy(com-> respostas);
 	g_hash_table_destroy(com-> users);
 	free(com);
-	return NULL;
+	return  NULL;
 
 }
 
