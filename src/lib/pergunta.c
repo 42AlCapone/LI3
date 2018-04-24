@@ -62,6 +62,10 @@ GTree* getTree(Pergunta p){
   return tree;
 }
 
+Date getCreationDate(Pergunta p){
+	return p->creationDate;
+}
+
 Resposta getResp(Pergunta p, Date d){
   GTree* t = getTree(p);
   Resposta r = g_tree_lookup(t,d);
@@ -119,6 +123,19 @@ int comparePerguntas(Pergunta p1, Pergunta p2){
   return i;
 }
 
+
+int pergunta_entre_datas(Pergunta p, Date b, Date e){
+	// 1 = TRUE && 0 = FALSE
+	if(compare_dates(p->creationTime, b) == 1 && compare_dates(p->creationDate, e) == -1){
+		return 1;
+	}
+
+	else if(compare_dates(p->creationTime, b) == 0 || compare_dates(p->creationTime, e) == 0){
+		return 1;
+	}
+
+	return 0;
+}
 
 void freePergunta(Pergunta p1){
     //g_tree_foreach(p1->resp,(GTraverseFunc) freeResposta);

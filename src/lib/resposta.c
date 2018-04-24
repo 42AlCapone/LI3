@@ -103,7 +103,18 @@ Resposta copyResposta(Resposta r){
   return a;
 }*/
 
+int resposta_entre_datas(Resposta r, Date b, Date e){
+	// 1 = TRUE && 0 = FALSE
+	if(compare_dates(r->creationTime, b) == 1 && compare_dates(r->creationDate, e) == -1){
+		return 1;
+	}
 
+	else if(compare_dates(r->creationTime, b) == 0 || compare_dates(r->creationTime, e) == 0){
+		return 1;
+	}
+
+	return 0;
+}
 
 
 void freeResposta(Resposta r){
