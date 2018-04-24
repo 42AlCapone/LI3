@@ -45,7 +45,7 @@ Pergunta initPergunta(long mainID, char* date, int scr, long userID, char* ttl, 
   temp->commentCount = cCount;
 
   temp->resp = g_tree_new((GCompareFunc)compare_dates);
-  //temp->resp = g_tree_new_full((GCompareDataFunc)compare_dates, NULL, (GDestroyNotify)free_dates, (GDestroyNotify)free_resposta);
+  //temp->resp = g_tree_new_full((GCompareDataFunc)compare_dates, NULL, (GDestroyNotify)free_date, (GDestroyNotify)freeResposta);
 
   return temp;
 }

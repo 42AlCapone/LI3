@@ -22,13 +22,14 @@ struct TCD_community{
 TAD_community init(){
 	TAD_community comunidade = malloc(sizeof(struct TCD_community));
 	comunidade->perguntas = g_hash_table_new(g_direct_hash, g_direct_equal);
-	//comunidade->perguntas = g_hashtable_new_full(g_direct_hash, g_direct_equal, (GDestroyNotify)free, (GDestroyNotify)free_pergunta);
+	//comunidade->perguntas = g_hashtable_new_full(g_direct_hash, g_direct_equal, (GDestroyNotify)free, (GDestroyNotify)freePergunta);
 	//função free para fazer free da key (não sei se é necessário) função sameID verifica se dois ID's são iguais
 
 	comunidade->respostas = g_hash_table_new(g_direct_hash, g_direct_equal);
-	//comunidade->respostas = g_hastable_new_full(g_direct_hash, g_direct_equal, (GDestroyNotify)free, (GDestroyNotify)free_resposta);
+	//comunidade->respostas = g_hastable_new_full(g_direct_hash, g_direct_equal, (GDestroyNotify)free, (GDestroyNotify)freeResposta);
 
 	comunidade->users = g_hash_table_new(g_direct_hash, g_direct_equal);
+	//comunidade->users = g_hashtable_new_full(g_direct_hash, g_direct_equal, (GDestroyNotify)free, (GDestroyNotify)free_user);
 	return comunidade;
 }
 
