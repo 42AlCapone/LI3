@@ -121,7 +121,7 @@ int comparePerguntas(Pergunta p1, Pergunta p2){
 
 
 void freePergunta(Pergunta p1){
-    //g_tree_foreach(p1->resp,(*GTraverseFunc) freeResposta(p1),getResp(p1));
+    //g_tree_foreach(p1->resp,(GTraverseFunc) freeResposta);
     g_tree_destroy(p1->resp);
     free(p1->title);
     free(p1->tags);
