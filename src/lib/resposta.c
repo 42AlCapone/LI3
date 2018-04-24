@@ -103,13 +103,13 @@ Resposta copyResposta(Resposta r){
   return a;
 }*/
 
-int resposta_entre_datas(Resposta r, Date b, Date e){
+int resposta_entre_datas(Resposta r, DateTime b, DateTime e){
 	// 1 = TRUE && 0 = FALSE
-	if(compare_dates(r->creationTime, b) == 1 && compare_dates(r->creationDate, e) == -1){
+	if(compareDateTime(r->creationTime, b) == 1 && compareDateTime(r->creationTime, e) == -1){
 		return 1;
 	}
 
-	else if(compare_dates(r->creationTime, b) == 0 || compare_dates(r->creationTime, e) == 0){
+	else if(compareDateTime(r->creationTime, b) == 0 || compareDateTime(r->creationTime, e) == 0){
 		return 1;
 	}
 

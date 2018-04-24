@@ -63,9 +63,10 @@ GTree* getTree(Pergunta p){
   return tree;
 }
 
+/*
 Date getCreationDate(Pergunta p){
 	return p->creationDate;
-}
+}*/
 
 Resposta getResp(Pergunta p, Date d){
   GTree* t = getTree(p);
@@ -125,13 +126,13 @@ int comparePerguntas(Pergunta p1, Pergunta p2){
 }
 
 
-int pergunta_entre_datas(Pergunta p, Date b, Date e){
+int pergunta_entre_datas(Pergunta p, DateTime b, DateTime e){
 	// 1 = TRUE && 0 = FALSE
-	if(compare_dates(p->creationTime, b) == 1 && compare_dates(p->creationDate, e) == -1){
+	if(compareDateTime(p->creationTime, b) == 1 && compareDateTime(p->creationTime, e) == -1){
 		return 1;
 	}
 
-	else if(compare_dates(p->creationTime, b) == 0 || compare_dates(p->creationTime, e) == 0){
+	else if(compareDateTime(p->creationTime, b) == 0 || compareDateTime(p->creationTime, e) == 0){
 		return 1;
 	}
 

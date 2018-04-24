@@ -33,7 +33,7 @@ int compareRespostas(Resposta r1, Resposta r2);
 
 Resposta copyResposta(Resposta r);
 
-int resposta_entre_datas(Resposta r, Date b, Date e);
+int resposta_entre_datas(Resposta r, DateTime b, DateTime e);
 
 void freeResposta(Resposta r);
 

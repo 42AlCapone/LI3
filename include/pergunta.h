@@ -45,7 +45,7 @@ int getcommentCount(Pergunta p);
 
 int comparePerguntas(Pergunta p1, Pergunta p2);
 
-int pergunta_entre_datas(Pergunta p, Date b, Date e);
+int pergunta_entre_datas(Pergunta p, DateTime b, DateTime e);
 
 //Pergunta copyPergunta(Pergunta p);
 
