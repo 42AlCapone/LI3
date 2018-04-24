@@ -3,12 +3,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "../../include/interface.h"
-
+#include "../../include/datetime.h"
 
 
 
 
 int main(int argc, char **argv){
+  	
   	long id =1, best;
  	TAD_community com = init();
  	load(com,argv[1]);
@@ -16,10 +17,13 @@ int main(int argc, char **argv){
  	best = better_answer( com , id );
  	printf("%ld\n", best);
  	free_str_pair(r);
+	
+  	clean(com); 
+  
+  //DateTime a = 
+  //printf("%d\n",getYear(a));
+  //freeDateTime(a);
 
-  	clean(com);
-  //parseUser("Users.xml");
-  //parsePost("Posts.xml");
   return 0;
 
 

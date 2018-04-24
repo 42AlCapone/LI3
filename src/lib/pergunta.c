@@ -3,12 +3,13 @@
 #include<glib.h>
 #include "../../include/pergunta.h"
 #include "../../include/resposta.h"
-#include "../../include/date.h"
+//#include "../../include/date.h"
 #include "../../include/common.h"
+#include "../../include/datetime.h"
 
 struct pergunta{
   long id;
-  Date creationTime;
+  DateTime creationTime;
   int score;
   long ownerUserID;
   char* title;
@@ -35,7 +36,7 @@ Pergunta initPergunta(long mainID, char* date, int scr, long userID, char* ttl, 
   temp->title = mystrdup(ttl);
 
   temp->tags = mystrdup(tgs);
-  temp->creationTime = stringToDate(date);
+  temp->creationTime = stringToDateT(date);
 
   temp->id = mainID;
   temp->score = scr;
@@ -51,7 +52,7 @@ Pergunta initPergunta(long mainID, char* date, int scr, long userID, char* ttl, 
 }
 
 void insertResposta(Pergunta p, Resposta r){
-  Date d = getDate(r);
+  DateTime d = getDateT(r);
   GTree* t= getTree(p);
   g_tree_insert(t,d, r);
 
@@ -73,7 +74,7 @@ long getIdp(Pergunta p){
 }
 
 
-Date getDatep(Pergunta p){
+DateTime getDatep(Pergunta p){
   return p-> creationTime;
 }
 
@@ -115,7 +116,7 @@ int comparePerguntas(Pergunta p1, Pergunta p2){
     - return 1 if date 2 happened before date 1;
     - return 0 if they are the same;
   */
-  int i = compare_dates(p1->creationTime, p2->creationTime);
+  int i = compareDateTime(p1->creationTime, p2->creationTime);
   return i;
 }
 
@@ -125,6 +126,6 @@ void freePergunta(Pergunta p1){
     g_tree_destroy(p1->resp);
     free(p1->title);
     free(p1->tags);
-    free_date(p1->creationTime);
+    freeDateTime(p1->creationTime);
     free(p1);
 }

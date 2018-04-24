@@ -80,7 +80,7 @@ void parsePost(GHashTable* structPerguntas , GHashTable* structRespostas, GHashT
 		    	
 		    	if(p!=NULL){
 		    	GTree* respostas = getTree(p);
-		    	Date d = getDate(r);
+		    	DateTime d = getDateT(r);
 		    	g_tree_insert(respostas, d, r);
 		    	//printf("Resposta Inserida!\n");
 		    	}

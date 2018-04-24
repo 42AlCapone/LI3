@@ -12,7 +12,7 @@
 struct resposta{
   long id;
   long parentID;
-  Date creationTime;
+  DateTime creationTime;
   int score;
   long ownerUserID;
   int commentCount;
@@ -37,7 +37,7 @@ Resposta genResposta(){
 Resposta initResposta(long mainID, long parentID, char* date, int scr, long userID, int cmmtcount, float rt){
   Resposta temp = malloc(sizeof(struct resposta));
 
-  temp->creationTime = stringToDate(date);
+  temp->creationTime = stringToDateT(date);
 
   temp->id = mainID;
   temp->parentID = parentID;
@@ -59,7 +59,7 @@ long getParentID(Resposta r){
 	return r->parentID;
 }
 
-Date getDate(Resposta r){
+DateTime getDateT(Resposta r){
 	return r->creationTime;
 }
 
@@ -94,7 +94,7 @@ int compareRespostas(Resposta r1, Resposta r2){
     - return 1 if date 2 happened before date 1;
     - return 0 if they are the same;
   */
-  return compare_dates(r1->creationTime, r2->creationTime);
+  return compareDateTime(r1->creationTime, r2->creationTime);
 }
 /*
 Resposta copyResposta(Resposta r){
@@ -107,7 +107,7 @@ Resposta copyResposta(Resposta r){
 
 
 void freeResposta(Resposta r){
-  free_date(r->creationTime);
+  freeDateTime(r->creationTime);
   free(r);
 }
 /*

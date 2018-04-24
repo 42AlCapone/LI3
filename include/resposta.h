@@ -1,8 +1,8 @@
 #ifndef _RESPOSTA_H_
 #define _RESPOSTA_H_
 
-//#include"datetime.h"
-#include "date.h"
+#include"datetime.h"
+//#include "date.h"
 #include <stdio.h>
 
 typedef struct resposta *Resposta;
@@ -15,7 +15,7 @@ long getIdr(Resposta r);
 
 long getParentID(Resposta r);
 
-Date getDate(Resposta r);
+DateTime getDateT(Resposta r);
 
 int getScore(Resposta r);
 
