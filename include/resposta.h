@@ -33,6 +33,8 @@ int compareRespostas(Resposta r1, Resposta r2);
 
 Resposta copyResposta(Resposta r);
 
+int resposta_entre_datas(Resposta r, Date b, Date e);
+
 void freeResposta(Resposta r);
 
 #endif

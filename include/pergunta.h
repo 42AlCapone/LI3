@@ -20,7 +20,7 @@ long getIdp(Pergunta p);
 
 
 
-//DateTime getCreationDate(Pergunta p);
+Date getCreationDate(Pergunta p);
 
 
 int getScorep(Pergunta p);
@@ -45,6 +45,7 @@ int getcommentCount(Pergunta p);
 
 int comparePerguntas(Pergunta p1, Pergunta p2);
 
+int pergunta_entre_datas(Pergunta p, Date b, Date e);
 
 //Pergunta copyPergunta(Pergunta p);
 
