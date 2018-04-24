@@ -67,7 +67,7 @@ TAD_community load(TAD_community com, char* dump_path){
 }
 
 
-
+//query 1
 STR_pair info_from_post(TAD_community com, long id){
 	char *title , *name;
 	STR_pair pair = NULL;
@@ -92,6 +92,30 @@ STR_pair info_from_post(TAD_community com, long id){
 	return pair;
 }
 
+
+//query 5 (inacabada)
+USER get_user_info(TAD_community com, long id){
+	char* bio;
+	USER user = NULL;
+	User u = g_hash_table_lookup(com->users,GSIZE_TO_POINTER(id));
+	bio = getBio(u);
+	printf("%s\n", bio);
+	
+	//g_hash_table_foreach(com->perguntas,(GHFunc) iterTable,ids);
+	//g_hash_table_foreach(com->respostas,(GHFunc) iterTable,ids);
+
+return user;
+
+
+}
+
+/*
+void iterTable(long id,Pergunta p, User){
+
+}
+*/
+
+//query 10
 long better_answer(TAD_community com, long id){
 	Pergunta p = g_hash_table_lookup(com->perguntas, GSIZE_TO_POINTER(id));
 	GTree* t = getTree(p);

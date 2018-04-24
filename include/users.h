@@ -6,7 +6,7 @@
 typedef struct user *User;
 
 /* Função que inicializa toda uma nova estrutura User com todas a variveis preenchidas*/
-User initUser(long id, int rep, char* name, int views, int voteDif, int nrPosts);
+User initUser(long id, char* bio, int rep, char* name, int views, int voteDif, int nrPosts);
 
 // Função que copia um user e retorna-o
 User copyUser(User u);
@@ -16,6 +16,9 @@ void freeUser(User u);
 
 /* recebe um User e devolve o seu Id*/
 long getId(User u);
+
+
+char* getBio(User u);
 
 // recebe um User e retorna a sua rep
 int getRep(User u);

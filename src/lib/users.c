@@ -5,8 +5,9 @@
 #include <string.h>
 #include "../../include/common.h"
 
-struct user{
+struct user{ 
 	long id;
+	char* bio;
 	int rep;
 	char *name;
 	int views;
@@ -15,9 +16,10 @@ struct user{
 };
 
 
-User initUser(long id, int rep, char* name, int views, int voteDif, int nrPosts){
+User initUser(long id, char* bio, int rep, char* name, int views, int voteDif, int nrPosts){
 	User u = malloc(sizeof(struct user));
 	u-> id = id;
+	u-> bio = mystrdup(bio); 
 	u-> rep = rep;
 	u-> name = mystrdup(name);
 	u-> views = views;
@@ -27,7 +29,7 @@ User initUser(long id, int rep, char* name, int views, int voteDif, int nrPosts)
 }
 
 User copyUser(User u){
-  	User new = initUser(getId(u),getRep(u),getName(u),getViews(u),getVoteDif(u),getNrPosts(u));
+  	User new = initUser(getId(u),getBio(u),getRep(u),getName(u),getViews(u),getVoteDif(u),getNrPosts(u));
 
   	return new;	
 }
@@ -41,6 +43,11 @@ void freeUser(User u){
 long getId(User u){
 	return u->id;
 }
+
+char* getBio(User u){
+	return u->bio;
+}
+
 
 int getRep(User u){
 	return u->rep;

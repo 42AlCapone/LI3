@@ -117,19 +117,20 @@ void parseUser(GHashTable* structUsers,char *docname){
 
 	int rep, views, up, down, votDif, nrPosts = 0;
 	long id;
-	char *name;
+	char *name, *bio;
 
 	cur = cur -> xmlChildrenNode;
 	while(cur != NULL){
 		if ((!xmlStrcmp(cur->name, (const xmlChar *)"row"))) {
 		   	id = atol((char*) xmlGetProp(cur,(const xmlChar*) "Id"));
+		   	bio = (char*) xmlGetProp(cur ,(const xmlChar*) "AboutMe");
 		   	rep = atoi((char*) xmlGetProp(cur,(const xmlChar*) "Reputation"));
 		   	name = (char*) xmlGetProp(cur ,(const xmlChar*) "DisplayName");
 		   	views = atoi((char*) xmlGetProp(cur,(const xmlChar *) "Views"));
 		   	up = atoi((char*) xmlGetProp(cur,(const xmlChar *) "UpVotes"));
 		   	down = atoi((char*) xmlGetProp(cur,(const xmlChar *) "DownVotes"));
 		   	votDif = up - down;
-		   	User u = initUser(id, rep, name, views, votDif,nrPosts);
+		   	User u = initUser(id, bio, rep, name, views, votDif,nrPosts);
 		    g_hash_table_insert(structUsers, GSIZE_TO_POINTER(id), u);
 	    }
 	    cur = cur->next;

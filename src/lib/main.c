@@ -16,6 +16,7 @@ int main(int argc, char **argv){
  	STR_pair r = info_from_post(com, id);
  	best = better_answer( com , id );
  	printf("%ld\n", best);
+ 	get_user_info(com, 51);
  	free_str_pair(r);
 	
   	clean(com); 
