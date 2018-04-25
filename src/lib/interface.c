@@ -9,6 +9,7 @@
 #include "../../include/resposta.h"
 #include "../../include/date.h"
 #include "../../include/common.h"
+#include "../../include/datetime.h"
 
 
 struct TCD_community{
@@ -17,7 +18,11 @@ struct TCD_community{
     GHashTable* users;
 };
 
-
+typedef struct querytres{
+	DatePair par;
+	long tot_perg;
+	long tot_resp;
+}QueryTres;
 
 TAD_community init(){
 	TAD_community comunidade = malloc(sizeof(struct TCD_community));
@@ -92,6 +97,56 @@ STR_pair info_from_post(TAD_community com, long id){
 	return pair;
 }
 
+
+//query 3 total posts entre duas datas: perguntas e respostas separadamente
+
+DateTime date_to_datetime(Date d){
+	DateTime temp = initDateTime(get_day(d), get_month(d), get_year(d), 0, 0, 0);
+
+	return temp;
+}
+
+
+gboolean iter_perguntas_para_total(long id, Pergunta p, QueryTres* resp){
+	if(pergunta_entre_datas(p, getBegin(resp->par), getEnd(resp->par)) == 1){
+		resp->tot_perg++;
+	}
+	return FALSE;
+}
+
+gboolean iter_respostas_para_total(long id, Resposta r, QueryTres* resp){
+	if(resposta_entre_datas(r, getBegin(resp->par), getEnd(resp->par)) == 1){
+		resp->tot_resp++;
+	}
+	return FALSE;
+}
+
+LONG_pair total_posts(TAD_community com, Date begin, Date end){
+	DateTime b = date_to_datetime(begin);
+	DateTime e = date_to_datetime(end);
+
+	QueryTres* resp = malloc(sizeof(struct querytres));
+	resp->par = initDatePair(b, e);
+	resp->tot_perg = 0;
+	resp->tot_resp = 0;
+
+	LONG_pair par = NULL;
+	
+	g_hash_table_foreach(com->perguntas, (GHFunc)iter_perguntas_para_total, resp);
+	
+	g_hash_table_foreach(com->respostas, (GHFunc)iter_respostas_para_total, resp);
+
+	par = create_long_pair(resp->tot_perg, resp->tot_resp);
+
+	freeDatePair(resp->par);
+	free(resp);
+	freeDateTime(b);
+	freeDateTime(e);
+
+	return par;
+}
+
+//end of query 3
 
 //query 5 (inacabada)
 USER get_user_info(TAD_community com, long id){
