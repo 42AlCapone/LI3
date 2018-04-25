@@ -21,6 +21,8 @@ long getIdp(Pergunta p);
 
 DateTime getDatep(Pergunta p);
 
+int getSize (Pergunta p);
+
 Date getCreationDate(Pergunta p);
 
 
@@ -43,6 +45,7 @@ int getAnswerCount(Pergunta p);
 
 int getcommentCount(Pergunta p);
 
+void setDateP(DateTime d, Pergunta p);
 
 int comparePerguntas(Pergunta p1, Pergunta p2);
 

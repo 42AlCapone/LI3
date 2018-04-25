@@ -97,6 +97,9 @@ DateTime getDatep(Pergunta p){
   return p-> creationTime;
 }
 
+int getSize (Pergunta p){
+  return (int) g_tree_nnodes(p->resp);
+}
 
 int getScorep(Pergunta p){
   return p-> score;
@@ -112,6 +115,10 @@ char* getTitle(Pergunta p){
 
 void getTags(Pergunta p, char* new){
   strcpy(new , p-> tags);
+}
+
+void setDateP(DateTime d, Pergunta p){
+  p->creationTime = d;
 }
 
 /*
