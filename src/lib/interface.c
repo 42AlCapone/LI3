@@ -14,13 +14,20 @@
 #include "../../include/list.h"
 
 
+
 struct TCD_community{
     GHashTable* perguntas;
     GHashTable* respostas;
     GHashTable* users;
 };
 
-
+/*
+typedef struct querytres{
+	DatePair par;
+	long tot_perg;
+	long tot_resp;
+}QueryTres;
+*/
 
 TAD_community init(){
 	TAD_community comunidade = malloc(sizeof(struct TCD_community));
@@ -58,19 +65,6 @@ TAD_community load(TAD_community com, char* dump_path){
 	parsePost(com-> perguntas, com-> respostas, com-> users, postFile);
 	
 	return com;
-	
-	/*
-	char* date = mystrdup("2010-09-13T19:22:39.290");
-	Pergunta p = g_hash_table_lookup(com->posts,GSIZE_TO_POINTER(1));
-	Date d = stringToDate(date);
-	Resposta r = getResp(p,d);
-	printf("%d\n",getScore(r));
-	*/
-	/*
-	User u = g_hash_table_lookup(com->users,GSIZE_TO_POINTER(21));
-	char *nome = getName(u);
-	printf("%s\n",nome); 
-	*/
 }
 
 
@@ -184,6 +178,57 @@ LONG_pair total_posts(TAD_community com, Date begin, Date end){
  	return pair;
 }
 
+/*
+//query 3 total posts entre duas datas: perguntas e respostas separadamente
+
+DateTime date_to_datetime(Date d){
+	DateTime temp = initDateTime(get_day(d), get_month(d), get_year(d), 0, 0, 0);
+
+	return temp;
+}
+
+
+gboolean iter_perguntas_para_total(long id, Pergunta p, QueryTres* resp){
+	if(pergunta_entre_datas(p, getBegin(resp->par), getEnd(resp->par)) == 1){
+		resp->tot_perg++;
+	}
+	return FALSE;
+}
+
+gboolean iter_respostas_para_total(long id, Resposta r, QueryTres* resp){
+	if(resposta_entre_datas(r, getBegin(resp->par), getEnd(resp->par)) == 1){
+		resp->tot_resp++;
+	}
+	return FALSE;
+}
+
+LONG_pair total_posts(TAD_community com, Date begin, Date end){
+	DateTime b = date_to_datetime(begin);
+	DateTime e = date_to_datetime(end);
+
+	QueryTres* resp = malloc(sizeof(struct querytres));
+	resp->par = initDatePair(b, e);
+	resp->tot_perg = 0;
+	resp->tot_resp = 0;
+
+	LONG_pair par = NULL;
+	
+	g_hash_table_foreach(com->perguntas, (GHFunc)iter_perguntas_para_total, resp);
+	
+	g_hash_table_foreach(com->respostas, (GHFunc)iter_respostas_para_total, resp);
+
+	par = create_long_pair(resp->tot_perg, resp->tot_resp);
+
+	freeDatePair(resp->par);
+	free(resp);
+	freeDateTime(b);
+	freeDateTime(e);
+
+	return par;
+}
+
+//end of query 3
+*/
 
 //query 5 FALTA ACABAR
 USER get_user_info(TAD_community com, long id){
@@ -280,24 +325,6 @@ static void ordenaUser(User a[],int N){
 	}
 }
 
-/*
-void iSort (Resposta *ar, int N, Resposta r){
-	int i, j;
-	Resposta tmp = ar[0];
-	while(i<N){
-		if (i=0) ar[0] = getScore(r);
-		else if(getScore(r)>getScore(tmp)){
-			ordena(ar,i);
-
-			ar[i]=tmp;
-			ar[j]=r;
-			j++;
-		
-		}
-
-	}
-}
-*/
 
 //query 10
 long better_answer(TAD_community com, long id){

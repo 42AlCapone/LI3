@@ -5,8 +5,12 @@
 
 typedef struct datetime *DateTime;
 
+typedef struct datepair *DatePair;
+
 
 DateTime initDateTime(int d, int m, int y, int h, int min, int seg);
+
+DatePair initDatePair(DateTime b, DateTime e);
 
 int compareDateTime(DateTime d1, DateTime  d2);
 
@@ -33,8 +37,13 @@ int getMinute(DateTime d);
 
 int getSegundos(DateTime d);
 
+DateTime getBegin(DatePair p);
+
+DateTime getEnd(DatePair p);
 
 void freeDateTime(DateTime d);
+
+void freeDatePair(DatePair p);
 
 
 #endif

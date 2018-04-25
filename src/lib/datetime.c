@@ -2,6 +2,7 @@
 #include "datetime.h"
 #include <stdio.h>
 #include <string.h>
+#include "../../include/date.h"
 #include "../../include/common.h"
 
 
@@ -12,6 +13,11 @@ struct datetime{
   int hour;
   int minute;
   int seg;
+};
+
+struct datepair{
+	DateTime begin;
+	DateTime end;
 };
 
 DateTime initDateTime(int d, int m, int y, int h, int min, int seg){
@@ -26,6 +32,13 @@ DateTime initDateTime(int d, int m, int y, int h, int min, int seg){
   return temp;
 }
 
+DatePair initDatePair(DateTime b, DateTime e){
+	DatePair par = malloc(sizeof(struct datepair));
+	par->begin = initDateTime(b->day, b->month, b->year, b->hour, b->minute, b->seg);
+	par->end = initDateTime(e->day, e->month, e->year, e->hour, e->minute, b->seg);
+	
+	return par;
+}
 
 int compareDateTime(DateTime d1, DateTime  d2){
   /*
@@ -221,8 +234,23 @@ int getSegundos(DateTime d){
   return d->seg;
 }
 
+
+DateTime getBegin(DatePair p){
+	return p->begin;
+}
+
+DateTime getEnd(DatePair p){
+	return p->end;
+}
+
 void freeDateTime(DateTime d){
   free(d);
+}
+
+void freeDatePair(DatePair p){
+	freeDateTime(p->begin);
+	freeDateTime(p->end);
+	free(p);
 }
 
 /*
