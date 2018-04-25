@@ -9,6 +9,7 @@ typedef struct pergunta *Pergunta;
 
 Pergunta initPergunta(long mainID, char* date, int scr, long userID, char* ttl, char* tgs, int cCount);
 
+Pergunta genPergunta();
 
 void insertResposta(Pergunta p, Resposta r);
 
@@ -18,7 +19,7 @@ Resposta getResp(Pergunta p, Date d);
 
 long getIdp(Pergunta p);
 
-
+DateTime getDatep(Pergunta p);
 
 Date getCreationDate(Pergunta p);
 

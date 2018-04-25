@@ -15,6 +15,17 @@ struct user{
 	int nrPosts;
 };
 
+User genUser(){
+	User u = malloc(sizeof(struct user));
+	u-> id = 0;
+	u-> bio = NULL; 
+	u-> rep = 0;
+	u-> name = NULL;
+	u-> views = 0;
+	u-> voteDif= 0;
+	u-> nrPosts = 0;
+	return u;
+}
 
 User initUser(long id, char* bio, int rep, char* name, int views, int voteDif, int nrPosts){
 	User u = malloc(sizeof(struct user));

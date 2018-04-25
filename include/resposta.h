@@ -31,7 +31,9 @@ void setRate(float rate, Resposta r);
 
 int compareRespostas(Resposta r1, Resposta r2);
 
-Resposta copyResposta(Resposta r);
+void setDateT(DateTime d, Resposta r);
+
+Resposta cloneR(Resposta r);
 
 int resposta_entre_datas(Resposta r, DateTime b, DateTime e);
 

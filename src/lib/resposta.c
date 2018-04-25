@@ -87,6 +87,16 @@ void setRate(float rate, Resposta r){
   r->rate = rate;
 }
 
+void setDateT(DateTime d, Resposta r){
+  r->creationTime = d;
+}
+
+Resposta cloneR(Resposta r){
+  Resposta ret = initResposta(getIdr(r),getParentID(r),"0000-00-00T00:00:00.000",getScore(r),getOwnerUserID(r),getCommentCount(r),getRate(r));
+  setDateT(getDateT(r),ret);
+  return ret;
+}
+
 int compareRespostas(Resposta r1, Resposta r2){
   /*
   Return values:

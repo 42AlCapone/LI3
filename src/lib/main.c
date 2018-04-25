@@ -16,9 +16,18 @@ int main(int argc, char **argv){
  	STR_pair r = info_from_post(com, id);
  	best = better_answer( com , id );
  	printf("%ld\n", best);
- 	get_user_info(com, 51);
  	free_str_pair(r);
-	
+ 	
+ 	int N = 10;
+ 	Date d1 = createDate(1,1,2014);
+ 	Date d2 = createDate(31,12,2014);
+ 	
+ 	
+ 	most_voted_answers(com, N, d1, d2);
+	total_posts(com,d1,d2);
+	printf("--------------------------------\n");
+	top_most_active(com,N);
+
   	clean(com); 
   
   //DateTime a = 

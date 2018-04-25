@@ -27,6 +27,20 @@ Pergunta insertResposta(Pergunta p1, Resposta r1){
 }
 */
 
+Pergunta genPergunta(){
+  Pergunta temp = (Pergunta) malloc(sizeof(struct pergunta));
+
+  temp->id = 0;
+  temp->creationTime = NULL;
+  temp->score = 0;
+  temp->title = NULL;
+  temp->tags = NULL;
+  temp->commentCount = 0;
+  temp->resp = NULL;
+
+  return temp;
+}
+
 
 Pergunta initPergunta(long mainID, char* date, int scr, long userID, char* ttl, char* tgs, int cCount){
 
@@ -45,7 +59,7 @@ Pergunta initPergunta(long mainID, char* date, int scr, long userID, char* ttl, 
   //temp->answerCount = anscnt;
   temp->commentCount = cCount;
 
-  temp->resp = g_tree_new((GCompareFunc)compare_dates);
+  temp->resp = g_tree_new((GCompareFunc)compareDateTime);
   //temp->resp = g_tree_new_full((GCompareDataFunc)compare_dates, NULL, (GDestroyNotify)free_date, (GDestroyNotify)freeResposta);
 
   return temp;

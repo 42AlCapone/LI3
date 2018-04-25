@@ -17,6 +17,7 @@ void freeUser(User u);
 /* recebe um User e devolve o seu Id*/
 long getId(User u);
 
+User genUser();
 
 char* getBio(User u);
 

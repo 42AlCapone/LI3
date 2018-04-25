@@ -3,7 +3,8 @@
 #include <stdio.h>
 #include <string.h>
 #include "../../include/common.h"
-  
+
+
 struct datetime{
   int day;
   int month;
@@ -74,6 +75,60 @@ int compareDateTime(DateTime d1, DateTime  d2){
   return 0;
 }
 
+//compara Date com DateTime final
+int compare_date_time_final (Date d1, DateTime d2)
+{
+    if (get_year(d1) < d2->year)
+       return 0;
+
+    else if (get_year(d1) >= d2->year){
+        
+        if (get_month(d1) < d2->month)
+              return 0;
+         else if (get_month(d1) >= d2->month){
+             
+              if (get_day(d1) < d2->day)
+              return 0;
+         else if(get_day(d1) >= d2->day)
+              return 1;
+         else
+              return 0;
+
+
+         }
+    }
+           
+    return 0;
+}
+
+
+//compara Date com DateTime begin
+int compare_date_time_begin (Date d1, DateTime d2)
+{
+    if (get_year(d1) > d2->year)
+       return 0;
+
+    else if (get_year(d1) <= d2->year){
+        
+        if (get_month(d1) > d2->month)
+              return 0;
+         else if (get_month(d1) <= d2->month){
+             
+              if (get_day(d1) > d2->day)
+              return 0;
+         else if(get_day(d1) <= d2->day)
+              return 1;
+         else
+              return 0;
+
+
+         }
+    }
+           
+    return 0;
+}
+
+
 DateTime stringToDateT(char* date){
   int i = 0;
   char* token;
@@ -88,7 +143,7 @@ DateTime stringToDateT(char* date){
   while (token != NULL && i<7){
     switch (i){
     case 0: 
-      y = mystrdup(token);  
+      y = mystrdup(token); 
       break;
     case 1: 
       m = mystrdup(token);
