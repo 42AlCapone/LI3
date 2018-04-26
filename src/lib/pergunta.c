@@ -104,6 +104,9 @@ DateTime getDatep(Pergunta p){
   return p-> creationTime;
 }
 
+int getSize (Pergunta p){
+  return (int) g_tree_nnodes(p->resp);
+}
 
 int getScorep(Pergunta p){
   return p-> score;
@@ -121,13 +124,17 @@ char** getTags(Pergunta p){
   return p-> tags;
 }
 
+
 int getNTags(Pergunta p){
   return p->nTags;
 }
 
-void setDateTp(DateTime d, Pergunta p){
+
+void setDateP(DateTime d, Pergunta p){
   p->creationTime = d;
 }
+
+
 /*
 int getFavoriteCount(Pergunta p){
   return p-> favoriteCount;

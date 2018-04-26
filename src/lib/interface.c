@@ -50,6 +50,8 @@ static void ordenaUser(User a[],int N);
 static void swapUser(User a[],int o,int s);
 static void ordenaPdata(Pergunta p[], int N);
 static void swapPergunta(Pergunta a[],int o,int s);
+static void ordenaPerg(Pergunta a[], int N);
+
 
 TAD_community load(TAD_community com, char* dump_path){
 	int l = strlen(dump_path);
@@ -240,7 +242,7 @@ LONG_list questions_with_tag(TAD_community com, char* tag, Date begin, Date end)
 
 	Pergunta p = genPergunta();
 	DateTime d = initDateTime(0,0,0,0,0,0);
-	setDateTp(d,p);
+	setDateP(d,p);
 	Pergunta *ar = malloc(sizeof(Pergunta)*20);
 
 	char **tags;
@@ -278,7 +280,7 @@ LONG_list questions_with_tag(TAD_community com, char* tag, Date begin, Date end)
     for(f=0;f<i;f++){
     	set_list(list,f,getIdp(ar[f]));	
     }
-    printf("Query 6-Top answers\n");
+    printf("Query 4-Top answers\n");
    	for(f=0;f<i;f++){
    		printf("%ld\n",get_list(list,f));
    	}
@@ -290,6 +292,7 @@ LONG_list questions_with_tag(TAD_community com, char* tag, Date begin, Date end)
 
 
 //query 5 FALTA ACABAR
+/*
 USER get_user_info(TAD_community com, long id){
 	
 	char* bio;
@@ -298,14 +301,40 @@ USER get_user_info(TAD_community com, long id){
 	bio = getBio(u);
 	printf("%s\n", bio);
 	
-	//g_hash_table_foreach(com->perguntas,(GHFunc) iterTable,ids);
-	//g_hash_table_foreach(com->respostas,(GHFunc) iterTable,ids);
+	
+
+	GHashTableIter iter;
+	gpointer id1 = &id;
+	gpointer r1 = &r;
+
+
+
+	g_hash_table_iter_init (&iter, com->respostas);
+	while (g_hash_table_iter_next (&iter,id1,r1)){
+    	if(compare_date_time_begin(begin,getDateT(r)) && compare_date_time_final(end,getDateT(r))){
+    		if (i==0){
+    			ar[0] = r;
+    			i++;
+    		} 
+    			if(i<N){
+    				ar[i] = r;
+    				ordena(ar,i);
+    				i++;
+    			}
+    			else if(getScore(r)>getScore(ar[i-1])){
+    				ar[i-1] = r;
+    				ordena(ar,i-1);
+
+    			}
+ 			}
+    }
+
 
 return user;
 
 
 }
-
+*/
 
 //query 6
 LONG_list most_voted_answers(TAD_community com, int N, Date begin, Date end){
@@ -389,6 +418,7 @@ static void ordenaUser(User a[],int N){
 	}
 }
 
+
 static void ordenaPdata(Pergunta p[], int N){
 	int i = N;
 	while (i>0 && compareDateTime(getDatep(p[i]),getDatep(p[i-1])) == 1){
@@ -396,6 +426,66 @@ static void ordenaPdata(Pergunta p[], int N){
 		i--;
 	}
 }
+
+static void ordenaPerg(Pergunta a[], int N){
+	int i=N;
+	while (i>0 && getSize(a[i])>getSize(a[i-1])){
+		swapPergunta(a,i,i-1);
+		i--;
+	}
+}
+
+
+//query 7
+LONG_list most_answered_questions(TAD_community com, int N, Date begin, Date end){
+
+	int i = 0;
+	long id = 0;
+
+	Pergunta p = genPergunta();
+	DateTime d = initDateTime(0,0,0,0,0,0);
+	setDateP(d,p);
+	Pergunta *ar = malloc(sizeof(Pergunta)*N);
+
+	LONG_list list = create_list(N);
+	GHashTableIter iter;
+	gpointer id1 = &id;
+	gpointer p1 = &p;
+	
+	g_hash_table_iter_init (&iter, com->perguntas);
+	while (g_hash_table_iter_next (&iter,id1,p1)){
+    	if(compare_date_time_begin(begin,getDatep(p)) && compare_date_time_final(end,getDatep(p))){
+    		if (i==0){
+    			ar[0] = p;
+    			i++;
+    		} 
+    			if(i<N){
+    				ar[i] = p;
+    				ordenaPerg(ar,i);
+    				i++;
+    			}
+    			else if(getSize(p)>getSize(ar[i-1])){
+    				ar[i-1] = p;
+    				ordenaPerg(ar,i-1);
+
+    			}
+ 			}
+    	}
+
+    for(i=0;i<N;i++){
+    	set_list(list,i,getIdp(ar[i]));	
+    }
+    printf("Query 7-Top resp/pergunta\n");
+   	
+   	for(i=0;i<N;i++){
+   		printf("%ld\n",get_list(list,i));
+   	}	
+
+   	return list;
+
+
+}
+
 
 //query 10
 long better_answer(TAD_community com, long id){
