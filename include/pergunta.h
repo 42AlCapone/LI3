@@ -59,6 +59,10 @@ void setDateTp(DateTime d, Pergunta p);
 
 //Pergunta insertResposta(Pergunta p1, Resposta r1);
 
+int searchTitle(char* word, char* title);
+
+void setTitle (char* title, Pergunta p);
+
 void freePergunta(Pergunta p);
 
 #endif

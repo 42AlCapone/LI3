@@ -263,8 +263,8 @@ LONG_list questions_with_tag(TAD_community com, char* tag, Date begin, Date end)
     					i++;
     				}
     				else{
-    					Pergunta *aux = realloc(ar,sizeof(Pergunta)*20);
-    					if(aux) ar = aux;
+    					ar = realloc(ar,20*sizeof(Pergunta));
+    					
     					reallocLlist(list);
     					ar[i] = p;
     					ordenaPdata(ar,i);
@@ -277,9 +277,11 @@ LONG_list questions_with_tag(TAD_community com, char* tag, Date begin, Date end)
     	}
     }
 
+
     for(f=0;f<i;f++){
     	set_list(list,f,getIdp(ar[f]));	
     }
+    
     printf("Query 4-Top answers\n");
    	for(f=0;f<i;f++){
    		printf("%ld\n",get_list(list,f));
@@ -482,7 +484,57 @@ LONG_list most_answered_questions(TAD_community com, int N, Date begin, Date end
    	}	
 
    	return list;
+}
 
+
+//query 8
+
+LONG_list contains_word(TAD_community com, char* word, int N){
+	
+	int i = 0;
+	long id = 0;
+
+	Pergunta p = genPergunta();
+	DateTime d = initDateTime(0,0,0,0,0,0);
+	setDateP(d,p);
+	setTitle("",p);
+	Pergunta *ar = malloc(sizeof(Pergunta)*N);
+
+	LONG_list list = create_list(N);
+	GHashTableIter iter;
+	gpointer id1 = &id;
+	gpointer p1 = &p;
+	
+	g_hash_table_iter_init (&iter, com->perguntas);
+	while (g_hash_table_iter_next (&iter,id1,p1)){
+    	if(searchTitle(word,getTitle(p))==1){
+    		if (i==0){
+    			ar[0] = p;
+    			i++;
+    		} 
+    			if(i<N){
+    				ar[i] = p;
+    				ordenaPdata(ar,i);
+    				i++;
+    			}
+    			else if(compareDateTime(getDatep(p),getDatep(ar[i-1])) == 1){
+    				ar[i-1] = p;
+    				ordenaPdata(ar,i-1);
+
+    			}
+ 			}
+    	}
+
+    for(i=0;i<N;i++){
+    	set_list(list,i,getIdp(ar[i]));	
+    }
+    printf("Query 8\n");
+   	
+   	for(i=0;i<N;i++){
+   		printf("%ld\n",get_list(list,i));
+   	}	
+
+   	return list;	
 
 }
 

@@ -20,19 +20,21 @@ int main(int argc, char **argv){
  	char tag[30] = "package-management";
 
  	int N = 10;
- 	Date d1 = createDate(1,8,2014);
- 	Date d2 = createDate(11,8,2014);
+ 	Date d1 = createDate(1,7,2016);
+ 	Date d2 = createDate(31,7,2016);
  	
  	
- 	most_voted_answers(com, N, d1, d2);
-	total_posts(com,d1,d2);
-	top_most_active(com,N);
+  top_most_active(com,N);
 
-  questions_with_tag(com,tag,d1,d2);
-
-  printf("--------------------------------\n");
   most_answered_questions(com,N,d1,d2);
+  
+  //questions_with_tag(com,tag,d1,d2);
+  printf("--------------------------------\n");
 
+  most_voted_answers(com, N, d1, d2);
+
+  total_posts(com,d1,d2);
+  contains_word(com,"glib",N);
 
   clean(com); 
 

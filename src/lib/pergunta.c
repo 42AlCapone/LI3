@@ -34,6 +34,7 @@ Pergunta genPergunta(){
   temp->id = 0;
   temp->creationTime = NULL;
   temp->score = 0;
+  temp->ownerUserID = 0;
   temp->title = NULL;
   temp->tags = NULL;
   temp->nTags = 0;
@@ -134,6 +135,14 @@ void setDateP(DateTime d, Pergunta p){
   p->creationTime = d;
 }
 
+int searchTitle(char* word, char* title){
+  if (strstr(title,word)!=NULL) return 1;
+  else return 0;
+}
+
+void setTitle (char* title, Pergunta p){
+  p->title = title;
+}
 
 /*
 int getFavoriteCount(Pergunta p){
