@@ -28,3 +28,16 @@ void free_list(LONG_list l) {
     }
 }
 
+int getlSize(LONG_list l){
+    return l->size;
+}
+
+int reallocLlist(LONG_list l){
+    l->size += 20;
+    long* aux;
+    aux = realloc(l->list, sizeof(long) * l->size);
+    if(aux) l->list = aux;
+    else return -1;
+    return 0; 
+}
+

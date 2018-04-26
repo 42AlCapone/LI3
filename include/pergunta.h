@@ -7,7 +7,7 @@ typedef struct pergunta *Pergunta;
 
 
 
-Pergunta initPergunta(long mainID, char* date, int scr, long userID, char* ttl, char* tgs, int cCount);
+Pergunta initPergunta(long mainID, char* date, int scr, long userID, char* ttl, char** tgs, int nTags, int cCount);
 
 Pergunta genPergunta();
 
@@ -33,7 +33,9 @@ long getOwnerUserIDp(Pergunta p);
 char* getTitle(Pergunta p);
 
 
-void getTags(Pergunta p, char* new);
+char** getTags(Pergunta p);
+
+int getNTags(Pergunta p);
 
 int getFavoriteCount(Pergunta p);
 
@@ -47,6 +49,8 @@ int getcommentCount(Pergunta p);
 int comparePerguntas(Pergunta p1, Pergunta p2);
 
 int pergunta_entre_datas(Pergunta p, DateTime b, DateTime e);
+
+void setDateTp(DateTime d, Pergunta p);
 
 //Pergunta copyPergunta(Pergunta p);
 

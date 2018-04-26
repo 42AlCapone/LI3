@@ -7,9 +7,28 @@
 #include <libxml/xmlmemory.h>
 #include <stdio.h>
 #include <glib.h>
+#include <string.h>
 #include "../../include/interface.h"
 
 static float calcRate(GHashTable* structUsers, long oid, int score, int cCount);
+
+
+
+char** parseTags(char* tags, int *nTags){
+	char** parsed = (char**) malloc(5*sizeof(char*));
+	char* token;
+	token = strtok(tags,"><");
+	int i = 0;
+	while(token != NULL){
+		parsed[i] = token;
+		token = strtok(NULL,"><");
+		i++;
+	}
+	*nTags = i;
+
+	return parsed;
+}
+
 
 void parsePost(GHashTable* structPerguntas , GHashTable* structRespostas, GHashTable* structUsers ,char *docname){
 	xmlDocPtr doc = xmlParseFile(docname);
@@ -22,10 +41,11 @@ void parsePost(GHashTable* structPerguntas , GHashTable* structRespostas, GHashT
 		xmlFreeDoc(doc);
 	}
 
-	int score, cCount;
+	int score, cCount, nTags;
 	float rate; 
 	long id , pid , oid;
 	char *title, *tags, *date;
+	char **tagsR;
 	
 	cur = cur -> xmlChildrenNode;
 	User u;
@@ -42,6 +62,7 @@ void parsePost(GHashTable* structPerguntas , GHashTable* structRespostas, GHashT
 				cCount = atoi((char*)xmlGetProp(cur,(const xmlChar*) "CommentCount"));
 				//fCount = atoi((char*)xmlGetProp(cur, "FavoriteCount"));
 				
+				tagsR = parseTags(tags, &nTags);
 			/*	printf("--------Question----------\n");
 				printf("ID: %ld\n", id);
 				printf("Date: %s\n", date);
@@ -50,8 +71,7 @@ void parsePost(GHashTable* structPerguntas , GHashTable* structRespostas, GHashT
 				printf("Title : %s\n", title);
 				printf("Tags: %s\n", tags);
 				printf("AnswerCount: %d\n", aCount); */
-
-				Pergunta p = initPergunta(id, date, score, oid, title, tags, cCount);
+				Pergunta p = initPergunta(id, date, score, oid, title, tagsR, nTags, cCount);
 		    	g_hash_table_insert(structPerguntas, GSIZE_TO_POINTER(id), p);
 		    	u = g_hash_table_lookup(structUsers, GSIZE_TO_POINTER(oid));
 		    	incrNrPosts(u);
@@ -95,6 +115,8 @@ void parsePost(GHashTable* structPerguntas , GHashTable* structRespostas, GHashT
 	}
 	printf("Posts inseridos\n");	
 }
+
+
 
 float calcRate(GHashTable* structUsers, long oid, int score, int cCount){
   User u = g_hash_table_lookup(structUsers,GSIZE_TO_POINTER(oid));

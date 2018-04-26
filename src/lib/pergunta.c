@@ -13,7 +13,8 @@ struct pergunta{
   int score;
   long ownerUserID;
   char* title;
-  char* tags;
+  char** tags;
+  int nTags;
   //int favoriteCount;
   //int answerCount;
   int commentCount;
@@ -35,6 +36,7 @@ Pergunta genPergunta(){
   temp->score = 0;
   temp->title = NULL;
   temp->tags = NULL;
+  temp->nTags = 0;
   temp->commentCount = 0;
   temp->resp = NULL;
 
@@ -42,14 +44,15 @@ Pergunta genPergunta(){
 }
 
 
-Pergunta initPergunta(long mainID, char* date, int scr, long userID, char* ttl, char* tgs, int cCount){
+Pergunta initPergunta(long mainID, char* date, int scr, long userID, char* ttl, char** tgs, int nTags, int cCount){
 
 
   Pergunta temp = malloc(sizeof(struct pergunta));
 
-  temp->title = mystrdup(ttl);
+  temp->title = ttl;
 
-  temp->tags = mystrdup(tgs);
+  temp->tags = tgs;
+  temp->nTags = nTags;
   temp->creationTime = stringToDateT(date);
 
   temp->id = mainID;
@@ -64,6 +67,10 @@ Pergunta initPergunta(long mainID, char* date, int scr, long userID, char* ttl, 
 
   return temp;
 }
+
+
+
+
 
 void insertResposta(Pergunta p, Resposta r){
   DateTime d = getDateT(r);
@@ -110,10 +117,17 @@ char* getTitle(Pergunta p){
   return p-> title;
 }
 
-void getTags(Pergunta p, char* new){
-  strcpy(new , p-> tags);
+char** getTags(Pergunta p){
+  return p-> tags;
 }
 
+int getNTags(Pergunta p){
+  return p->nTags;
+}
+
+void setDateTp(DateTime d, Pergunta p){
+  p->creationTime = d;
+}
 /*
 int getFavoriteCount(Pergunta p){
   return p-> favoriteCount;
