@@ -47,6 +47,7 @@ User copyUser(User u){
 	
 void freeUser(User u){
 	free(u->name);
+	free(u->bio);
 	free(u);
 }
 

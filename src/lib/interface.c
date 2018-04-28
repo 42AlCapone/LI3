@@ -338,6 +338,125 @@ return user;
 }
 */
 
+//query 5
+
+void insert_perg_by_oldest(Pergunta p, long last_posts[], int day[], int month[], int year[]){
+	for(int i = 0; i < 9; i++){
+		last_posts[i] = last_posts[i+1];
+		day[i] = day[i+1];
+		month[i] = month[i+1];
+		year[i] = year[i+1];
+	}
+
+	last_posts[9] = getIdp(p);
+	day[9] = getDay(getDatep(p));
+	month[9] = getMonth(getDatep(p));
+	year[9] = getYear(getDatep(p)); 
+}
+
+int cmp_dates(int d1, int m1, int y1, int d2, int m2, int y2){
+	if(y1 > y2) return 1;
+	if(m1 > m2) return 1;
+	if(d1 > d2) return 1;
+	return 0;
+}
+
+void insert_resp_by_oldest(Resposta r, long last_posts[], int day[], int month[], int year[]){
+	int d = getDay(getDateT(r));
+	int m = getMonth(getDateT(r));
+	int y = getYear(getDateT(r));
+	int i = 0;
+	int pf = 0;
+	while(i < 10 && pf == 0){
+		if(cmp_dates(d, m, y, day[i], month[i], year[i]) == 0){
+			pf = 1;
+		}
+		i++;
+	}
+	i--;
+	for(int j = 0; j < i-1; j++){
+		last_posts[j] = last_posts[j+1];
+		day[j] = day[j+1];
+		month[j] = month[j+1];
+		year[j] = year[j+1];
+	}
+	if(i > 0){
+		last_posts[i-1] = getIdr(r);
+		day[i-1] = d;
+		month[i-1] = m; 
+		year[i-1] = y;
+	}
+		
+}
+
+USER get_user_info(TAD_community com, long id){
+	
+	char* bio;
+	long idp;
+	long idr;
+	long last_posts[10];
+	int day[10];
+	int month[10];
+	int year[10];
+	int fillup = 0;
+
+	for(int i = 0; i < 10; i++){
+		day[i] = 0;
+		month[i] = 0;
+		year[i] = 0;
+	}
+
+	USER user = NULL;
+	User u = g_hash_table_lookup(com->users,GSIZE_TO_POINTER(id));
+	bio = getBio(u);
+	printf("%s\n", bio);
+	
+	GHashTableIter iter_perg;
+	Pergunta p = genPergunta();
+	gpointer id_perg = &idp;
+	gpointer p1 = &p;
+
+	GHashTableIter iter_resp;
+	Resposta r = genResposta();
+	gpointer id_resp = &idr;
+	gpointer r1 = &r;
+
+	g_hash_table_iter_init(&iter_perg, com->perguntas);
+	g_hash_table_iter_init(&iter_resp, com->respostas);
+
+	while(g_hash_table_iter_next(&iter_perg, id_perg, p1)){
+		if(fillup < 10 && getOwnerUserIDp(p) == id){
+			last_posts[fillup] = getIdp(p);
+			day[fillup] = getDay(getDatep(p));
+			month[fillup] = getMonth(getDatep(p));
+			year[fillup] = getYear(getDatep(p));
+			fillup++;
+		}
+		else if(getOwnerUserIDp(p) == id){
+			insert_perg_by_oldest(p, last_posts, day, month, year);
+		}
+	}
+
+	while(g_hash_table_iter_next(&iter_resp, id_resp, r1)){
+		if(getOwnerUserID(r) == id){
+			insert_resp_by_oldest(r, last_posts, day, month, year);
+		}
+	}
+
+	for(int j = 0; j < 10; j++){
+		printf("%ld:", last_posts[j]);
+	}
+
+	printf("\nBio: %s\n", bio);
+
+	user = create_user(bio, last_posts);
+	freeResposta(r);
+	freeUser(u);
+	return user;
+}
+	
+		
+
 //query 6
 LONG_list most_voted_answers(TAD_community com, int N, Date begin, Date end){
 	

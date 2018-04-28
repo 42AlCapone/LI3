@@ -17,7 +17,7 @@ int main(int argc, char **argv){
  	best = better_answer( com , id );
  	printf("%ld\n", best);
  	free_str_pair(r);
- 	char tag[30] = "package-management";
+ 	//char tag[30] = "package-management";
 
  	int N = 10;
  	Date d1 = createDate(1,7,2016);
@@ -30,7 +30,7 @@ int main(int argc, char **argv){
   
   //questions_with_tag(com,tag,d1,d2);
   printf("--------------------------------\n");
-
+  get_user_info(com, 15811);
   most_voted_answers(com, N, d1, d2);
 
   total_posts(com,d1,d2);
