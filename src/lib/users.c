@@ -3,7 +3,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <string.h>
-#include "../../include/common.h"
+#include "common.h"
 
 struct user{ 
 	long id;
@@ -44,6 +44,22 @@ User copyUser(User u){
 
   	return new;	
 }
+
+void swapUser(User a[],int o,int s) {
+	User tmp = malloc(sizeof(User));
+	tmp=a[o];
+	a[o]=a[s];
+	a[s]=tmp;
+}
+
+void ordenaUser(User a[],int N){
+	int i=N;
+	while (i>0 && getNrPosts(a[i])>getNrPosts(a[i-1])) {
+		swapUser(a,i,i-1);
+		i--;
+	}
+}
+
 	
 void freeUser(User u){
 	free(u->name);

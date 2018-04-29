@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include <string.h>
-#include "../../include/date.h"
+#include "date.h"
 
 
 struct date {

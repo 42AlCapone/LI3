@@ -1,11 +1,10 @@
 #include<stdlib.h>
 #include<string.h>
 #include<glib.h>
-#include "../../include/pergunta.h"
-#include "../../include/resposta.h"
-//#include "../../include/date.h"
-#include "../../include/common.h"
-#include "../../include/datetime.h"
+#include "pergunta.h"
+#include "resposta.h"
+#include "common.h"
+#include "datetime.h"
 
 struct pergunta{
   long id;
@@ -15,8 +14,6 @@ struct pergunta{
   char* title;
   char** tags;
   int nTags;
-  //int favoriteCount;
-  //int answerCount;
   int commentCount;
   GTree* resp;
 };
@@ -77,8 +74,32 @@ void insertResposta(Pergunta p, Resposta r){
   DateTime d = getDateT(r);
   GTree* t= getTree(p);
   g_tree_insert(t,d, r);
-
 }
+
+void swapPergunta(Pergunta a[],int o,int s) {
+  Pergunta tmp = malloc(sizeof(Pergunta));
+  tmp=a[o];
+  a[o]=a[s];
+  a[s]=tmp;
+}
+
+
+void ordenaPdata(Pergunta p[], int N){
+  int i = N;
+  while (i>0 && compareDateTime(getDatep(p[i]),getDatep(p[i-1])) == 1){
+    swapPergunta(p,i,i-1);
+    i--;
+  }
+}
+
+void ordenaPerg(Pergunta a[], int N){
+  int i=N;
+  while (i>0 && getSize(a[i])>getSize(a[i-1])){
+    swapPergunta(a,i,i-1);
+    i--;
+  }
+}
+
 
 GTree* getTree(Pergunta p){
   GTree* tree = (GTree*) p->resp;

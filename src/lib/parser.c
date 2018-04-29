@@ -1,14 +1,14 @@
-#include "../../include/parser.h"
-#include "../../include/users.h"
-#include "../../include/resposta.h"
-#include "../../include/pergunta.h"
-#include "../../include/date.h"
+#include <glib.h>
+#include "parser.h"
+#include "users.h"
+#include "resposta.h"
+#include "pergunta.h"
+#include "date.h"
 #include <libxml/parser.h>
 #include <libxml/xmlmemory.h>
 #include <stdio.h>
-#include <glib.h>
 #include <string.h>
-#include "../../include/interface.h"
+#include "interface.h"
 
 static float calcRate(GHashTable* structUsers, long oid, int score, int cCount);
 

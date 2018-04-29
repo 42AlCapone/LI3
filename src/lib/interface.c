@@ -1,19 +1,20 @@
-#include "../../include/interface.h"
 #include <glib.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "../../include/parser.h"
 #include <string.h>
-#include "../../include/users.h"
-#include "../../include/pergunta.h"
-#include "../../include/resposta.h"
-#include "../../include/date.h"
-#include "../../include/common.h"
-#include "../../include/datetime.h"
-#include "../../include/pair.h"
-#include "../../include/list.h"
+#include "interface.h"
+#include "parser.h"
+#include "users.h"
+#include "pergunta.h"
+#include "resposta.h"
+#include "date.h"
+#include "common.h"
+#include "datetime.h"
+#include "pair.h"
+#include "list.h"
 
 
+static gboolean iterateRate(Date d, Resposta r, Resposta best);
 
 struct TCD_community{
     GHashTable* perguntas;
@@ -21,13 +22,6 @@ struct TCD_community{
     GHashTable* users;
 };
 
-/*
-typedef struct querytres{
-	DatePair par;
-	long tot_perg;
-	long tot_resp;
-}QueryTres;
-*/
 
 TAD_community init(){
 	TAD_community comunidade = malloc(sizeof(struct TCD_community));
@@ -43,14 +37,7 @@ TAD_community init(){
 	return comunidade;
 }
 
-static gboolean iterateRate(Date d, Resposta r, Resposta best);
-static void swap(Resposta a[],int o,int s);
-static void ordena(Resposta a[],int N);
-static void ordenaUser(User a[],int N);
-static void swapUser(User a[],int o,int s);
-static void ordenaPdata(Pergunta p[], int N);
-static void swapPergunta(Pergunta a[],int o,int s);
-static void ordenaPerg(Pergunta a[], int N);
+
 
 
 TAD_community load(TAD_community com, char* dump_path){
@@ -181,58 +168,6 @@ LONG_pair total_posts(TAD_community com, Date begin, Date end){
 
  	return pair;
 }
-
-/*
-//query 3 total posts entre duas datas: perguntas e respostas separadamente
-
-DateTime date_to_datetime(Date d){
-	DateTime temp = initDateTime(get_day(d), get_month(d), get_year(d), 0, 0, 0);
-
-	return temp;
-}
-
-
-gboolean iter_perguntas_para_total(long id, Pergunta p, QueryTres* resp){
-	if(pergunta_entre_datas(p, getBegin(resp->par), getEnd(resp->par)) == 1){
-		resp->tot_perg++;
-	}
-	return FALSE;
-}
-
-gboolean iter_respostas_para_total(long id, Resposta r, QueryTres* resp){
-	if(resposta_entre_datas(r, getBegin(resp->par), getEnd(resp->par)) == 1){
-		resp->tot_resp++;
-	}
-	return FALSE;
-}
-
-LONG_pair total_posts(TAD_community com, Date begin, Date end){
-	DateTime b = date_to_datetime(begin);
-	DateTime e = date_to_datetime(end);
-
-	QueryTres* resp = malloc(sizeof(struct querytres));
-	resp->par = initDatePair(b, e);
-	resp->tot_perg = 0;
-	resp->tot_resp = 0;
-
-	LONG_pair par = NULL;
-	
-	g_hash_table_foreach(com->perguntas, (GHFunc)iter_perguntas_para_total, resp);
-	
-	g_hash_table_foreach(com->respostas, (GHFunc)iter_respostas_para_total, resp);
-
-	par = create_long_pair(resp->tot_perg, resp->tot_resp);
-
-	freeDatePair(resp->par);
-	free(resp);
-	freeDateTime(b);
-	freeDateTime(e);
-
-	return par;
-}
-
-//end of query 3
-*/
 
 
 //query 4
@@ -389,6 +324,7 @@ void insert_resp_by_oldest(Resposta r, long last_posts[], int day[], int month[]
 		
 }
 
+
 USER get_user_info(TAD_community com, long id){
 	
 	char* bio;
@@ -482,12 +418,12 @@ LONG_list most_voted_answers(TAD_community com, int N, Date begin, Date end){
     		} 
     			if(i<N){
     				ar[i] = r;
-    				ordena(ar,i);
+    				ordenaByScore(ar,i);
     				i++;
     			}
     			else if(getScore(r)>getScore(ar[i-1])){
     				ar[i-1] = r;
-    				ordena(ar,i-1);
+    				ordenaByScore(ar,i-1);
 
     			}
  			}
@@ -502,60 +438,6 @@ LONG_list most_voted_answers(TAD_community com, int N, Date begin, Date end){
    	}
  	return list;
 }
-
-static void swap(Resposta a[],int o,int s) {
-	Resposta tmp = malloc(sizeof(Resposta));
-	tmp=a[o];
-	a[o]=a[s];
-	a[s]=tmp;
-}
-
-static void swapUser(User a[],int o,int s) {
-	User tmp = malloc(sizeof(User));
-	tmp=a[o];
-	a[o]=a[s];
-	a[s]=tmp;
-}
-static void swapPergunta(Pergunta a[],int o,int s) {
-	Pergunta tmp = malloc(sizeof(Pergunta));
-	tmp=a[o];
-	a[o]=a[s];
-	a[s]=tmp;
-}
-
-static void ordena(Resposta a[],int N) {
-	int i=N;
-	while (i>0 && getScore(a[i])>getScore(a[i-1])) {
-		swap(a,i,i-1);
-		i--;
-	}
-}
-
-static void ordenaUser(User a[],int N){
-	int i=N;
-	while (i>0 && getNrPosts(a[i])>getNrPosts(a[i-1])) {
-		swapUser(a,i,i-1);
-		i--;
-	}
-}
-
-
-static void ordenaPdata(Pergunta p[], int N){
-	int i = N;
-	while (i>0 && compareDateTime(getDatep(p[i]),getDatep(p[i-1])) == 1){
-		swapPergunta(p,i,i-1);
-		i--;
-	}
-}
-
-static void ordenaPerg(Pergunta a[], int N){
-	int i=N;
-	while (i>0 && getSize(a[i])>getSize(a[i-1])){
-		swapPergunta(a,i,i-1);
-		i--;
-	}
-}
-
 
 //query 7
 LONG_list most_answered_questions(TAD_community com, int N, Date begin, Date end){

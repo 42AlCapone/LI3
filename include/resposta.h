@@ -2,14 +2,18 @@
 #define _RESPOSTA_H_
 
 #include"datetime.h"
-//#include "date.h"
 #include <stdio.h>
+#include <glib.h>
 
 typedef struct resposta *Resposta;
 
 Resposta initResposta(long mainID, long parentID, char* date, int scr, long userID, int cmmtcount, float rt);
 
 Resposta genResposta();
+
+void swapResp(Resposta a[],int o,int s);
+
+void ordenaByScore(Resposta a[],int N);
 
 long getIdr(Resposta r);
 

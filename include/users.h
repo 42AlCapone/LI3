@@ -11,6 +11,10 @@ User initUser(long id, char* bio, int rep, char* name, int views, int voteDif, i
 // Função que copia um user e retorna-o
 User copyUser(User u);
 
+void swapUser(User a[],int o,int s);
+
+void ordenaUser(User a[],int N);
+
 /* recebe um User e liberta toda a memória utilizada pelo mesmo*/
 void freeUser(User u);
 

@@ -13,6 +13,12 @@ Pergunta genPergunta();
 
 void insertResposta(Pergunta p, Resposta r);
 
+void swapPergunta(Pergunta a[],int o,int s);
+
+void ordenaPdata(Pergunta p[], int N);
+
+void ordenaPerg(Pergunta a[], int N);
+
 GTree* getTree(Pergunta p);
 
 Resposta getResp(Pergunta p, Date d);

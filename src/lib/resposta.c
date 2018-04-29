@@ -1,12 +1,10 @@
+#include <glib.h>
 #include <stdlib.h>
 #include <string.h>
-#include "../../include/resposta.h"
-//#include "datetime.c"
-//#include "pergunta.h"
-#include <glib.h>
-#include "../../include/date.h"
-#include "../../include/users.h"
-#include "../../include/interface.h"
+#include "resposta.h"
+#include "date.h"
+#include "users.h"
+#include "interface.h"
 #include <stdio.h>
 
 struct resposta{
@@ -49,6 +47,20 @@ Resposta initResposta(long mainID, long parentID, char* date, int scr, long user
   return temp;
 }
 
+void swapResp(Resposta a[],int o,int s) {
+  Resposta tmp = malloc(sizeof(Resposta));
+  tmp=a[o];
+  a[o]=a[s];
+  a[s]=tmp;
+}
+
+void ordenaByScore(Resposta a[],int N) {
+  int i=N;
+  while (i>0 && getScore(a[i])>getScore(a[i-1])) {
+    swapResp(a,i,i-1);
+    i--;
+  }
+}
 
 
 long getIdr(Resposta r){
@@ -131,21 +143,3 @@ void freeResposta(Resposta r){
   freeDateTime(r->creationTime);
   free(r);
 }
-/*
-int main(){
-
-	Resposta r1 = initResposta(1, 1, 9, 1, 1994, 21, 35, 100, 1, 10, 5);
-	Resposta r2 = initResposta(2, 1, 6, 1, 1990, 12, 20, 43, 2, 6, 1);
-	Resposta r3 = copyResposta(r1);
-
-	printf("compareRespostas = %d\n", compareRespostas(r1, r2));
-	printf("compareRespostas = %d\n", compareRespostas(r1, r3));
-	printf("compareRespostas = %d\n", compareRespostas(r2, r1));
-
-	freeResposta(r1);
-	freeResposta(r2);
-	freeResposta(r3);
-
-	return 0;
-}
-*/
