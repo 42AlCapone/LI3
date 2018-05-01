@@ -70,8 +70,6 @@ STR_pair info_from_post(TAD_community com, long id){
 		User u = g_hash_table_lookup (com->users, GSIZE_TO_POINTER(getOwnerUserIDp(p)));
 		title = getTitle( p );
 		name = getName( u );
-		printf("Title:%s\n", title);
-		printf("User Name: %s\n", name);
 		pair = create_str_pair( title , name );
 	}else{
 		Resposta r = g_hash_table_lookup(com->respostas, GSIZE_TO_POINTER(id));
@@ -79,8 +77,6 @@ STR_pair info_from_post(TAD_community com, long id){
 		User u = g_hash_table_lookup(com->users, GSIZE_TO_POINTER(getOwnerUserID(r)));
 		title = getTitle( p );
 		name = getName( u );
-		printf("Title: %s\n", title );
-		printf("User Name: %s\n", name );
 		pair = create_str_pair( title, name );
 	}
 	return pair;
@@ -172,7 +168,7 @@ LONG_pair total_posts(TAD_community com, Date begin, Date end){
 
 //query 4
 LONG_list questions_with_tag(TAD_community com, char* tag, Date begin, Date end){
-	int i = 0, j,f;
+	int i = 0, j,f,realoc=2;
 	long id = 0;
 
 	Pergunta p = genPergunta();
@@ -198,12 +194,13 @@ LONG_list questions_with_tag(TAD_community com, char* tag, Date begin, Date end)
     					i++;
     				}
     				else{
-    					ar = realloc(ar,20*sizeof(Pergunta));
+    					ar = realloc(ar,20*realoc*sizeof(Pergunta));
     					
     					reallocLlist(list);
     					ar[i] = p;
     					ordenaPdata(ar,i);
     					i++;
+    					realoc++;
     				}
 
     			}
@@ -221,57 +218,12 @@ LONG_list questions_with_tag(TAD_community com, char* tag, Date begin, Date end)
    	for(f=0;f<i;f++){
    		printf("%ld\n",get_list(list,f));
    	}
-   	printf("%d\n",i);
  	return list;
 }
 
 
 
 
-//query 5 FALTA ACABAR
-/*
-USER get_user_info(TAD_community com, long id){
-	
-	char* bio;
-	USER user = NULL;
-	User u = g_hash_table_lookup(com->users,GSIZE_TO_POINTER(id));
-	bio = getBio(u);
-	printf("%s\n", bio);
-	
-	
-
-	GHashTableIter iter;
-	gpointer id1 = &id;
-	gpointer r1 = &r;
-
-
-
-	g_hash_table_iter_init (&iter, com->respostas);
-	while (g_hash_table_iter_next (&iter,id1,r1)){
-    	if(compare_date_time_begin(begin,getDateT(r)) && compare_date_time_final(end,getDateT(r))){
-    		if (i==0){
-    			ar[0] = r;
-    			i++;
-    		} 
-    			if(i<N){
-    				ar[i] = r;
-    				ordena(ar,i);
-    				i++;
-    			}
-    			else if(getScore(r)>getScore(ar[i-1])){
-    				ar[i-1] = r;
-    				ordena(ar,i-1);
-
-    			}
- 			}
-    }
-
-
-return user;
-
-
-}
-*/
 
 //query 5
 
@@ -391,7 +343,80 @@ USER get_user_info(TAD_community com, long id){
 	return user;
 }
 	
-		
+	
+	/*	
+USER get_user_info(TAD_community com, long id) {
+
+
+	char* bio;
+	USER user = NULL;
+	User u = g_hash_table_lookup(com->users,GSIZE_TO_POINTER(id));
+	bio = getBio(u);
+
+	int i = 0;
+	long id = 0;
+
+	Resposta r = genResposta();
+	Pergunta p = genPergunta();
+
+	DateTime d = initDateTime(0,0,0,0,0,0);
+	setDateT(d,r);
+	setDateP(d,p);
+	Resposta *arR = malloc(sizeof(Resposta)*10);
+	Pergunta *arP = malloc(sizeof(Pergunta)*10);
+
+	
+	GHashTableIter iter;
+	gpointer id1 = &id;
+	gpointer r1 = &r;
+	gpointer p1 = &p;
+
+	g_hash_table_iter_init (&iter, com->respostas);
+	while (g_hash_table_iter_next (&iter,id1,r1)){
+    	if(compare_date_time_begin(begin,getDateT(r)) && compare_date_time_final(end,getDateT(r))){
+    		if (i==0){
+    			ar[0] = r;
+    			i++;
+    		} 
+    			if(i<N){
+    				ar[i] = r;
+    				ordenaByScore(ar,i);
+    				i++;
+    			}
+    			else if(getScore(r)>getScore(ar[i-1])){
+    				ar[i-1] = r;
+    				ordenaByScore(ar,i-1);
+
+    			}
+ 			}
+    	}
+
+
+	g_hash_table_iter_init (&iter, com->perguntas);
+	while (g_hash_table_iter_next (&iter,id1,r1)){
+    	if(compare_date_time_begin(begin,getDateT(r)) && compare_date_time_final(end,getDateT(r))){
+    		if (i==0){
+    			ar[0] = r;
+    			i++;
+    		} 
+    			if(i<N){
+    				ar[i] = r;
+    				ordenaByScore(ar,i);
+    				i++;
+    			}
+    			else if(getScore(r)>getScore(ar[i-1])){
+    				ar[i-1] = r;
+    				ordenaByScore(ar,i-1);
+
+    			}
+ 			}
+    	}
+
+
+ 	return list;
+
+}
+*/
 
 //query 6
 LONG_list most_voted_answers(TAD_community com, int N, Date begin, Date end){

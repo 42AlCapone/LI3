@@ -1,9 +1,9 @@
 #include <stdlib.h>
-#include "datetime.h"
 #include <stdio.h>
 #include <string.h>
-#include "../../include/date.h"
-#include "../../include/common.h"
+#include "date.h"
+#include "datetime.h"
+#include "common.h"
 
 
 struct datetime{
@@ -177,33 +177,6 @@ DateTime stringToDateT(char* date){
     token = strtok(NULL, "-T:.");
     i++;
   }
-/*
-  token = strtok(NULL,"T");
-
-  //data year,month,day
-  token = strtok(data,"-");
-  token = strtok(NULL,"-");
-  token = strtok(NULL,"-");
-  
-  //time hour,min,seg
-  token = strtok(time,":");
-  token = strtok(NULL,":");
-  token = strtok(NULL,":");
-
-  *(date + 19) = '\0';
-  char* seg = date+17;
-  *(date + 16) = '\0';
-  char* min = date + 14;
-  *(date + 13) = '\0';
-  char* hr = date+11;
-  *(date + 10) = '\0';
-  char* d = date+8;
-  *(date +7) = '\0';
-  char* m = date+5;
-  *(date +4) = '\0';
-  char* y = date;
-*/
-
 
   DateTime a = initDateTime(atoi(d),atoi(m),atoi(y),atoi(hr),atoi(min),atoi(seg));
   return a;
@@ -252,32 +225,3 @@ void freeDatePair(DatePair p){
 	freeDateTime(p->end);
 	free(p);
 }
-
-/*
-int main(){
-	int d1 = 9;
-	int m1 = 1;
-	int y1 = 1994;
-	int h1 = 21;
-	int min1 = 35;
-  int seg1 = 20;
-
-	int d2 = 6;
-	int m2 = 1;
-	int y2 = 1990;
-	int h2 = 4;
-	int min2 = 20;
-  int seg2 = 20;
-
-	DateTime t1 = initDateTime(d1, m1, y1, h1, min1, seg1);
-
-	DateTime t2 = initDateTime(d2, m2, y2, h2, min2, seg2);
-
-	printf("%d\n", compareDateTime(t1, t2));
-
-	freeDateTime(t1);
-	freeDateTime(t2);
-
-	return 0;
-}
-*/
