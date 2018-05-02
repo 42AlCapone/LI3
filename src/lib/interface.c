@@ -344,7 +344,7 @@ USER get_user_info(TAD_community com, long id){
 }
 	
 	
-	/*	
+/*	
 USER get_user_info(TAD_community com, long id) {
 
 
@@ -586,7 +586,7 @@ gboolean iterateRate(Date d, Resposta r, Resposta best){
 	return FALSE;
 }
 
-/*
+
 TAD_community clean(TAD_community com){
 	if(!com)
 		return com;
@@ -596,7 +596,7 @@ TAD_community clean(TAD_community com){
 	free(com);
 	return  NULL;
 }
-*/
+/*
 TAD_community clean(TAD_community com){
 	if(!com)
 		return com;
@@ -637,4 +637,4 @@ TAD_community clean(TAD_community com){
 	return  NULL;
 
 }
-
+*/

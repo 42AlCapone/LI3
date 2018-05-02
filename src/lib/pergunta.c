@@ -60,8 +60,8 @@ Pergunta initPergunta(long mainID, char* date, int scr, long userID, char* ttl, 
   //temp->answerCount = anscnt;
   temp->commentCount = cCount;
 
-  //temp->resp = g_tree_new((GCompareFunc)compareDateTime);
-  temp->resp = g_tree_new_full((GCompareDataFunc)compareDateTime, NULL, (GDestroyNotify)freeDateTime, (GDestroyNotify)freeResposta);
+  temp->resp = g_tree_new((GCompareFunc)compareDateTime);
+  //temp->resp = g_tree_new_full((GCompareDataFunc)compareDateTime, NULL, (GDestroyNotify)freeDateTime, (GDestroyNotify)freeResposta);
 
   return temp;
 }
