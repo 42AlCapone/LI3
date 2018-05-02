@@ -586,10 +586,50 @@ gboolean iterateRate(Date d, Resposta r, Resposta best){
 	return FALSE;
 }
 
-
+/*
 TAD_community clean(TAD_community com){
 	if(!com)
 		return com;
+	g_hash_table_destroy(com-> perguntas);
+	g_hash_table_destroy(com-> respostas);
+	g_hash_table_destroy(com-> users);
+	free(com);
+	return  NULL;
+}
+*/
+TAD_community clean(TAD_community com){
+	if(!com)
+		return com;
+
+	long idp, idr, idu;
+
+	Pergunta p = genPergunta();
+	GHashTableIter iter1;
+	gpointer id1 = &idp;
+	gpointer p1 = &p;
+	g_hash_table_iter_init (&iter1, com->perguntas);
+	while (g_hash_table_iter_next (&iter1,id1,p1)){
+		freePergunta(p);
+	}
+
+	Resposta r = genResposta();
+	GHashTableIter iter2;
+	gpointer id2 = &idr;
+	gpointer r1 = &r;
+	g_hash_table_iter_init (&iter2, com->perguntas);
+	while (g_hash_table_iter_next (&iter2,id2,r1)){
+		freeResposta(r);
+	}
+	
+	User u = genUser();
+	GHashTableIter iter3;
+	gpointer id3 = &idu;
+	gpointer u1 = &u;
+	g_hash_table_iter_init (&iter3, com->perguntas);
+	while (g_hash_table_iter_next (&iter3,id3,u1)){
+		freeUser(u);
+	}
+
 	g_hash_table_destroy(com-> perguntas);
 	g_hash_table_destroy(com-> respostas);
 	g_hash_table_destroy(com-> users);

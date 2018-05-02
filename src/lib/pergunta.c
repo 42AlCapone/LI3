@@ -60,8 +60,8 @@ Pergunta initPergunta(long mainID, char* date, int scr, long userID, char* ttl, 
   //temp->answerCount = anscnt;
   temp->commentCount = cCount;
 
-  temp->resp = g_tree_new((GCompareFunc)compareDateTime);
-  //temp->resp = g_tree_new_full((GCompareDataFunc)compare_dates, NULL, (GDestroyNotify)free_date, (GDestroyNotify)freeResposta);
+  //temp->resp = g_tree_new((GCompareFunc)compareDateTime);
+  temp->resp = g_tree_new_full((GCompareDataFunc)compareDateTime, NULL, (GDestroyNotify)freeDateTime, (GDestroyNotify)freeResposta);
 
   return temp;
 }
@@ -205,7 +205,7 @@ int pergunta_entre_datas(Pergunta p, DateTime b, DateTime e){
 }
 
 void freePergunta(Pergunta p1){
-    //g_tree_foreach(p1->resp,(GTraverseFunc) freeResposta);
+    //g_tree_foreach(p1->resp,(GTraverseFunc)freeResposta, G_IN_ORDER);
     g_tree_destroy(p1->resp);
     free(p1->title);
     free(p1->tags);
