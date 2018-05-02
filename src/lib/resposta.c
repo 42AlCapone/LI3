@@ -93,7 +93,7 @@ float getRate(Resposta r){
 }
 
 void setId(long id,Resposta r){
-  r->id = id; 
+  r->id = id;
 }
 void setRate(float rate, Resposta r){
   r->rate = rate;
@@ -141,5 +141,5 @@ int resposta_entre_datas(Resposta r, DateTime b, DateTime e){
 
 void freeResposta(Resposta r){
   freeDateTime(r->creationTime);
-  free(r);
+  //free(r);
 }

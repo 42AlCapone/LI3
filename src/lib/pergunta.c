@@ -1,6 +1,7 @@
 #include<stdlib.h>
 #include<string.h>
 #include<glib.h>
+#include<stdbool.h>
 #include "pergunta.h"
 #include "resposta.h"
 #include "common.h"
@@ -60,8 +61,8 @@ Pergunta initPergunta(long mainID, char* date, int scr, long userID, char* ttl, 
   //temp->answerCount = anscnt;
   temp->commentCount = cCount;
 
-  temp->resp = g_tree_new((GCompareFunc)compareDateTime);
-  //temp->resp = g_tree_new_full((GCompareDataFunc)compareDateTime, NULL, (GDestroyNotify)freeDateTime, (GDestroyNotify)freeResposta);
+  //temp->resp = g_tree_new((GCompareFunc)compareDateTime);
+  temp->resp = g_tree_new_full((GCompareDataFunc)compareDateTime, NULL, (GDestroyNotify)freeDateTime, (GDestroyNotify)freeResposta);
 
   return temp;
 }
@@ -210,5 +211,5 @@ void freePergunta(Pergunta p1){
     free(p1->title);
     free(p1->tags);
     freeDateTime(p1->creationTime);
-    free(p1);
+    //free(p1);
 }
