@@ -72,4 +72,3 @@ void setTitle (char* title, Pergunta p);
 void freePergunta(Pergunta p);
 
 #endif
-
