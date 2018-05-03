@@ -220,123 +220,102 @@ LONG_list questions_with_tag(TAD_community com, char* tag, Date begin, Date end)
  	return list;
 }
 
-
-
-
-
 //query 5
-
-void insert_perg_by_oldest(Pergunta p, long last_posts[], int day[], int month[], int year[]){
-	for(int i = 0; i < 9; i++){
-		last_posts[i] = last_posts[i+1];
-		day[i] = day[i+1];
-		month[i] = month[i+1];
-		year[i] = year[i+1];
-	}
-
-	last_posts[9] = getIdp(p);
-	day[9] = getDay(getDatep(p));
-	month[9] = getMonth(getDatep(p));
-	year[9] = getYear(getDatep(p));
-}
-
-int cmp_dates(int d1, int m1, int y1, int d2, int m2, int y2){
-	if(y1 > y2) return 1;
-	if(m1 > m2) return 1;
-	if(d1 > d2) return 1;
-	return 0;
-}
-
-void insert_resp_by_oldest(Resposta r, long last_posts[], int day[], int month[], int year[]){
-	int d = getDay(getDateT(r));
-	int m = getMonth(getDateT(r));
-	int y = getYear(getDateT(r));
-	int i = 0;
-	int pf = 0;
-	while(i < 10 && pf == 0){
-		if(cmp_dates(d, m, y, day[i], month[i], year[i]) == 0){
-			pf = 1;
-		}
-		i++;
-	}
-	i--;
-	for(int j = 0; j < i-1; j++){
-		last_posts[j] = last_posts[j+1];
-		day[j] = day[j+1];
-		month[j] = month[j+1];
-		year[j] = year[j+1];
-	}
-	if(i > 0){
-		last_posts[i-1] = getIdr(r);
-		day[i-1] = d;
-		month[i-1] = m;
-		year[i-1] = y;
-	}
-
-}
-
 
 USER get_user_info(TAD_community com, long id){
 
 	char* bio;
 	long idp;
 	long idr;
-	long last_posts[10];
-	int day[10];
-	int month[10];
-	int year[10];
-	int fillup = 0;
+	long ids_perg[10];
+    long ids_resp[10];
+	int dates_perg[10];
+	int dates_resp[10];
+	int n = 0;
 
 	for(int i = 0; i < 10; i++){
-		day[i] = 0;
-		month[i] = 0;
-		year[i] = 0;
+		dates_perg[i] = 0;
+		dates_resp[i] = 0;
 	}
 
 	USER user = NULL;
 	User u = g_hash_table_lookup(com->users,GSIZE_TO_POINTER(id));
 	bio = getBio(u);
-	printf("%s\n", bio);
+	printf("Query 5 - user info\nBio: %s\n", bio);
 
-	GHashTableIter iter_perg;
+	GHashTableIter iter1;
 	Pergunta p = genPergunta();
-	gpointer id_perg = &idp;
+	gpointer id1 = &idp;
 	gpointer p1 = &p;
+	g_hash_table_iter_init(&iter1, com->perguntas);
+	while(g_hash_table_iter_next(&iter1, id1, p1)){
+		if(n >= 10){
+            n = 0;
+        }
+        if(getOwnerUserIDp(p) == id){
+            ids_perg[n] = getIdp(p);
+            dates_perg[n] = absDate(getDatep(p));
+        }
+        n++;
+	}
+    /*
+    printf("ids perguntas:\n");
+    for(int i = 0; i < 10; i++){
+        printf(";%ld", ids_perg[i]);
+    }
+    */
+    n = 0;
 
-	GHashTableIter iter_resp;
+    GHashTableIter iter2;
 	Resposta r = genResposta();
-	gpointer id_resp = &idr;
-	gpointer r1 = &r;
-
-	g_hash_table_iter_init(&iter_perg, com->perguntas);
-	g_hash_table_iter_init(&iter_resp, com->respostas);
-
-	while(g_hash_table_iter_next(&iter_perg, id_perg, p1)){
-		if(fillup < 10 && getOwnerUserIDp(p) == id){
-			last_posts[fillup] = getIdp(p);
-			day[fillup] = getDay(getDatep(p));
-			month[fillup] = getMonth(getDatep(p));
-			year[fillup] = getYear(getDatep(p));
-			fillup++;
-		}
-		else if(getOwnerUserIDp(p) == id){
-			insert_perg_by_oldest(p, last_posts, day, month, year);
-		}
+	gpointer id2 = &idr;
+	gpointer r2 = &r;
+    g_hash_table_iter_init(&iter2, com->respostas);
+    while(g_hash_table_iter_next(&iter2, id2, r2)){
+		if(n >= 10){
+            n = 0;
+        }
+        if(getOwnerUserID(r) == id){
+            ids_resp[n] = getIdr(r);
+            dates_resp[n] = absDate(getDateT(r));
+        }
+        n++;
+	}
+    /*
+    printf("\nids respostas:\n");
+    for(int i = 0; i < 10; i++){
+        printf(";%ld", ids_resp[i]);
+    }
+    */
+    long ids_final[20];
+    int dates_final[20];
+	for(int i = 0; i < 10; i++){
+        ids_final[i] = ids_perg[i];
+        dates_final[i] = dates_perg[i];
+        ids_final[i+10] = ids_resp[i];
+        dates_final[i+10] = dates_resp[i];
 	}
 
-	while(g_hash_table_iter_next(&iter_resp, id_resp, r1)){
-		if(getOwnerUserID(r) == id){
-			insert_resp_by_oldest(r, last_posts, day, month, year);
-		}
-	}
+    int keydate, keyid, i, j;
+    for(i = 0; i < 20; i++){
+        keydate = dates_final[i];
+        keyid = ids_final[i];
+        for(j = i-1; j >= 0 && dates_final[j] > keydate; j--){
+            dates_final[j+1] = dates_final[j];
+            ids_final[j+1] = ids_final[j];
+        }
+        dates_final[j+1] = keydate;
+        ids_final[j+1] = keyid;
+    }
 
-	for(int j = 0; j < 10; j++){
-		printf("%ld:", last_posts[j]);
-	}
-
-	printf("\nBio: %s\n", bio);
-
-	user = create_user(bio, last_posts);
+    long top10[10];
+    printf("\n10 last posts:\n");
+    for(int i = 0; i < 10; i++){
+        top10[i] = ids_final[i+10];
+        printf(";%ld", top10[i]);
+    }
+    printf("\n");
+	user = create_user(bio, top10);
 	freeResposta(r);
 	freeUser(u);
 	return user;

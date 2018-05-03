@@ -1,6 +1,6 @@
 #ifndef _DATETIME_H_
 #define _DATETIME_H_
- 
+
 #include "date.h"
 
 typedef struct datetime *DateTime;
@@ -40,6 +40,8 @@ int getSegundos(DateTime d);
 DateTime getBegin(DatePair p);
 
 DateTime getEnd(DatePair p);
+
+int absDate(DateTime d);
 
 void freeDateTime(DateTime d);
 
