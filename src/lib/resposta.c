@@ -54,6 +54,15 @@ void swapResp(Resposta a[],int o,int s) {
   a[s]=tmp;
 }
 
+
+void ordenaRdata(Resposta r[], int N){
+  int i = N;
+  while (i>0 && compareDateTime(getDateT(r[i]),getDateT(r[i-1])) == 1){
+    swapResp(r,i,i-1);
+    i--;
+  }
+}
+
 void ordenaByScore(Resposta a[],int N) {
   int i=N;
   while (i>0 && getScore(a[i])>getScore(a[i-1])) {

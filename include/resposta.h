@@ -15,6 +15,8 @@ void swapResp(Resposta a[],int o,int s);
 
 void ordenaByScore(Resposta a[],int N);
 
+void ordenaRdata(Resposta r[], int N);
+
 long getIdr(Resposta r);
 
 long getParentID(Resposta r);

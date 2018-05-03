@@ -10,8 +10,6 @@
 #include <string.h>
 #include "interface.h"
 
-static float calcRate(GHashTable* structUsers, long oid, int score, int cCount);
-
 
 
 char** parseTags(char* tags, int *nTags){
@@ -58,26 +56,15 @@ void parsePost(GHashTable* structPerguntas , GHashTable* structRespostas, GHashT
 				oid = atol((char*)xmlGetProp(cur,(const xmlChar*) "OwnerUserId"));
 				title = (char*)xmlGetProp(cur,(const xmlChar*) "Title");
 				tags = (char*)xmlGetProp(cur,(const xmlChar*) "Tags");
-				//aCount = atoi((char*)xmlGetProp(cur, "AnswerCount"));
 				cCount = atoi((char*)xmlGetProp(cur,(const xmlChar*) "CommentCount"));
-				//fCount = atoi((char*)xmlGetProp(cur, "FavoriteCount"));
 				
 				tagsR = parseTags(tags, &nTags);
-			/*	printf("--------Question----------\n");
-				printf("ID: %ld\n", id);
-				printf("Date: %s\n", date);
-				printf("Score: %d\n", score);
-				printf("OwnerUserId: %ld\n", oid);
-				printf("Title : %s\n", title);
-				printf("Tags: %s\n", tags);
-				printf("AnswerCount: %d\n", aCount); */
+		
 				Pergunta p = initPergunta(id, date, score, oid, title, tagsR, nTags, cCount);
 		    	g_hash_table_insert(structPerguntas, GSIZE_TO_POINTER(id), p);
 		    	u = g_hash_table_lookup(structUsers, GSIZE_TO_POINTER(oid));
-		    	incrNrPosts(u);
-
-			}else{
-				if((!xmlStrcmp(xmlGetProp(cur ,(const xmlChar*) "PostTypeId"), (const xmlChar *) "2"))){
+		}else{
+			if((!xmlStrcmp(xmlGetProp(cur ,(const xmlChar*) "PostTypeId"), (const xmlChar *) "2"))){
 				id = atol((char*)xmlGetProp(cur,(const xmlChar *) "Id"));
 				pid = atol((char*)xmlGetProp(cur,(const xmlChar *) "ParentId"));
 				date = (char*)xmlGetProp(cur,(const xmlChar *) "CreationDate");
@@ -85,34 +72,26 @@ void parsePost(GHashTable* structPerguntas , GHashTable* structRespostas, GHashT
 				oid = atol((char*)xmlGetProp(cur,(const xmlChar *) "OwnerUserId"));
 				cCount = atoi((char*)xmlGetProp(cur,(const xmlChar *) "CommentCount"));
 				rate = calcRate(structUsers,oid,score,cCount);
-
-			/*	printf("---------Response--------\n");
-				printf("ID: %ld\n", id);
-				printf("ParentId: %ld\n", pid);
-				printf("Date: %s\n", date);
-				printf("Score: %i\n", score);
-				printf("OwnerUserId: %ld\n", oid);
-				printf("CommentCount: %d\n", cCount); */
 				
-				Resposta r = initResposta(id, pid, date, score, oid, cCount, rate);
-		    	Pergunta p = g_hash_table_lookup(structPerguntas,GSIZE_TO_POINTER(pid));
-		    	g_hash_table_insert(structRespostas, GSIZE_TO_POINTER(id),r);
-		    	
-		    	if(p!=NULL){
-		    	GTree* respostas = getTree(p);
-		    	DateTime d = getDateT(r);
-		    	g_tree_insert(respostas, d, r);
-		    	//printf("Resposta Inserida!\n");
-		    	}
 
+				Resposta r = initResposta(id, pid, date, score, oid, cCount, rate);
+		   		Pergunta p = g_hash_table_lookup(structPerguntas,GSIZE_TO_POINTER(pid));
+		   		g_hash_table_insert(structRespostas, GSIZE_TO_POINTER(id),r);
 		    	
-		    	u = g_hash_table_lookup(structUsers, GSIZE_TO_POINTER(oid));
-		    	incrNrPosts(u);
+		   		if(p!=NULL){
+		   			GTree* respostas = getTree(p);
+	    			DateTime d = getDateT(r);
+	    			g_tree_insert(respostas, d, r);
+	    		}
+
+	    		u = g_hash_table_lookup(structUsers, GSIZE_TO_POINTER(oid));
+	    		incrNrPosts(u);
 		    	}
 			}	
 		}
 	cur = cur -> next;
 	}
+	xmlFreeDoc(doc);
 	printf("Posts inseridos\n");	
 }
 
@@ -157,5 +136,6 @@ void parseUser(GHashTable* structUsers,char *docname){
 	    }
 	    cur = cur->next;
 	}
+	xmlFreeDoc(doc);
 	printf("Users inseridos\n");
  }
