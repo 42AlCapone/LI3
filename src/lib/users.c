@@ -5,7 +5,7 @@
 #include <string.h>
 #include "common.h"
 
-struct user{ 
+struct user{
 	long id;
 	char* bio;
 	int rep;
@@ -18,7 +18,7 @@ struct user{
 User genUser(){
 	User u = malloc(sizeof(struct user));
 	u-> id = 0;
-	u-> bio = NULL; 
+	u-> bio = NULL;
 	u-> rep = 0;
 	u-> name = NULL;
 	u-> views = 0;
@@ -30,7 +30,7 @@ User genUser(){
 User initUser(long id, char* bio, int rep, char* name, int views, int voteDif, int nrPosts){
 	User u = malloc(sizeof(struct user));
 	u-> id = id;
-	u-> bio = mystrdup(bio); 
+	u-> bio = mystrdup(bio);
 	u-> rep = rep;
 	u-> name = mystrdup(name);
 	u-> views = views;
@@ -42,7 +42,7 @@ User initUser(long id, char* bio, int rep, char* name, int views, int voteDif, i
 User copyUser(User u){
   	User new = initUser(getId(u),getBio(u),getRep(u),getName(u),getViews(u),getVoteDif(u),getNrPosts(u));
 
-  	return new;	
+  	return new;
 }
 
 void swapUser(User a[],int o,int s) {
@@ -60,11 +60,11 @@ void ordenaUser(User a[],int N){
 	}
 }
 
-	
+
 void freeUser(User u){
 	free(u->name);
 	free(u->bio);
-	free(u);
+	//free(u);
 }
 
 //gets

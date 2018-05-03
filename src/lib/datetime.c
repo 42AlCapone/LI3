@@ -36,7 +36,7 @@ DatePair initDatePair(DateTime b, DateTime e){
 	DatePair par = malloc(sizeof(struct datepair));
 	par->begin = initDateTime(b->day, b->month, b->year, b->hour, b->minute, b->seg);
 	par->end = initDateTime(e->day, e->month, e->year, e->hour, e->minute, b->seg);
-	
+
 	return par;
 }
 
@@ -95,11 +95,11 @@ int compare_date_time_final (Date d1, DateTime d2)
        return 0;
 
     else if (get_year(d1) >= d2->year){
-        
+
         if (get_month(d1) < d2->month)
               return 0;
          else if (get_month(d1) >= d2->month){
-             
+
               if (get_day(d1) < d2->day)
               return 0;
          else if(get_day(d1) >= d2->day)
@@ -110,7 +110,7 @@ int compare_date_time_final (Date d1, DateTime d2)
 
          }
     }
-           
+
     return 0;
 }
 
@@ -122,11 +122,11 @@ int compare_date_time_begin (Date d1, DateTime d2)
        return 0;
 
     else if (get_year(d1) <= d2->year){
-        
+
         if (get_month(d1) > d2->month)
               return 0;
          else if (get_month(d1) <= d2->month){
-             
+
               if (get_day(d1) > d2->day)
               return 0;
          else if(get_day(d1) <= d2->day)
@@ -137,7 +137,7 @@ int compare_date_time_begin (Date d1, DateTime d2)
 
          }
     }
-           
+
     return 0;
 }
 
@@ -151,26 +151,26 @@ DateTime stringToDateT(char* date){
   char *hr;
   char* min;
   char* seg;
-  
+
   token = strtok(date,"-");
   while (token != NULL && i<7){
     switch (i){
-    case 0: 
-      y = mystrdup(token); 
+    case 0:
+      y = mystrdup(token);
       break;
-    case 1: 
+    case 1:
       m = mystrdup(token);
       break;
-    case 2: 
+    case 2:
       d = mystrdup(token);
       break;
-    case 4: 
+    case 4:
       hr = mystrdup(token);
       break;
-    case 5: 
+    case 5:
       min = mystrdup(token);
       break;
-    case 6: 
+    case 6:
       seg = mystrdup(token);
       break;
     }
@@ -180,7 +180,7 @@ DateTime stringToDateT(char* date){
 
   DateTime a = initDateTime(atoi(d),atoi(m),atoi(y),atoi(hr),atoi(min),atoi(seg));
   return a;
-  
+
 }
 
 int getDay(DateTime d){
@@ -220,6 +220,9 @@ void freeDateTime(DateTime d){
   free(d);
 }
 
+int absDate(DateTime d){
+    return (getYear(d)*100) + getMonth(d) + 31 + getDay(d);
+}
 void freeDatePair(DatePair p){
 	freeDateTime(p->begin);
 	freeDateTime(p->end);
