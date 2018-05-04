@@ -207,7 +207,7 @@ int pergunta_entre_datas(Pergunta p, DateTime b, DateTime e){
 
 void freePergunta(Pergunta p1){
     //g_tree_foreach(p1->resp,(GTraverseFunc)freeResposta, G_IN_ORDER);
-    g_tree_destroy(p1->resp);
+    //g_tree_destroy(p1->resp);
     free(p1->title);
     free(p1->tags);
     freeDateTime(p1->creationTime);
