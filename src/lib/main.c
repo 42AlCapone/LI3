@@ -58,7 +58,7 @@ int main(int argc, char **argv){
   LONG_list q4 = questions_with_tag(com,tag,q4_d1,q4_d2);
   int f;
   int size4 = getlSize(q4);
-  for(f=0;f<size4 && get_list(q4,f)!=0;f++){
+  for(f=0;f<size4;f++){
     printf("%ld\n",get_list(q4,f));
   }
   free_list(q4);
