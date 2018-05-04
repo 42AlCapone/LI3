@@ -25,8 +25,8 @@ struct TCD_community{
 
 TAD_community init(){
 	TAD_community comunidade = malloc(sizeof(struct TCD_community));
-	comunidade->perguntas = g_hash_table_new(g_direct_hash, g_direct_equal);
-	//comunidade->perguntas = g_hash_table_new_full(g_direct_hash, g_direct_equal, NULL, (GDestroyNotify)freePergunta);
+	//comunidade->perguntas = g_hash_table_new(g_direct_hash, g_direct_equal);
+	comunidade->perguntas = g_hash_table_new_full(g_direct_hash, g_direct_equal, NULL, (GDestroyNotify)freePergunta);
 
 	//comunidade->respostas = g_hash_table_new(g_direct_hash, g_direct_equal);
 	comunidade->respostas = g_hash_table_new_full(g_direct_hash, g_direct_equal, NULL, (GDestroyNotify)freeResposta);
@@ -89,7 +89,7 @@ LONG_list top_most_active(TAD_community com, int N){
 
 	User u = genUser();
 	User *ar = malloc(sizeof(User)*N);
-	
+
 	GHashTableIter iter;
 	gpointer id1 = &id;
 	gpointer u1 = &u;
@@ -101,7 +101,7 @@ LONG_list top_most_active(TAD_community com, int N){
     		if (i==0){
     			ar[0] = u;
     			i++;
-    		} 
+    		}
     		if(i<N){
     			ar[i] = u;
     			ordenaUser(ar,i);
@@ -113,7 +113,7 @@ LONG_list top_most_active(TAD_community com, int N){
 
    			}
  	}
- 	
+
  	for(i=0;i<N;i++){
     	set_list(list,i,getId(ar[i]));
   	}
@@ -152,7 +152,6 @@ LONG_pair total_posts(TAD_community com, Date begin, Date end){
     		rCount++;
 
     pair = create_long_pair(pCount,rCount);
-
  	return pair;
 }
 
@@ -209,167 +208,7 @@ LONG_list questions_with_tag(TAD_community com, char* tag, Date begin, Date end)
 
 //query 5
 
-
-/*
-void insert_perg_by_oldest(Pergunta p, long last_posts[], int day[], int month[], int year[]){
-	for(int i = 0; i < 9; i++){
-		last_posts[i] = last_posts[i+1];
-		day[i] = day[i+1];
-		month[i] = month[i+1];
-		year[i] = year[i+1];
-	}
-
-	last_posts[9] = getIdp(p);
-	day[9] = getDay(getDatep(p));
-	month[9] = getMonth(getDatep(p));
-	year[9] = getYear(getDatep(p)); 
-}
-
-int cmp_dates(int d1, int m1, int y1, int d2, int m2, int y2){
-	if(y1 > y2) return 1;
-	if(m1 > m2) return 1;
-	if(d1 > d2) return 1;
-	return 0;
-}
-
-void insert_resp_by_oldest(Resposta r, long last_posts[], int day[], int month[], int year[]){
-	int d = getDay(getDateT(r));
-	int m = getMonth(getDateT(r));
-	int y = getYear(getDateT(r));
-	int i = 0;
-	int pf = 0;
-	while(i < 10 && pf == 0){
-		if(cmp_dates(d, m, y, day[i], month[i], year[i]) == 0){
-			pf = 1;
-		}
-		i++;
-	}
-	i--;
-	for(int j = 0; j < i-1; j++){
-		last_posts[j] = last_posts[j+1];
-		day[j] = day[j+1];
-		month[j] = month[j+1];
-		year[j] = year[j+1];
-	}
-	if(i > 0){
-		last_posts[i-1] = getIdr(r);
-		day[i-1] = d;
-		month[i-1] = m; 
-		year[i-1] = y;
-	}
-		
-}
-
-
-=======
->>>>>>> aabb485a36453aed150712d01c55d1167c60a657
-USER get_user_info(TAD_community com, long id){
-
-	char* bio;
-	long idp;
-	long idr;
-	long ids_perg[10];
-    long ids_resp[10];
-	int dates_perg[10];
-	int dates_resp[10];
-	int n = 0;
-
-	for(int i = 0; i < 10; i++){
-		dates_perg[i] = 0;
-		dates_resp[i] = 0;
-	}
-
-	USER user = NULL;
-	User u = g_hash_table_lookup(com->users,GSIZE_TO_POINTER(id));
-	bio = getBio(u);
-	printf("Query 5 - user info\nBio: %s\n", bio);
-
-	GHashTableIter iter1;
-	Pergunta p = genPergunta();
-	gpointer id1 = &idp;
-	gpointer p1 = &p;
-	g_hash_table_iter_init(&iter1, com->perguntas);
-	while(g_hash_table_iter_next(&iter1, id1, p1)){
-		if(n >= 10){
-            n = 0;
-        }
-        if(getOwnerUserIDp(p) == id){
-            ids_perg[n] = getIdp(p);
-            dates_perg[n] = absDate(getDatep(p));
-        }
-        n++;
-	}
-    
-    printf("ids perguntas:\n");
-    for(int i = 0; i < 10; i++){
-        printf(";%ld", ids_perg[i]);
-    }
-    */
-/*
-    n = 0;
-
-    GHashTableIter iter2;
-	Resposta r = genResposta();
-	gpointer id2 = &idr;
-	gpointer r2 = &r;
-    g_hash_table_iter_init(&iter2, com->respostas);
-    while(g_hash_table_iter_next(&iter2, id2, r2)){
-		if(n >= 10){
-            n = 0;
-        }
-        if(getOwnerUserID(r) == id){
-            ids_resp[n] = getIdr(r);
-            dates_resp[n] = absDate(getDateT(r));
-        }
-        n++;
-	}*/
-    /*
-    printf("\nids respostas:\n");
-    for(int i = 0; i < 10; i++){
-        printf(";%ld", ids_resp[i]);
-    }
-    */
-    /*
-    long ids_final[20];
-    int dates_final[20];
-	for(int i = 0; i < 10; i++){
-        ids_final[i] = ids_perg[i];
-        dates_final[i] = dates_perg[i];
-        ids_final[i+10] = ids_resp[i];
-        dates_final[i+10] = dates_resp[i];
-	}
-
-    int keydate, keyid, i, j;
-    for(i = 0; i < 20; i++){
-        keydate = dates_final[i];
-        keyid = ids_final[i];
-        for(j = i-1; j >= 0 && dates_final[j] > keydate; j--){
-            dates_final[j+1] = dates_final[j];
-            ids_final[j+1] = ids_final[j];
-        }
-        dates_final[j+1] = keydate;
-        ids_final[j+1] = keyid;
-    }
-
-    long top10[10];
-    printf("\n10 last posts:\n");
-    for(int i = 0; i < 10; i++){
-        top10[i] = ids_final[i+10];
-        printf(";%ld", top10[i]);
-    }
-    printf("\n");
-	user = create_user(bio, top10);
-	freeResposta(r);
-	freeUser(u);
-	return user;
-}
-*/
-
-	
 static long compDate_RespPer(int *flag, int *flagID,Pergunta p,Resposta r);
-
-
-
 
 USER get_user_info(TAD_community com, long id) {
 
@@ -403,7 +242,7 @@ USER get_user_info(TAD_community com, long id) {
     		if (i==0){
     			arR[0] = r;
     			i++;
-    		} 
+    		}
     			if(i<10){
     				arR[i] = r;
     				ordenaRdata(arR,i);
@@ -424,7 +263,7 @@ USER get_user_info(TAD_community com, long id) {
     		if (r==0){
     			arP[0] = p;
     			j++;
-    		} 
+    		}
    			if(j<10){
    				arP[j] = p;
    				ordenaPdata(arP,j);
@@ -446,7 +285,7 @@ USER get_user_info(TAD_community com, long id) {
     int flagID=2;
 
     for (c=0;c<10;c++){
-    	
+
     	posts[c]=compDate_RespPer(&flag,&flagID,arP[perg],arR[resp]);
 
     	switch(flag){
@@ -467,13 +306,7 @@ USER get_user_info(TAD_community com, long id) {
     }
 
     user = create_user(bio,posts);
-    
-    
-
-
-
  	return user;
-
 }
 
 
@@ -522,7 +355,7 @@ LONG_list most_voted_answers(TAD_community com, int N, Date begin, Date end){
     		if (i==0){
     			ar[0] = r;
     			i++;
-    		} 
+    		}
     		if(i<N){
     			ar[i] = r;
     			ordenaByScore(ar,i);
@@ -539,7 +372,7 @@ LONG_list most_voted_answers(TAD_community com, int N, Date begin, Date end){
     for(i=0;i<N;i++){
     	set_list(list,i,getIdr(ar[i]));
     }
-  
+
  	return list;
 }
 
@@ -625,9 +458,8 @@ LONG_list contains_word(TAD_community com, char* word, int N){
     	}
 
     for(i=0;i<N;i++){
-    	set_list(list,i,getIdp(ar[i]));	
+    	set_list(list,i,getIdp(ar[i]));
     }
-
    	return list;
 }
 
@@ -639,7 +471,6 @@ long better_answer(TAD_community com, long id){
 	Resposta r = genResposta();
 	g_tree_foreach(t,(GTraverseFunc)iterateRate,r);
 	long idResp = getIdr(r);
-    //freePergunta(p);
 	return idResp;
 }
 
@@ -665,45 +496,3 @@ TAD_community clean(TAD_community com){
 	free(com);
 	return  NULL;
 }
-/*
-TAD_community clean(TAD_community com){
-	if(!com)
-		return com;
-
-	long idp, idr, idu;
-
-	Pergunta p = genPergunta();
-	GHashTableIter iter1;
-	gpointer id1 = &idp;
-	gpointer p1 = &p;
-	g_hash_table_iter_init (&iter1, com->perguntas);
-	while (g_hash_table_iter_next (&iter1,id1,p1)){
-		freePergunta(p);
-	}
-
-	Resposta r = genResposta();
-	GHashTableIter iter2;
-	gpointer id2 = &idr;
-	gpointer r1 = &r;
-	g_hash_table_iter_init (&iter2, com->perguntas);
-	while (g_hash_table_iter_next (&iter2,id2,r1)){
-		freeResposta(r);
-	}
-
-	User u = genUser();
-	GHashTableIter iter3;
-	gpointer id3 = &idu;
-	gpointer u1 = &u;
-	g_hash_table_iter_init (&iter3, com->perguntas);
-	while (g_hash_table_iter_next (&iter3,id3,u1)){
-		freeUser(u);
-	}
-
-	g_hash_table_destroy(com-> perguntas);
-	g_hash_table_destroy(com-> respostas);
-	g_hash_table_destroy(com-> users);
-	free(com);
-	return  NULL;
-
-}
-*/
