@@ -12,6 +12,7 @@
 #include "datetime.h"
 #include "pair.h"
 #include "list.h"
+#include "query.h"
 
 
 // struct TCD_community com as estruturas do programa
@@ -307,8 +308,8 @@ USER get_user_info(TAD_community com, long id) {
 
     }
 
-  
-    
+
+
     user = create_user(bio,posts);
  	return user;
 }
@@ -470,12 +471,13 @@ LONG_list contains_word(TAD_community com, char* word, int N){
    	return list;
 }
 //query 9
-
+/*
 static gboolean iterateBoth(Date d, Resposta r, Query q);
 
 LONG_list both_participated(TAD_community com, long id1, long id2, int N){
 	long idp = 0;
 	int i = 0;
+
 	Query aux = initQuery(id1, id2, N, com->perguntas);
 	Pergunta p = genPergunta();
 	DateTime d = initDateTime(0,0,0,0,0,0);
@@ -485,7 +487,7 @@ LONG_list both_participated(TAD_community com, long id1, long id2, int N){
 	GHashTableIter iter;
 	gpointer in = &idp;
 	gpointer p1 = &p;
-	
+
 	g_hash_table_iter_init (&iter, com->perguntas);
 	while (g_hash_table_iter_next (&iter,in,p1)){
 		if( id1 == getOwnerUserIDp(p) ){
@@ -509,21 +511,15 @@ LONG_list both_participated(TAD_community com, long id1, long id2, int N){
 	for(i=0 ; i< getIndex(aux) ; i++){
 		set_list(list,i,getIdp(ar[i]));
 	}
-	printf("Query 9\n");
-   	
+
    	for(i=0;i< getIndex(aux) ;i++){
    		printf("%ld\n",get_list(list,i));
    	}
-   	freeQuery(aux);	
+   	freeQuery(aux);
 
    	return list;
 
 }
-
-
-
-
-
 
 static gboolean iterateBoth(Date d, Resposta r, Query q){
 	if(getAux1(q)){
@@ -541,6 +537,82 @@ static gboolean iterateBoth(Date d, Resposta r, Query q){
 	}
 	return FALSE;
 }
+*/
+static gboolean iterateBoth(Date d, Resposta r, Query q);
+
+LONG_list both_participated(TAD_community com, long id1, long id2, int N){
+    long idp = 0;
+	int i = 0;
+
+    Query aux = initQuery(id1, id2, N, com->perguntas);
+    Pergunta p = genPergunta();
+    GTree* t;
+    GHashTableIter iter;
+    gpointer in = &idp;
+    gpointer p1 = &p;
+
+    g_hash_table_iter_init (&iter, com->perguntas);
+	while (g_hash_table_iter_next (&iter,in,p1)){
+        if(id1 == getOwnerUserIDp(p)){
+            setAux1(aux);
+            t = getTree(p);
+			g_tree_foreach(t , (GTraverseFunc)iterateBoth, aux);
+        }
+        else if(id2 == getOwnerUserIDp(p)){
+            setAux2(aux);
+            t = getTree(p);
+            g_tree_foreach(t , (GTraverseFunc)iterateBoth, aux);
+        }
+        else{
+            t = getTree(p);
+            g_tree_foreach(t , (GTraverseFunc)iterateBoth, aux);
+        }
+
+        setQuery(aux);
+    }
+
+    int s = getIndex(aux);
+    printf("index de aux final = %d\n", s);
+
+    LONG_list list = create_list(s+1);
+
+    printf("pergunta índice 0  em aux = %ld\n", getIDlist(aux, i));
+	for(int z =0 ; z < s+1 ; z++){
+        long temp = getIDlist(aux, z);
+        printf("a imprimir id = %ld para list\n", temp);
+		set_list(list,i,temp);
+	}
+
+   	for(i=0 ; i < s+1 ;i++){
+   		printf("%ld\n",get_list(list,i));
+   	}
+
+    printf("Index = %d\n", getIndex(aux));
+    printf("pergunta índice 0 em list = %ld\n", get_list(list, 0));
+   	freeQuery(aux);
+
+   	return list;
+}
+
+static gboolean iterateBoth(Date d, Resposta r, Query q){
+    if(getAux1(q) == 1 && getOwnerUserID(r) == getId2Q(q)){
+        insertList(q, getParentID(r));
+        printf("encontrou pergunta valida de id %ld\n", getParentID(r));
+        return TRUE;
+    }
+    else if(getAux2(q) == 1 && getOwnerUserID(r) == getId1Q(q)){
+        insertList(q, getParentID(r));
+        printf("encontrou pergunta valida de id %ld\n", getParentID(r));
+        return TRUE;
+    }
+    else if(getAux1(q) == 0 && getOwnerUserID(r) == getId1Q(q)){
+        setAux1(q);
+    }
+    else if(getAux2(q) == 0 && getOwnerUserID(r) == getId2Q(q)){
+        setAux2(q);
+    }
+    return FALSE;
+}
 
 //query 10
 static gboolean iterateRate(Date d, Resposta r, Resposta best);
@@ -548,12 +620,12 @@ static gboolean iterateRate(Date d, Resposta r, Resposta best);
 long better_answer(TAD_community com, long id){
 	Pergunta p = g_hash_table_lookup(com->perguntas, GSIZE_TO_POINTER(id));
 	long idResp=0;
-	
+
 	if(p){
 	GTree* t = getTree(p);
 	Resposta r = genResposta();
 	g_tree_foreach(t,(GTraverseFunc)iterateRate,r);
-	idResp = getIdr(r);	
+	idResp = getIdr(r);
 	}
 	return idResp;
 }

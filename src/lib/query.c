@@ -25,8 +25,11 @@ Query initQuery(int id1, int id2, int N, GHashTable* structPerguntas){
 	t-> id2 = id2;
 	t-> aux2 = 0;
 	t-> size = N;
-	t-> index = 0;
+	t-> index = -1;
 	t-> list = malloc(sizeof(Pergunta)* N);
+	for(int i = 0; i < N; i++){
+		t->list[i] = NULL;
+	}
 	t-> structPerguntas = structPerguntas;
 	return t;
 }
@@ -74,19 +77,32 @@ Pergunta* getList(Query t){
 	return t->list;
 }
 
+long getIDlist(Query q, int index){
+	printf("id de idlist = %ld\n", getIdp(q->list[index]));
+	return getIdp(q->list[index]);
+}
+
 void insertList(Query t, long pid){
 	Pergunta p = g_hash_table_lookup(t->structPerguntas,GSIZE_TO_POINTER(pid));
 	if(t->index == t->size-1){
-		if( compareDateTime(getDatep(p), getDatep(t->list[t->index])) ) t-> list[t->index] = p;
-		ordenaPdata(t->list, t-> size);
-	}else{
-		if(t->index == 0) t->list[0] = p;
-		else{
-			t-> index++;
+		if(compareDateTime(getDatep(p), getDatep(t->list[t->index]))){
+			t-> list[t->index] = p;
+			ordenaPdata(t->list, t-> size);
+			printf("inserção feita em %d\n", t->index);
+		}
+	}
+	else if(t->index == -1 ){
+		t->list[0] = p;
+		t->index++;
+		printf("index incrementado para %d\n", t->index);
+		printf("id escrito = %ld\n", getIdp(t->list[0]));
+
+	}
+	else{
+		t-> index++;
+		printf("index incrementado para %d\n", t->index);
 		t-> list[t->index] = p;
 		ordenaPdata(t->list, t-> index);
-		}
-	//if(t->size == t-> index) list = realloc(list , 20*realoc*sizeof(long));
 	}
 }
 
@@ -98,12 +114,3 @@ void freeQuery(Query t){
 
 	return;
 }
-
-
-
-
-
-
-
-
-
