@@ -144,7 +144,6 @@ void parsePost(GHashTable* structPerguntas , GHashTable* structRespostas, GHashT
 float calcRate(GHashTable* structUsers, long oid, int score, int cCount){
   User u = g_hash_table_lookup(structUsers,GSIZE_TO_POINTER(oid));
   if(u){
-
   int repUser = getRep(u);
   return (float) (score*0.45) + (repUser*25) + (score*0.2) + (cCount*0.1);
   }

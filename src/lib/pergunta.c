@@ -1,7 +1,7 @@
-#include<stdlib.h>
-#include<string.h>
-#include<glib.h>
-#include<stdbool.h>
+#include <stdlib.h>
+#include <string.h>
+#include <glib.h>
+#include <stdbool.h>
 #include "pergunta.h"
 #include "resposta.h"
 #include "common.h"
@@ -16,15 +16,9 @@ struct pergunta{
   char** tags;
   int nTags;
   int commentCount;
-  GTree* resp;
+  GTree* resp;      //avl com respetivas respostas
 };
 
-/*
-Pergunta insertResposta(Pergunta p1, Resposta r1){
-    p1->resp = g_tree_insert(p1->resp, (gpointer)r1->creationDate, r1);
-    return p1;
-}
-*/
 
 Pergunta genPergunta(){
   Pergunta temp = (Pergunta) malloc(sizeof(struct pergunta));
@@ -45,30 +39,20 @@ Pergunta genPergunta(){
 
 Pergunta initPergunta(long mainID, char* date, int scr, long userID, char* ttl, char** tgs, int nTags, int cCount){
 
-
   Pergunta temp = malloc(sizeof(struct pergunta));
 
   temp->title = ttl;
-
   temp->tags = tgs;
   temp->nTags = nTags;
   temp->creationTime = stringToDateT(date);
-
   temp->id = mainID;
   temp->score = scr;
   temp->ownerUserID = userID;
-  //temp->favoriteCount = favcnt;
-  //temp->answerCount = anscnt;
   temp->commentCount = cCount;
-
   temp->resp = g_tree_new((GCompareFunc)compareDateTime);
-  //temp->resp = g_tree_new_full((GCompareDataFunc)compareDateTime22,NULL, (GDestroyNotify)freeDateTime, (GDestroyNotify)freeResposta);
-
+  
   return temp;
 }
-
-
-
 
 
 void insertResposta(Pergunta p, Resposta r){
@@ -76,6 +60,7 @@ void insertResposta(Pergunta p, Resposta r){
   GTree* t= getTree(p);
   g_tree_insert(t,d, r);
 }
+
 
 void swapPergunta(Pergunta a[],int o,int s) {
   Pergunta tmp;
@@ -93,6 +78,7 @@ void ordenaPdata(Pergunta p[], int N){
   }
 }
 
+
 void ordenaPerg(Pergunta a[], int N){
   int i=N;
   while (i>0 && getSize(a[i])>getSize(a[i-1])){
@@ -101,7 +87,45 @@ void ordenaPerg(Pergunta a[], int N){
   }
 }
 
+int searchTitle(char* word, char* title){
+  if (strstr(title,word)!=NULL) return 1;
+  else return 0;
+}
 
+int comparePerguntas(Pergunta p1, Pergunta p2){
+  /*
+  Return values:
+    - return -1 if date 1 happened before date 2;
+    - return 1 if date 2 happened before date 1;
+    - return 0 if they are the same;
+  */
+  int i = compareDateTime(p1->creationTime, p2->creationTime);
+  return i;
+}
+
+
+int pergunta_entre_datas(Pergunta p, DateTime b, DateTime e){
+	// 1 = TRUE && 0 = FALSE
+	if(compareDateTime(p->creationTime, b) == 1 && compareDateTime(p->creationTime, e) == -1){
+		return 1;
+	}
+
+	else if(compareDateTime(p->creationTime, b) == 0 || compareDateTime(p->creationTime, e) == 0){
+    return 1;
+  }
+
+  return 0;
+}
+
+void freePergunta(Pergunta p1){
+    g_tree_destroy(p1->resp);
+    free(p1->title);
+    free(p1->tags);
+    freeDateTime(p1->creationTime);
+    free(p1);
+}
+
+// GETs
 GTree* getTree(Pergunta p){
   if(p){
   GTree* tree = (GTree*) p->resp;
@@ -109,11 +133,6 @@ GTree* getTree(Pergunta p){
   }
   return NULL;
 }
-
-/*
-Date getCreationDate(Pergunta p){
-	return p->creationDate;
-}*/
 
 Resposta getResp(Pergunta p, Date d){
   GTree* t = getTree(p);
@@ -127,7 +146,6 @@ long getIdp(Pergunta p){
   }
   return 0;
 }
-
 
 DateTime getDatep(Pergunta p){
   return p-> creationTime;
@@ -156,69 +174,15 @@ char** getTags(Pergunta p){
   return p-> tags;
 }
 
-
 int getNTags(Pergunta p){
   return p->nTags;
 }
 
-
+// SETs
 void setDateP(DateTime d, Pergunta p){
   p->creationTime = d;
-}
-
-int searchTitle(char* word, char* title){
-  if (strstr(title,word)!=NULL) return 1;
-  else return 0;
 }
 
 void setTitle (char* title, Pergunta p){
   p->title = title;
 }
-
-/*
-int getFavoriteCount(Pergunta p){
-  return p-> favoriteCount;
-}
-
-int getAnswerCount(Pergunta p){
-  return p-> answerCount ;
-}
-
-int getcommentCount(Pergunta p){
-  return p-> commentCount;
-}
-*/
-
-int comparePerguntas(Pergunta p1, Pergunta p2){
-  /*
-  Return values:
-    - return -1 if date 1 happened before date 2;
-    - return 1 if date 2 happened before date 1;
-    - return 0 if they are the same;
-  */
-  int i = compareDateTime(p1->creationTime, p2->creationTime);
-  return i;
-}
-
-
-int pergunta_entre_datas(Pergunta p, DateTime b, DateTime e){
-	// 1 = TRUE && 0 = FALSE
-	if(compareDateTime(p->creationTime, b) == 1 && compareDateTime(p->creationTime, e) == -1){
-		return 1;
-	}
-
-	else if(compareDateTime(p->creationTime, b) == 0 || compareDateTime(p->creationTime, e) == 0){
-		return 1;
-	}
-
-	return 0;
-}
-
-void freePergunta(Pergunta p1){
-    g_tree_destroy(p1->resp);
-    free(p1->title);
-    free(p1->tags);
-    freeDateTime(p1->creationTime);
-    free(p1);
-}
-

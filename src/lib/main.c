@@ -66,10 +66,15 @@ int main(int argc, char **argv){
   for(f=0;f<size4;f++){
     printf("%ld\n",get_list(q4,f));
   }
+  /*
   free_list(q4);
   free_date(q4_d1);
   free_date(q4_d2);
+<<<<<<< HEAD
 
+=======
+  */
+>>>>>>> b486c626e455b9ea8bee408a156dbea84181d646
 
   //query 5
   printf("\nQuery 5-----------------------\n");
