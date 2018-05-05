@@ -21,23 +21,18 @@ struct TCD_community{
     GHashTable* users;		// Hashtable de users
 };
 
-
+// Função que inicializa as estruturas
 TAD_community init(){
 	TAD_community comunidade = malloc(sizeof(struct TCD_community));
-	//comunidade->perguntas = g_hash_table_new(g_direct_hash, g_direct_equal);
 	comunidade->perguntas = g_hash_table_new_full(g_direct_hash, g_direct_equal, NULL, (GDestroyNotify)freePergunta);
-
-	//comunidade->respostas = g_hash_table_new(g_direct_hash, g_direct_equal);
 	comunidade->respostas = g_hash_table_new_full(g_direct_hash, g_direct_equal, NULL, (GDestroyNotify)freeResposta);
-
-	//comunidade->users = g_hash_table_new(g_direct_hash, g_direct_equal);
 	comunidade->users = g_hash_table_new_full(g_direct_hash, g_direct_equal, NULL, (GDestroyNotify)freeUser);
 	return comunidade;
 }
 
 
 
-
+// Função que insere os dados nas estruturas
 TAD_community load(TAD_community com, char* dump_path){
 	int l = strlen(dump_path);
 	char* postFile = malloc(10+l);
@@ -98,7 +93,7 @@ LONG_list top_most_active(TAD_community com, int N){
 	LONG_list list = create_list(N);
 
 	g_hash_table_iter_init (&iter, com->users);
-	while (g_hash_table_iter_next (&iter,id1,u1)){
+	while (g_hash_table_iter_next (&iter,id1,u1)){ 
 
     		if (i==0){
     			ar[0] = u;
@@ -210,12 +205,14 @@ LONG_list questions_with_tag(TAD_community com, char* tag, Date begin, Date end)
  	return list;
 }
 
-//query 5
+
 
 static long compDate_RespPer(int *flag, int *flagID,Pergunta p,Resposta r);
+static int case0 (long idP, long idR);
 
+
+//query 5
 USER get_user_info(TAD_community com, long id) {
-
 
 	char* bio;
 	USER user = NULL;
@@ -247,18 +244,17 @@ USER get_user_info(TAD_community com, long id) {
     			arR[0] = r;
     			i++;
     		}
-    			if(i<10){
-    				arR[i] = r;
-    				ordenaRdata(arR,i);
-    				i++;
-    			}
-    			else if(compareDateTime(getDateT(r),getDateT(arR[i-1]))){
-    				arR[i-1] = r;
-    				ordenaRdata(arR,i-1);
-
-    			}
- 			}
-    	}
+    		if(i<10){
+    			arR[i] = r;
+   				ordenaRdata(arR,i);
+   				i++;
+   			}
+   			else if(compareDateTime(getDateT(r),getDateT(arR[i-1]))){
+   				arR[i-1] = r;
+   				ordenaRdata(arR,i-1);
+   			}
+ 		}
+   	}
 
 	g_hash_table_iter_init (&iter, com->perguntas);
 	while (g_hash_table_iter_next (&iter,id1,p1)){
@@ -281,11 +277,11 @@ USER get_user_info(TAD_community com, long id) {
   	}
 
     long posts[10];
-    int c;
-    int perg=0;
-    int resp=0;
-    int flag=2;
-    int flagID=2;
+    int c, perg, resp, flag, flagID;
+    perg=0;
+    resp=0;
+    flag=2;
+    flagID=2;
 
     if(i+j<10) return NULL;
 
@@ -307,18 +303,17 @@ USER get_user_info(TAD_community com, long id) {
 
     }
 
-  
-    
     user = create_user(bio,posts);
  	return user;
 }
 
-
+// Função que verifica o caso de dois DateTimes iguais
 static int case0 (long idP, long idR){
 	if (idP>idR) return 1;
 	else return 0;
 }
 
+// Função que compara os DateTime entre uma pergunta e resposta
 static long compDate_RespPer(int *flag, int *flagID,Pergunta p,Resposta r){
 	DateTime pd = getDatep(p);
 	DateTime rd = getDateT(r);
@@ -372,11 +367,9 @@ LONG_list most_voted_answers(TAD_community com, int N, Date begin, Date end){
  		}
    	}
 
-
     for(i=0;i<N;i++){
     	set_list(list,i,getIdr(ar[i]));
     }
-    //free(r);
     freeDateTime(d);
     free(ar);
  	return list;
@@ -405,18 +398,19 @@ LONG_list most_answered_questions(TAD_community com, int N, Date begin, Date end
     			ar[0] = p;
     			i++;
     		}
-    			if(i<N){
-    				ar[i] = p;
-    				ordenaPerg(ar,i);
-    				i++;
-    			}
-    			else if(getSize(p)>getSize(ar[i-1])){
-    				ar[i-1] = p;
-    				ordenaPerg(ar,i-1);
 
-    			}
- 			}
-    	}
+   			if(i<N){
+   				ar[i] = p;
+   				ordenaPerg(ar,i);
+   				i++;
+   			}
+   			else if(getSize(p)>getSize(ar[i-1])){
+   				ar[i-1] = p;
+   				ordenaPerg(ar,i-1);
+
+   			}
+		}
+    }
 
     for(i=0;i<N;i++){
     	set_list(list,i,getIdp(ar[i]));
@@ -426,7 +420,6 @@ LONG_list most_answered_questions(TAD_community com, int N, Date begin, Date end
 
 
 //query 8
-
 LONG_list contains_word(TAD_community com, char* word, int N){
 
 	int i = 0;
@@ -450,18 +443,19 @@ LONG_list contains_word(TAD_community com, char* word, int N){
     			ar[0] = p;
     			i++;
     		}
-    			if(i<N){
-    				ar[i] = p;
-    				ordenaPdata(ar,i);
-    				i++;
-    			}
-    			else if(compareDateTime(getDatep(p),getDatep(ar[i-1])) == 1){
-    				ar[i-1] = p;
-    				ordenaPdata(ar,i-1);
+    		if(i<N){
+   				ar[i] = p;
+   				ordenaPdata(ar,i);
+   				i++;
+   			}
+   			else if(compareDateTime(getDatep(p),getDatep(ar[i-1])) == 1){
+   				ar[i-1] = p;
+   				ordenaPdata(ar,i-1);
 
-    			}
- 			}
-    	}
+   			}
+		}
+   	}
+
     if(i<10) return NULL;
 
     for(i=0;i<N;i++){
@@ -487,6 +481,7 @@ long better_answer(TAD_community com, long id){
 	return idResp;
 }
 
+// Função que ordena por rate no iterate da tree
 gboolean iterateRate(Date d, Resposta r, Resposta best){
 	float rateR, rateBest;
 	rateR = getRate(r);
@@ -498,11 +493,11 @@ gboolean iterateRate(Date d, Resposta r, Resposta best){
 	return FALSE;
 }
 
-
+// Função que realiza os frees no final do programa
 TAD_community clean(TAD_community com){
 	if(!com)
 		return com;
-    //g_hash_table_foreach(com->perguntas, (GHFunc)freePergunta, NULL);
+    
 	g_hash_table_destroy(com-> users);
 	g_hash_table_destroy(com-> respostas);
 	g_hash_table_destroy(com-> perguntas);

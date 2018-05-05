@@ -6,7 +6,7 @@
 #include "common.h"
 #include <glib.h>
 
-
+ 
 struct datetime{
   int day;       
   int month;      // Estrutura DateTime até ao seg
@@ -17,7 +17,7 @@ struct datetime{
 };
 
 
-// Função que cria um DateTime
+
 DateTime initDateTime(int d, int m, int y, int h, int min, int seg){
   DateTime temp = malloc(sizeof(struct datetime));
   temp->day = d;
@@ -30,7 +30,7 @@ DateTime initDateTime(int d, int m, int y, int h, int min, int seg){
   return temp;
 }
 
-// Função que compara dois DateTime
+
 int compareDateTime(DateTime d1, DateTime  d2){
   /*
   Return values:
@@ -79,7 +79,7 @@ int compareDateTime(DateTime d1, DateTime  d2){
 }
 
 
-// Função que verifica se um DateTime d2 ocorre depois de um Date d1
+
 int compare_date_time_begin (Date d1, DateTime d2)
 {
     if (get_year(d1) > d2->year)
@@ -106,7 +106,7 @@ int compare_date_time_begin (Date d1, DateTime d2)
 }
 
 
-// Função que verifica se um DateTime d2 ocorre antes de um Date d1
+
 int compare_date_time_final (Date d1, DateTime d2)
 {
     if (get_year(d1) < d2->year)
@@ -131,7 +131,7 @@ int compare_date_time_final (Date d1, DateTime d2)
     return 0;
 }
 
-// Função que faz parse da string date recebida do xml e torna-la num DateTime 
+
 DateTime stringToDateT(char* date){
   int i = 0;
   char* token;
@@ -178,7 +178,6 @@ DateTime stringToDateT(char* date){
   return a;
 }
 
-// Função de free de um DateTime
 void freeDateTime(DateTime d){
   free(d);
 }

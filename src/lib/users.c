@@ -12,7 +12,7 @@ struct user{
 	char *name;
 	int views;
 	int voteDif;
-	int nrPosts;
+	int nrPosts; //este valor é incrementado ao inserir posts no parser
 };
 
 User genUser(){
@@ -60,6 +60,9 @@ void ordenaUser(User a[],int N){
 	}
 }
 
+void incrNrPosts(User u){
+	u->nrPosts++;
+}
 
 void freeUser(User u){
 	free(u->name);
@@ -75,7 +78,6 @@ long getId(User u){
 char* getBio(User u){
 	return u->bio;
 }
-
 
 int getRep(User u){
 	return u->rep;
@@ -98,8 +100,4 @@ int getVoteDif(User u){
 
 int getNrPosts(User u){
 	return u->nrPosts;
-}
-
-void incrNrPosts(User u){
-	u->nrPosts++;
 }

@@ -3,7 +3,7 @@
 #include <string.h>
 #include "resposta.h"
 #include "date.h"
-#include "users.h"
+#include "users.h" 
 #include "interface.h"
 #include <stdio.h>
 
@@ -71,62 +71,6 @@ void ordenaByScore(Resposta a[],int N) {
   }
 }
 
-
-long getIdr(Resposta r){
-	return r->id;
-}
-
-long getParentID(Resposta r){
-	if(r){
-    
-  return r->parentID;
-  }
-  return 0;
-}
-
-DateTime getDateT(Resposta r){
-  if(!r) return NULL;
-  
-	return r->creationTime;
-}
-
-
-int getScore(Resposta r){
-	return r->score;
-}
-
-long getOwnerUserID(Resposta r){
-	if(r){
-  return r->ownerUserID;
-  }
-  return 0;
-}
-
-int getCommentCount(Resposta r){
-	return r->commentCount;
-}
-
-float getRate(Resposta r){
-	return r->rate;
-}
-
-void setId(long id,Resposta r){
-  r->id = id;
-}
-void setRate(float rate, Resposta r){
-  r->rate = rate;
-}
-
-void setDateT(DateTime d, Resposta r){
-  r->creationTime = d;
-}
-
-Resposta cloneR(Resposta r){
-  Resposta ret = initResposta(getIdr(r),getParentID(r),"0000-00-00T00:00:00.000",getScore(r),getOwnerUserID(r),getCommentCount(r),getRate(r));
-  setDateT(getDateT(r),ret);
-  return ret;
-}
-
 int compareRespostas(Resposta r1, Resposta r2){
   /*
   Return values:
@@ -136,12 +80,7 @@ int compareRespostas(Resposta r1, Resposta r2){
   */
   return compareDateTime(r1->creationTime, r2->creationTime);
 }
-/*
-Resposta copyResposta(Resposta r){
-    Resposta a = initResposta(r->id, r->parentID, , r->score, r->ownerUserID, r->commentCount, r->rate);
 
-  return a;
-}*/
 
 int resposta_entre_datas(Resposta r, DateTime b, DateTime e){
 	// 1 = TRUE && 0 = FALSE
@@ -161,3 +100,56 @@ void freeResposta(Resposta r){
   freeDateTime(r->creationTime);
   free(r);
 }
+
+// GETs
+long getIdr(Resposta r){
+  return r->id;
+}
+
+long getParentID(Resposta r){
+  if(r){
+    
+  return r->parentID;
+  }
+  return 0;
+}
+
+DateTime getDateT(Resposta r){
+  if(!r) return NULL;
+  
+  return r->creationTime;
+}
+
+
+int getScore(Resposta r){
+  return r->score;
+}
+
+long getOwnerUserID(Resposta r){
+  if(r){
+  return r->ownerUserID;
+  }
+  return 0;
+}
+
+int getCommentCount(Resposta r){
+  return r->commentCount;
+}
+
+float getRate(Resposta r){
+  return r->rate;
+}
+
+// SETs
+void setId(long id,Resposta r){
+  r->id = id;
+}
+void setRate(float rate, Resposta r){
+  r->rate = rate;
+}
+
+void setDateT(DateTime d, Resposta r){
+  r->creationTime = d;
+}
+
+
