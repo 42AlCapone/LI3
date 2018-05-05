@@ -24,9 +24,9 @@ int main(int argc, char **argv){
   if(r){
   printf("%s\n",get_fst_str(r));
   printf("%s\n",get_snd_str(r));
-  free_str_pair(r);
   }
   else printf("Não existe!");
+  free_str_pair(r);
   //-------------------------------------
 
 
@@ -66,11 +66,9 @@ int main(int argc, char **argv){
   for(f=0;f<size4;f++){
     printf("%ld\n",get_list(q4,f));
   }
-  /*
   free_list(q4);
   free_date(q4_d1);
   free_date(q4_d2);
-  */
 
   //query 5
   printf("\nQuery 5-----------------------\n");
@@ -149,6 +147,7 @@ int main(int argc, char **argv){
       }
   }
   else printf("Não existe!\n");
+  free_list(q9);
 
 
   //query10

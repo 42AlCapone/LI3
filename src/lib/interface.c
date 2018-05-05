@@ -464,8 +464,8 @@ LONG_list contains_word(TAD_community com, char* word, int N){
     }
    	return list;
 }
-//query 9
 
+//query 9
 static gboolean iterateBoth(Date d, Resposta r, Query q);
 
 LONG_list both_participated(TAD_community com, long id1, long id2, int N){
