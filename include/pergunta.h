@@ -2,6 +2,7 @@
 #define _PERGUNTA_H_
 #include "date.h"
 #include "resposta.h"
+#include <glib.h>
 
 typedef struct pergunta *Pergunta;
 
@@ -70,5 +71,7 @@ int searchTitle(char* word, char* title);
 void setTitle (char* title, Pergunta p);
 
 void freePergunta(Pergunta p);
+
+gboolean freeAVL(Date d, Resposta r,gpointer data);
 
 #endif

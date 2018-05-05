@@ -46,7 +46,7 @@ User copyUser(User u){
 }
 
 void swapUser(User a[],int o,int s) {
-	User tmp = malloc(sizeof(User));
+	User tmp;
 	tmp=a[o];
 	a[o]=a[s];
 	a[s]=tmp;
@@ -64,7 +64,7 @@ void ordenaUser(User a[],int N){
 void freeUser(User u){
 	free(u->name);
 	free(u->bio);
-	//free(u);
+	free(u);
 }
 
 //gets
@@ -82,7 +82,10 @@ int getRep(User u){
 }
 
 char* getName(User u){
-	return u->name;
+	if(u){
+	return u->name;	
+	}
+	return NULL;
 }
 
 int getViews(User u){

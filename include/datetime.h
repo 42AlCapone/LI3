@@ -2,11 +2,11 @@
 #define _DATETIME_H_
 
 #include "date.h"
+#include <glib.h>
 
 typedef struct datetime *DateTime;
 
 typedef struct datepair *DatePair;
-
 
 DateTime initDateTime(int d, int m, int y, int h, int min, int seg);
 

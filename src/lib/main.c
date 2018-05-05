@@ -17,18 +17,21 @@ int main(int argc, char **argv){
   
 
   //query 1 - done
-  printf("Query 1--------------\n");
+  printf("\nQuery 1--------------\n");
   long id_q1 = 801049;
   STR_pair r = info_from_post(com, id_q1);
- 
+  
+  if(r){  
   printf("%s\n",get_fst_str(r));
   printf("%s\n",get_snd_str(r));
   free_str_pair(r);
+  }
+  else printf("Não existe!");
   //-------------------------------------
 
 
   //query 2
-  printf("Query 2--------------\n");
+  printf("\nQuery 2--------------\n");
   int N_q2 = 10;
   int i;
   LONG_list q2 = top_most_active(com,N_q2);
@@ -41,16 +44,18 @@ int main(int argc, char **argv){
   
 
   //query 3
-  printf("Query 3--------------\n");
+  printf("\nQuery 3--------------\n");
   Date q3_d1 = createDate(1,1,2014);
   Date q3_d2 = createDate(31,12,2014);
   
   LONG_pair q3 = total_posts(com,q3_d1,q3_d2);
   printf("Perguntas: %ld----------Respostas: %ld\n",get_fst_long(q3),get_snd_long(q3));
   free_long_pair(q3);
+  free_date(q3_d1);
+  free_date(q3_d2);
 
   //query 4
-  printf("Query 4-----------------------\n");
+  printf("\nQuery 4-----------------------\n");
   char *tag = "nautilus";
   Date q4_d1 = createDate(1,1,2014);
   Date q4_d2 = createDate(31,1,2014);
@@ -62,22 +67,27 @@ int main(int argc, char **argv){
     printf("%ld\n",get_list(q4,f));
   }
   free_list(q4);
+  free_date(q4_d1);
+  free_date(q4_d2);
   
 
   //query 5
-  printf("Query 5-----------------------\n");
+  printf("\nQuery 5-----------------------\n");
   
   USER q5 = get_user_info(com, 15811);
-  printf("%s\n",get_bio(q5));
-  long *posts = get_10_latest_posts(q5);
-  for(f=0;f<10;f++){
-    printf("%ld\n",posts[f]);
+  if(q5){
+    long *posts = get_10_latest_posts(q5);
+    printf("%s\n",get_bio(q5));
+    for(f=0;f<10;f++){
+      printf("%ld\n",posts[f]);
+    }
   }
+  else printf("Não existe!\n");
   free_user(q5);
-  
+
 
   //query 6
-  printf("Query 6-----------------------\n");
+  printf("\nQuery 6-----------------------\n");
   int q6_N = 5;
   Date q6_d1 = createDate(1,11,2015);
   Date q6_d2 = createDate(30,11,2015);
@@ -89,9 +99,11 @@ int main(int argc, char **argv){
     printf("%ld\n",get_list(q6,f));
   }
   free_list(q6);
-
+  free_date(q6_d1);
+  free_date(q6_d2);
+  
   //query 7
-  printf("Query 7-----------------------\n");
+  printf("\nQuery 7-----------------------\n");
   
   int q7_N = 10;
   Date q7_d1 = createDate(1,8,2014);
@@ -104,27 +116,33 @@ int main(int argc, char **argv){
     printf("%ld\n",get_list(q7,f));
   }
   free_list(q7);
+  free_date(q7_d1);
+  free_date(q7_d2);
 
   
   //query 8
-  printf("Query 8-----------------------\n");
+  printf("\nQuery 8-----------------------\n");
   char *word = "kde";
   int q8_N=10;
-
   LONG_list q8 = contains_word(com,word,q8_N);
-  int size8 = getlSize(q8);
-  
-  for(f=0;f<size8;f++){
+
+  if(q8){
+    int size8 = getlSize(q8);
+    for(f=0;f<size8;f++){
     printf("%ld\n",get_list(q8,f));
-  }
+    }
+  } 
+  else printf("Não existe!");
   free_list(q8);
 
 
+
   //query10
-  printf("Query 10-----------------------\n");
+  printf("\nQuery 10-----------------------\n");
   long id_q10 = 5942;
   long best = better_answer(com,id_q10);
-  printf("%ld\n",best);
+  if (best==0) printf("Não existe!\n"); 
+  else printf("%ld\n",best);
 
   clean(com); 
 

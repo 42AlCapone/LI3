@@ -61,8 +61,8 @@ Pergunta initPergunta(long mainID, char* date, int scr, long userID, char* ttl, 
   //temp->answerCount = anscnt;
   temp->commentCount = cCount;
 
-  //temp->resp = g_tree_new((GCompareFunc)compareDateTime);
-  temp->resp = g_tree_new_full((GCompareDataFunc)compareDateTime, NULL, (GDestroyNotify)freeDateTime, (GDestroyNotify)freeResposta);
+  temp->resp = g_tree_new((GCompareFunc)compareDateTime);
+  //temp->resp = g_tree_new_full((GCompareDataFunc)compareDateTime22,NULL, (GDestroyNotify)freeDateTime, (GDestroyNotify)freeResposta);
 
   return temp;
 }
@@ -78,7 +78,7 @@ void insertResposta(Pergunta p, Resposta r){
 }
 
 void swapPergunta(Pergunta a[],int o,int s) {
-  Pergunta tmp = malloc(sizeof(Pergunta));
+  Pergunta tmp;
   tmp=a[o];
   a[o]=a[s];
   a[s]=tmp;
@@ -103,8 +103,11 @@ void ordenaPerg(Pergunta a[], int N){
 
 
 GTree* getTree(Pergunta p){
+  if(p){
   GTree* tree = (GTree*) p->resp;
-  return tree;
+  return tree;  
+  }
+  return NULL;
 }
 
 /*
@@ -119,7 +122,10 @@ Resposta getResp(Pergunta p, Date d){
 }
 
 long getIdp(Pergunta p){
-  return p-> id;
+  if(p){
+    return p-> id;
+  }
+  return 0;
 }
 
 
@@ -140,7 +146,10 @@ long getOwnerUserIDp(Pergunta p){
 }
 
 char* getTitle(Pergunta p){
-  return p-> title;
+  if(p){
+  return p-> title;  
+  }
+  return NULL;
 }
 
 char** getTags(Pergunta p){
@@ -206,10 +215,10 @@ int pergunta_entre_datas(Pergunta p, DateTime b, DateTime e){
 }
 
 void freePergunta(Pergunta p1){
-    //g_tree_foreach(p1->resp,(GTraverseFunc)freeResposta, G_IN_ORDER);
-    //g_tree_destroy(p1->resp);
+    g_tree_destroy(p1->resp);
     free(p1->title);
     free(p1->tags);
     freeDateTime(p1->creationTime);
-    //free(p1);
+    free(p1);
 }
+

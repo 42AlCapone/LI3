@@ -48,7 +48,7 @@ Resposta initResposta(long mainID, long parentID, char* date, int scr, long user
 }
 
 void swapResp(Resposta a[],int o,int s) {
-  Resposta tmp = malloc(sizeof(Resposta));
+  Resposta tmp;
   tmp=a[o];
   a[o]=a[s];
   a[s]=tmp;
@@ -77,10 +77,16 @@ long getIdr(Resposta r){
 }
 
 long getParentID(Resposta r){
-	return r->parentID;
+	if(r){
+    
+  return r->parentID;
+  }
+  return 0;
 }
 
 DateTime getDateT(Resposta r){
+  if(!r) return NULL;
+  
 	return r->creationTime;
 }
 
@@ -90,7 +96,10 @@ int getScore(Resposta r){
 }
 
 long getOwnerUserID(Resposta r){
-	return r->ownerUserID;
+	if(r){
+  return r->ownerUserID;
+  }
+  return 0;
 }
 
 int getCommentCount(Resposta r){
@@ -150,5 +159,5 @@ int resposta_entre_datas(Resposta r, DateTime b, DateTime e){
 
 void freeResposta(Resposta r){
   freeDateTime(r->creationTime);
-  //free(r);
+  free(r);
 }
