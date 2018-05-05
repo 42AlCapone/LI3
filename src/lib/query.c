@@ -78,7 +78,6 @@ Pergunta* getList(Query t){
 }
 
 long getIDlist(Query q, int index){
-	printf("id de idlist = %ld\n", getIdp(q->list[index]));
 	return getIdp(q->list[index]);
 }
 
@@ -88,19 +87,14 @@ void insertList(Query t, long pid){
 		if(compareDateTime(getDatep(p), getDatep(t->list[t->index]))){
 			t-> list[t->index] = p;
 			ordenaPdata(t->list, t-> size);
-			printf("inserção feita em %d\n", t->index);
 		}
 	}
 	else if(t->index == -1 ){
 		t->list[0] = p;
 		t->index++;
-		printf("index incrementado para %d\n", t->index);
-		printf("id escrito = %ld\n", getIdp(t->list[0]));
-
 	}
 	else{
 		t-> index++;
-		printf("index incrementado para %d\n", t->index);
 		t-> list[t->index] = p;
 		ordenaPdata(t->list, t-> index);
 	}

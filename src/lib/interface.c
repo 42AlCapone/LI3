@@ -94,7 +94,7 @@ LONG_list top_most_active(TAD_community com, int N){
 	LONG_list list = create_list(N);
 
 	g_hash_table_iter_init (&iter, com->users);
-	while (g_hash_table_iter_next (&iter,id1,u1)){ 
+	while (g_hash_table_iter_next (&iter,id1,u1)){
 
     		if (i==0){
     			ar[0] = u;
@@ -304,11 +304,6 @@ USER get_user_info(TAD_community com, long id) {
 
     }
 
-<<<<<<< HEAD
-
-
-=======
->>>>>>> b486c626e455b9ea8bee408a156dbea84181d646
     user = create_user(bio,posts);
  	return user;
 }
@@ -571,23 +566,14 @@ LONG_list both_participated(TAD_community com, long id1, long id2, int N){
     }
 
     int s = getIndex(aux);
-    printf("index de aux final = %d\n", s);
 
     LONG_list list = create_list(s+1);
 
-    printf("pergunta índice 0  em aux = %ld\n", getIDlist(aux, i));
 	for(int z =0 ; z < s+1 ; z++){
         long temp = getIDlist(aux, z);
-        printf("a imprimir id = %ld para list\n", temp);
 		set_list(list,i,temp);
 	}
 
-   	for(i=0 ; i < s+1 ;i++){
-   		printf("%ld\n",get_list(list,i));
-   	}
-
-    printf("Index = %d\n", getIndex(aux));
-    printf("pergunta índice 0 em list = %ld\n", get_list(list, 0));
    	freeQuery(aux);
 
    	return list;
@@ -596,12 +582,10 @@ LONG_list both_participated(TAD_community com, long id1, long id2, int N){
 static gboolean iterateBoth(Date d, Resposta r, Query q){
     if(getAux1(q) == 1 && getOwnerUserID(r) == getId2Q(q)){
         insertList(q, getParentID(r));
-        printf("encontrou pergunta valida de id %ld\n", getParentID(r));
         return TRUE;
     }
     else if(getAux2(q) == 1 && getOwnerUserID(r) == getId1Q(q)){
         insertList(q, getParentID(r));
-        printf("encontrou pergunta valida de id %ld\n", getParentID(r));
         return TRUE;
     }
     else if(getAux1(q) == 0 && getOwnerUserID(r) == getId1Q(q)){
@@ -645,7 +629,7 @@ gboolean iterateRate(Date d, Resposta r, Resposta best){
 TAD_community clean(TAD_community com){
 	if(!com)
 		return com;
-    
+
 	g_hash_table_destroy(com-> users);
 	g_hash_table_destroy(com-> respostas);
 	g_hash_table_destroy(com-> perguntas);
