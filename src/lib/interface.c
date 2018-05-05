@@ -469,11 +469,82 @@ LONG_list contains_word(TAD_community com, char* word, int N){
     }
    	return list;
 }
+//query 9
+
+static gboolean iterateBoth(Date d, Resposta r, Query q);
+
+LONG_list both_participated(TAD_community com, long id1, long id2, int N){
+	long idp = 0;
+	int i = 0;
+	Query aux = initQuery(id1, id2, N, com->perguntas);
+	Pergunta p = genPergunta();
+	DateTime d = initDateTime(0,0,0,0,0,0);
+	setDateP(d,p);
+	GTree* t;
+	LONG_list list = create_list(N);
+	GHashTableIter iter;
+	gpointer in = &idp;
+	gpointer p1 = &p;
+	
+	g_hash_table_iter_init (&iter, com->perguntas);
+	while (g_hash_table_iter_next (&iter,in,p1)){
+		if( id1 == getOwnerUserIDp(p) ){
+			setAux1(aux);
+			t = getTree(p);
+			g_tree_foreach(t , (GTraverseFunc)iterateBoth, aux);
+		}else if(id2 == getOwnerUserIDp(p)){
+			setAux2(aux);
+			t = getTree(p);
+			g_tree_foreach(t, (GTraverseFunc)iterateBoth, aux);
+		} else{
+			t = getTree(p);
+			g_tree_foreach(t, (GTraverseFunc)iterateBoth, aux);
+		}
+		setQuery(aux);
+	}
+	N = getIndex(aux);
+	Pergunta *ar = malloc(sizeof(Pergunta)*N);
+	ar = getList(aux);
+
+	for(i=0 ; i< getIndex(aux) ; i++){
+		set_list(list,i,getIdp(ar[i]));
+	}
+	printf("Query 9\n");
+   	
+   	for(i=0;i< getIndex(aux) ;i++){
+   		printf("%ld\n",get_list(list,i));
+   	}
+   	freeQuery(aux);	
+
+   	return list;
+
+}
 
 
-static gboolean iterateRate(Date d, Resposta r, Resposta best);
+
+
+
+
+static gboolean iterateBoth(Date d, Resposta r, Query q){
+	if(getAux1(q)){
+		if( getId2Q(q) == getOwnerUserID(r)){
+			insertList(q , getParentID(r));
+		}else return TRUE;
+	}else if(getAux2(q)){
+		if (getId1Q(q) == getOwnerUserID(r)){
+			insertList(q , getParentID(r));
+		} else return TRUE;
+	}else{
+		if(getId1Q(q) == getOwnerUserID(r)) setAux1(q);
+		if(getId2Q(q) == getOwnerUserID(r)) setAux2(q);
+		return FALSE;
+	}
+	return FALSE;
+}
 
 //query 10
+static gboolean iterateRate(Date d, Resposta r, Resposta best);
+
 long better_answer(TAD_community com, long id){
 	Pergunta p = g_hash_table_lookup(com->perguntas, GSIZE_TO_POINTER(id));
 	long idResp=0;
