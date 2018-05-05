@@ -137,9 +137,9 @@ int main(int argc, char **argv){
 
   //query9
   printf("\nQuery 9-----------------------\n");
-  long u1_q9 = 87;
-  long u2_q9 = 5691;
-  int n_q9 = 10;
+  long u1_q9 = 253;
+  long u2_q9 = 455;
+  int n_q9 = 5;
   LONG_list q9 = both_participated(com, u1_q9, u2_q9, n_q9);
   if(q9){
       int size9 = getlSize(q9);
