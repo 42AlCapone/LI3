@@ -14,10 +14,12 @@ import java.lang.System;
 import java.lang.Integer;
 import java.lang.Long;
 import java.lang.String;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class Parser {
 
-	public static void parseUsers(String dump) {
+	public static void parseUsers(String dump, CatUsers users) {
 		
 		String xml,file;
 		xml = "Users.xml";
@@ -84,15 +86,20 @@ public class Parser {
                 
                 voteDif = upv1-downv1;
       
-                System.out.println(id1);
-                System.out.println(name1);
-                System.out.println(bio1);
-                System.out.println(rep1);
-                System.out.println(views1);
-                System.out.println(voteDif);                
-                System.out.println('\n');
+                User u = new User();
+                u.setUserID(id1);
+                u.setName(name1);
+                u.setBio(bio1);
+                u.setRep(rep1);
+                u.setViews(views1);
+                u.setVotes(voteDif);
+
+                users.insereUser(u);
+
+                
             }
-            
+            System.out.println("-------------------------------------------");                
+                System.out.println(users.getUser(2L).getName());
 
         } catch (SAXException e) {
             e.printStackTrace();
@@ -106,7 +113,7 @@ public class Parser {
 
 
 
-	public static void parsePosts(String dump) {
+	public static void parsePosts(String dump, CatUsers users, CatPerguntas pergs, CatRespostas resps) {
 		
 		String xml,file;
 		xml = "Posts.xml";
@@ -183,16 +190,18 @@ public class Parser {
                     if(nrComsP!=null)
                         nrComs1 = Integer.parseInt(nrComsP.getNodeValue());
 
-                    System.out.println(id1);
-                    System.out.println(date1);
-                    System.out.println(score1);
-                    System.out.println(owner1);
-                    System.out.println(title1);
-                    System.out.println(tags1);
-                    System.out.println(nrComs1);
-                    System.out.println('\n');
+                    Pergunta p = new Pergunta();
+                    p.setPergID(id1);
+                    p.setPergDate(convertDate(date1));
+                    p.setScoreP(score1);
+                    p.setOwnerIDp(owner1);
+                    p.setTitle(title1);
+                    p.setTags(tags1);
+                    p.setCommentsP(nrComs1);
+                    pergs.inserePerg(p);
 
                     //INCREMENTAR NRPOSTS
+                    users.getUser(owner1).incNrPosts();
 
                 }
 
@@ -223,21 +232,33 @@ public class Parser {
                     if(nrComsR!=null)
                         nrComs2 = Integer.parseInt(nrComsR.getNodeValue());
 
-                    System.out.println(id2);
-                    System.out.println(parent2);
-                    System.out.println(date2);
-                    System.out.println(score2);
-                    System.out.println(owner2);
-                    System.out.println(nrComs2);
-                    System.out.println('\n');
+                    Resposta r = new Resposta();
+                    r.setRespID(id2);
+                    r.setParentID(parent2);
+                    r.setRespDate(convertDate(date2));
+                    r.setScoreR(score2);
+                    r.setOwnerIDr(owner2);
+                    r.setCommentsR(nrComs2);
+                    resps.insereResp(r);
+                    
                     
 
+                    
+                    //INSERIR NA TreeMap
+                    Pergunta p = pergs.getPergunta(parent2);
+                    if(p!=null)
+                    p.setResposta(r);
+
                     //INCREMENTAR nrPOSTS
+                	users.getUser(owner2).incNrPosts();
+
+                    //CALCULAR RATE
                 }
 
                 
             }
-            
+            System.out.println("-------------------------------------------");                
+                System.out.println(users.getUser(10L).getNrPosts());
 
         } catch (SAXException e) {
             e.printStackTrace();
@@ -249,6 +270,18 @@ public class Parser {
 
 
     }
+
+    public static LocalDate convertDate(String date) {
+    	
+    	String[] tokens = date.split("T");
+    	String format = tokens[0];
+    	
+    	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		LocalDate localdate = LocalDate.parse(format, formatter);
+
+    	return localdate;
+    }
+
 
 }
 

@@ -15,7 +15,7 @@ public class Resposta implements Serializable {
 
 	public Resposta() {
 		this.id = 0;
-		this.parentID = 0;
+		this.parentID = 0; 
 		this.creationDate = null;
 		this.score = 0;
 		this.ownerID = 0;
@@ -37,9 +37,9 @@ public class Resposta implements Serializable {
 		this.id = resp.getRespID();
 		this.parentID = resp.getParentID();
 		this.creationDate = resp.getRespDate();
-		this.score = resp.getScore();
-		this.ownerID = resp.getOwnerID();
-		this.nrComments = resp.getComments();
+		this.score = resp.getScoreR();
+		this.ownerID = resp.getOwnerIDr();
+		this.nrComments = resp.getCommentsR();
 		this.rate = resp.getRate();
 	}	
 
@@ -58,15 +58,15 @@ public class Resposta implements Serializable {
 		return this.creationDate;
 	}
 
-	public int getScore() {
+	public int getScoreR() {
 		return this.score;
 	} 
 
-	public long getOwnerID() {
+	public long getOwnerIDr() {
 		return this.ownerID;
 	}
 
-	public int getComments() {
+	public int getCommentsR() {
 		return this.nrComments;
 	}
 
@@ -88,15 +88,15 @@ public class Resposta implements Serializable {
 		this.creationDate = creationDate;
 	}
 
-	public void setScore(int score) {
+	public void setScoreR(int score) {
 		this.score = score;
 	}
 
-	public void setOwnerID(long ownerID) {
+	public void setOwnerIDr(long ownerID) {
 		this.ownerID = ownerID;
 	}
 
-	public void setComments(int nrComments) {
+	public void setCommentsR(int nrComments) {
 		this.nrComments = nrComments;
 	}
 
@@ -115,9 +115,9 @@ public class Resposta implements Serializable {
 		return r.getRespID() == this.id
 		&& r.getParentID() == this.parentID
 		&& r.getRespDate() == this.creationDate
-		&& r.getScore() == this.score
-		&& r.getOwnerID() == this.ownerID
-		&& r.getComments() == this.nrComments
+		&& r.getScoreR() == this.score
+		&& r.getOwnerIDr() == this.ownerID
+		&& r.getCommentsR() == this.nrComments
 		&& r.getRate() == this.rate;
 	}
 

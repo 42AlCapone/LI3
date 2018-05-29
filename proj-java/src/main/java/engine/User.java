@@ -1,9 +1,10 @@
 package engine;
 
 import java.io.Serializable;
+import java.lang.Long;
 
 public class User implements Serializable {
-	private long id;
+	private Long id;
 	private String name;
 	private String bio;
 	private int rep;
@@ -13,7 +14,7 @@ public class User implements Serializable {
 
 
 	public User() {
-		this.id = 0;
+		this.id = null;
 		this.name = "";
 		this.bio = "";
 		this.rep = 0;
@@ -22,7 +23,7 @@ public class User implements Serializable {
 		this.nrPosts = 0;
 	}
 
-	public User(long id, String name, String bio, int rep, int views, int voteDif) {
+	public User(Long id, String name, String bio, int rep, int views, int voteDif) {
 		this.id = id;
 		this.name = name;
 		this.bio = bio;
@@ -45,7 +46,7 @@ public class User implements Serializable {
 
 	// Getters
 
-	public long getUserID() {
+	public Long getUserID() {
 		return this.id;
 	}
 
@@ -75,7 +76,7 @@ public class User implements Serializable {
 
 	// Setters
 
-	public void setUserID(long id) {
+	public void setUserID(Long id) {
 		this.id = id;
 	}
 

@@ -11,45 +11,76 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
+import java.io.FileNotFoundException;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
+import java.lang.System;
 
 public class TCDExample implements TADCommunity {
 
-    private MyLog qelog;
+    //private MyLog qelog;
 
-    /*
-    public void init() {
-        this.qelog = new MyLog("queryengine");
+    private CatUsers users;
+    private CatPerguntas perguntas;
+    private CatRespostas respostas;
+
+    
+    public TCDExample() {
+        this.users = new CatUsers();
+        this.perguntas = new CatPerguntas();
+        this.respostas = new CatRespostas();
     }
-    */
 
     public void load(String dumpPath) {
-        File inputFile = new File(dumpPath);
-        try {
+        
 
-        DocumentBuilderFactory dbFactory
-                = DocumentBuilderFactory.newInstance();
+        
+        Parser.parseUsers(dumpPath,this.users);
+        Parser.parsePosts(dumpPath,this.users, this.perguntas,this.respostas);
+        
+       
 
-        DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-
-        Document doc = null;
-
-            doc = dBuilder.parse(inputFile);
-            doc.getDocumentElement().normalize();
-        } catch (SAXException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ParserConfigurationException e) {
-            e.printStackTrace();
-        }
     }
 
+/*
     // Query 1
     public Pair<String,String> infoFromPost(long id) {
-        return new Pair<>("What are the actual risks of giving www-data sudo nopasswd access?", "WebNinja");
+        String title, name;
+        title=name=null;
+        
+        Long objLong = new Long(id);
+        Pergunta p1 = null;
+        Pergunta p2 = null;
+        Resposta r = null;
+        User u = null;
+        p1 = this.perguntas.getPergunta(objLong);
+        title=p1.getTitle();
+            System.out.println(title);
+        r = this.respostas.getResp(objLong);
+        
+        if(p1!=null){
+            u = this.users.getUser(p1.getOwnerIDp());
+            title = p1.getTitle();
+            name = u.getName();
+            //pair.setFst(title);
+            //pair.setSecond(name);
+        }
+
+        else if (r!=null){
+            
+            
+            p2 = this.perguntas.getPergunta(r.getParentID());  
+            u = this.users.getUser(r.getOwnerIDr());
+            title = p2.getTitle();
+            name = u.getName();
+            //pair.setFst(title);
+            //pair.setSecond(name);
+            
+
+        }
+        //return new Pair<>("What are the actual risks of giving www-data sudo nopasswd access?", "WebNinja");
+        return new Pair<>(title,name);
     }
 
     // Query 2
@@ -113,6 +144,7 @@ public class TCDExample implements TADCommunity {
     }
 
     public void clear(){
-
+        
     }
+    */
 }
