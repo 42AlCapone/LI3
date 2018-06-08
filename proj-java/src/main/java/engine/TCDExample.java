@@ -19,7 +19,9 @@ import java.util.List;
 import java.lang.System;
 import java.util.stream.Collectors;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.Comparator;
+import java.util.Collections;
 
 
 
@@ -95,7 +97,8 @@ public class TCDExample implements TADCommunity {
     public List<Long> topMostActive(int N) {
         Comparator<Map.Entry<Long,User>> comparador = new ComparadorNrPosts();
         List<Long> list = new ArrayList<Long>();
-        list = this.users.getCatUsers().entrySet().stream().sorted(comparador)
+        list = this.users.getCatUsers().entrySet().stream()
+        .sorted(comparador)
         .limit(N)
         .map(e->e.getValue().getUserID())
         .collect(Collectors.toCollection(ArrayList :: new));
@@ -106,16 +109,20 @@ public class TCDExample implements TADCommunity {
     public Pair<Long,Long> totalPosts(LocalDate begin, LocalDate end) {
         return new Pair<>(3667L,4102L);
     }
-
+*/
     // Query 4
     public List<Long> questionsWithTag(String tag, LocalDate begin, LocalDate end) {
-        return Arrays.asList(276174L,276029L,274462L,274324L,274316L,274141L,274100L,272937L,
-                272813L,272754L,272666L,272565L,272450L,272313L,271816L,271683L,271647L,270853L,270608L,270528L,270488L,
-                270188L,270014L,269876L,269781L,269095L,268501L,268155L,267746L,267656L,267625L,266742L,266335L,266016L,
-                265531L,265483L,265443L,265347L,265104L,265067L,265028L,264764L,264762L,264616L,264525L,264292L,263816L,
-                263740L,263460L,263405L,263378L,263253L,262733L,262574L);
+        Comparator<Map.Entry<Long,Pergunta>> comparador = new ComparadorDates();
+        List<Long> list = new ArrayList<Long>();
+        list = this.perguntas.getCatPerg().entrySet().stream()
+        .filter(e->(e.getValue().getTags().contains(tag) && e.getValue().getPergDate().compareTo(begin)>0 && e.getValue().getPergDate().compareTo(end)<0))
+        .sorted(comparador)
+        .map(e->e.getValue().getPergID())
+        .collect(Collectors.toCollection(ArrayList :: new));
+        return list;
     }
 
+/*
     // Query 5
     public Pair<String, List<Long>> getUserInfo(long id) {
         String shortBio = "<p>Coder. JS, Perl, Python, Basic<br>Books/movies: SF+F.<br>Dead:" +
@@ -126,38 +133,81 @@ public class TCDExample implements TADCommunity {
                 974359L,973895L,973838L);
         return new Pair<>(shortBio,ids);
     }
-
+*/
     // Query 6
     public List<Long> mostVotedAnswers(int N, LocalDate begin, LocalDate end) {
-        return Arrays.asList(701775L,697197L,694560L,696641L,704208L);
+        Comparator<Map.Entry<Long,Resposta>> comparador = new ComparadorScore();
+        List<Long> list = new ArrayList<Long>();
+        list = this.respostas.getCatResp().entrySet().stream()
+        .filter(e->(e.getValue().getRespDate().compareTo(begin)>0 && e.getValue().getRespDate().compareTo(end)<0))
+        .sorted(comparador)
+        .limit(N)
+        .map(e->e.getValue().getRespID())
+        .collect(Collectors.toCollection(ArrayList :: new));
+        return list;
     }
-
+/*
     // Query 7
     public List<Long> mostAnsweredQuestions(int N, LocalDate begin, LocalDate end) {
-        return Arrays.asList(505506L,508221L,506510L,508029L,506824L,505581L,505368L,509498L,509283L,508635L);
+        Comparator<Map.Entry<Long,Pergunta>> comparador = new ComparadorNrResps();
+        List<Pergunta> list = new ArrayList<Pergunta>();
+        list = this.perguntas.getCatPerg().entrySet().stream()
+        .filter(e->(e.getValue().getPergDate().compareTo(begin)>0 && e.getValue().getPergDate().compareTo(end)<0))
+        .map(e->e.getValue())
+        .collect(Collectors.toCollection(ArrayList :: new));
+
+        Map<Integer,Pergunta> map = new TreeMap<Integer,Pergunta>(Collections.reverseOrder());
+        int count;
+        for (Pergunta p : list){
+            
+            count = 0;
+            for(Resposta r : p.getRespostas()){
+                if(r.getRespDate().compareTo(begin)>0 && r.getRespDate().compareTo(end)<0)
+                    count++;
+                
+            } 
+            map.put(count,p);
+        }
+        return map.entrySet().stream().limit(N).map(e->e.getValue().getPergID())
+        .collect(Collectors.toCollection(ArrayList :: new));
+        
+
+        //return Arrays.asList(505506L,508221L,506510L,508029L,506824L,505581L,505368L,509498L,509283L,508635L);
+        //[508221, 508029, 508635, 508278, 508546, 509174, 509193, 509176, 509197, 509191]
     }
+    */
 
     // Query 8
     public List<Long> containsWord(int N, String word) {
-        return Arrays.asList(980835L,979082L,974117L,974105L,973832L,971812L,971056L,968451L,964999L,962770L);
+        Comparator<Map.Entry<Long,Pergunta>> comparador = new ComparadorDates();
+        List<Long> list = new ArrayList<Long>();
+        list = this.perguntas.getCatPerg().entrySet().stream()
+        .filter(e->(e.getValue().getTitle().contains(word)))
+        .sorted(comparador)
+        .limit(N)
+        .map(e->e.getValue().getPergID())
+        .collect(Collectors.toCollection(ArrayList :: new));
+        return list;
     }
 
+/*
     // Query 9
     public List<Long> bothParticipated(int N, long id1, long id2) {
         return Arrays.asList(594L);
     }
-*/
+  */
+   
     // Query 10
     public long betterAnswer(long id) {
-        List<Long> listResp = perguntas.getPergunta(id).getRespostas();
+        List<Resposta> list = perguntas.getPergunta(id).getRespostas();
         double best,aux;
         best=aux=0;
         long bestID = -1;
-        for(Long resp : listResp){
-            aux = respostas.getResp(resp).getRate();
+        for(Resposta resp : list){
+            aux = resp.getRate();
             if (aux>best){
             best = aux;
-            bestID = respostas.getResp(resp).getRespID();
+            bestID = resp.getRespID();
             }
         }    
         return bestID;

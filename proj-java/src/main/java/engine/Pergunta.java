@@ -17,7 +17,7 @@ public class Pergunta implements Serializable {
 	private String title;
 	private String tags;
 	private int nrComments;
-	private List<Long> respostas;
+	private List<Resposta> respostas;
 
 
 	public Pergunta() {
@@ -28,11 +28,11 @@ public class Pergunta implements Serializable {
 		this.title = "";
 		this.tags = "";
 		this.nrComments = 0;
-		this.respostas = new ArrayList<Long>();
+		this.respostas = new ArrayList<Resposta>();
 	}
 
 	public Pergunta(Long id, LocalDate creationDate, int score, Long ownerID, String title, 
-						String tags, int nrComments, List<Long> respostas) {
+						String tags, int nrComments, List<Resposta> respostas) {
 		this.id = id;
 		this.creationDate = creationDate;
 		this.score = score;
@@ -85,8 +85,12 @@ public class Pergunta implements Serializable {
 		return this.nrComments;
 	}
 
-	public List<Long> getRespostas() {
+	public List<Resposta> getRespostas() {
 		return this.respostas;
+	}
+
+	public int getNrResp(){
+		return this.respostas.size();
 	}
 
 	// Setters
@@ -119,12 +123,12 @@ public class Pergunta implements Serializable {
 		this.nrComments = nrComments;
 	}
 
-	public void setTreeResp(List<Long> respostas) {
+	public void setTreeResp(List<Resposta> respostas) {
 		this.respostas = respostas;
 	}
 
 	public void setResposta(Resposta r) {
-		this.respostas.add(r.getRespID());	
+		this.respostas.add(r);	
 		
 	}
 
