@@ -1,29 +1,29 @@
-package engine;
+package engine; 
 
 import java.io.Serializable;
 import java.time.LocalDate;
 
 public class Resposta implements Serializable {
-	private long id;
-	private long parentID;
+	private Long id;
+	private Long parentID;
 	private LocalDate creationDate;
 	private int score;
-	private long ownerID;
+	private Long ownerID;
 	private int nrComments;
 	private double rate;
 
 
 	public Resposta() {
-		this.id = 0;
-		this.parentID = 0; 
+		this.id = null;
+		this.parentID = null; 
 		this.creationDate = null;
 		this.score = 0;
-		this.ownerID = 0;
+		this.ownerID = null;
 		this.nrComments = 0;
 		this.rate = 0.0;
 	}
 
-	public Resposta(long id, long parentID, LocalDate creationDate, int score, long ownerID, int nrComments, double rate) {
+	public Resposta(Long id, Long parentID, LocalDate creationDate, int score, Long ownerID, int nrComments, double rate) {
 		this.id = id;
 		this.parentID = parentID;
 		this.creationDate = creationDate;
@@ -46,11 +46,11 @@ public class Resposta implements Serializable {
 
 	// Getters
 
-	public long getRespID() {
+	public Long getRespID() {
 		return this.id;
 	}
 
-	public long getParentID() {
+	public Long getParentID() {
 		return this.parentID;
 	}
 
@@ -62,7 +62,7 @@ public class Resposta implements Serializable {
 		return this.score;
 	} 
 
-	public long getOwnerIDr() {
+	public Long getOwnerIDr() {
 		return this.ownerID;
 	}
 
@@ -76,11 +76,11 @@ public class Resposta implements Serializable {
 
 	// Setters
 
-	public void setRespID(long id) {
+	public void setRespID(Long id) {
 		this.id = id;
 	}
 
-	public void setParentID(long parentID) {
+	public void setParentID(Long parentID) {
 		this.parentID = parentID;
 	}
 
@@ -92,7 +92,7 @@ public class Resposta implements Serializable {
 		this.score = score;
 	}
 
-	public void setOwnerIDr(long ownerID) {
+	public void setOwnerIDr(Long ownerID) {
 		this.ownerID = ownerID;
 	}
 

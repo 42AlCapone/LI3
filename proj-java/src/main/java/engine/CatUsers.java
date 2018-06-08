@@ -50,7 +50,9 @@ public class CatUsers {
 		return this.catUsers.containsKey(id);
 	}
 
-
+	public void clearCatUsers() {
+		this.catUsers.clear();
+	}
 
 
 

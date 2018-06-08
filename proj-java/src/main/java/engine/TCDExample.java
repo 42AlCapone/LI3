@@ -14,8 +14,14 @@ import java.io.IOException;
 import java.io.FileNotFoundException;
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 import java.lang.System;
+import java.util.stream.Collectors;
+import java.util.Map;
+import java.util.Comparator;
+
+
 
 public class TCDExample implements TADCommunity {
 
@@ -42,29 +48,30 @@ public class TCDExample implements TADCommunity {
        
 
     }
-
 /*
     // Query 1
     public Pair<String,String> infoFromPost(long id) {
         String title, name;
         title=name=null;
         
+
+        Pair <String,String> pair = new Pair(null,null);
         Long objLong = new Long(id);
         Pergunta p1 = null;
         Pergunta p2 = null;
         Resposta r = null;
         User u = null;
         p1 = this.perguntas.getPergunta(objLong);
-        title=p1.getTitle();
-            System.out.println(title);
+        
+            //System.out.println(title);
         r = this.respostas.getResp(objLong);
         
         if(p1!=null){
             u = this.users.getUser(p1.getOwnerIDp());
             title = p1.getTitle();
             name = u.getName();
-            //pair.setFst(title);
-            //pair.setSecond(name);
+            pair.setFst(title);
+            pair.setSecond(name);
         }
 
         else if (r!=null){
@@ -74,20 +81,27 @@ public class TCDExample implements TADCommunity {
             u = this.users.getUser(r.getOwnerIDr());
             title = p2.getTitle();
             name = u.getName();
-            //pair.setFst(title);
-            //pair.setSecond(name);
+            pair.setFst(title);
+            pair.setSecond(name);
             
 
         }
-        //return new Pair<>("What are the actual risks of giving www-data sudo nopasswd access?", "WebNinja");
-        return new Pair<>(title,name);
+        return pair;
+        //return pair;
     }
+    */
 
     // Query 2
     public List<Long> topMostActive(int N) {
-        return Arrays.asList(15811L,449L,158442L,167850L,367165L,295286L,59676L,93977L,35795L,3940L);
+        Comparator<Map.Entry<Long,User>> comparador = new ComparadorNrPosts();
+        List<Long> list = new ArrayList<Long>();
+        list = this.users.getCatUsers().entrySet().stream().sorted(comparador)
+        .limit(N)
+        .map(e->e.getValue().getUserID())
+        .collect(Collectors.toCollection(ArrayList :: new));
+        return list;
     }
-
+/*
     // Query 3
     public Pair<Long,Long> totalPosts(LocalDate begin, LocalDate end) {
         return new Pair<>(3667L,4102L);
@@ -132,19 +146,34 @@ public class TCDExample implements TADCommunity {
     public List<Long> bothParticipated(int N, long id1, long id2) {
         return Arrays.asList(594L);
     }
-
+*/
     // Query 10
     public long betterAnswer(long id) {
-        return 175891;
+        List<Long> listResp = perguntas.getPergunta(id).getRespostas();
+        double best,aux;
+        best=aux=0;
+        long bestID = -1;
+        for(Long resp : listResp){
+            aux = respostas.getResp(resp).getRate();
+            if (aux>best){
+            best = aux;
+            bestID = respostas.getResp(resp).getRespID();
+            }
+        }    
+        return bestID;
     }
 
+/*
     // Query 11
     public List<Long> mostUsedBestRep(int N, LocalDate begin, LocalDate end) {
         return Arrays.asList(6L,29L,72L,163L,587L);
     }
+    */
 
     public void clear(){
-        
+        this.users.clearCatUsers();
+        this.perguntas.clearCatPerg();
+        this.respostas.clearCatResp();
+        return;
     }
-    */
 }

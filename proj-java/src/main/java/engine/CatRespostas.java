@@ -50,4 +50,8 @@ public class CatRespostas {
 		return this.catResp.containsKey(id);
 	}
 
+	public void clearCatResp() {
+		this.catResp.clear();
+	}
+
 }

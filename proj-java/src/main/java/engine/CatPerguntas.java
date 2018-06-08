@@ -50,4 +50,8 @@ public class CatPerguntas {
 		return this.catPerg.containsKey(id);
 	}
 
+	public void clearCatPerg() {
+		this.catPerg.clear();
+	}
+
 }

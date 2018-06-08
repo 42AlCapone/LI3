@@ -3,34 +3,36 @@ package engine;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Month;
-import java.util.TreeMap;
-import java.util.Map;
+import java.util.List;
+import java.util.ArrayList;
 import java.util.Set;
 import java.util.Comparator;
+import java.lang.Long;
 
 public class Pergunta implements Serializable {
-	private long id;
+	private Long id;
 	private LocalDate creationDate;
 	private int score;
-	private long ownerID;
+	private Long ownerID;
 	private String title;
 	private String tags;
 	private int nrComments;
-	private TreeMap<LocalDate,Resposta> respostas;
+	private List<Long> respostas;
 
 
 	public Pergunta() {
-		this.id = 0;
+		this.id = null;
 		this.creationDate = null;
 		this.score = 0;
-		this.ownerID = 0;
+		this.ownerID = null;
 		this.title = "";
 		this.tags = "";
 		this.nrComments = 0;
-		this.respostas = new TreeMap<LocalDate,Resposta>(new ComparadorDates());
+		this.respostas = new ArrayList<Long>();
 	}
 
-	public Pergunta(long id, LocalDate creationDate, int score, long ownerID, String title, String tags, int nrComments, TreeMap<LocalDate,Resposta> respostas) {
+	public Pergunta(Long id, LocalDate creationDate, int score, Long ownerID, String title, 
+						String tags, int nrComments, List<Long> respostas) {
 		this.id = id;
 		this.creationDate = creationDate;
 		this.score = score;
@@ -55,7 +57,7 @@ public class Pergunta implements Serializable {
 
 	// Getters
 
-	public long getPergID() {
+	public Long getPergID() {
 		return this.id;
 	}
 
@@ -83,13 +85,13 @@ public class Pergunta implements Serializable {
 		return this.nrComments;
 	}
 
-	public TreeMap<LocalDate,Resposta> getRespostas() {
+	public List<Long> getRespostas() {
 		return this.respostas;
 	}
 
 	// Setters
 
-	public void setPergID(long id) {
+	public void setPergID(Long id) {
 		this.id = id;
 	}
 
@@ -101,7 +103,7 @@ public class Pergunta implements Serializable {
 		this.score = score;
 	}
 
-	public void setOwnerIDp(long ownerID) {
+	public void setOwnerIDp(Long ownerID) {
 		this.ownerID = ownerID;
 	}
 
@@ -117,12 +119,12 @@ public class Pergunta implements Serializable {
 		this.nrComments = nrComments;
 	}
 
-	public void setTreeResp(TreeMap<LocalDate,Resposta> respostas) {
+	public void setTreeResp(List<Long> respostas) {
 		this.respostas = respostas;
 	}
 
 	public void setResposta(Resposta r) {
-		this.respostas.put(r.getRespDate(),r);	
+		this.respostas.add(r.getRespID());	
 		
 	}
 

@@ -49,8 +49,12 @@ public class Parser {
             int rep1, views1, upv1, downv1, voteDif;
             String name1, bio1;
             
+            User u = null;
+            
             for(int x=0,size = nodeList.getLength(); x<size; x++) {
-                
+            
+            	u = new User();
+
                 id1=null; 
                 rep1=views1=voteDif=upv1=downv1=0;
                 name1=bio1=null;
@@ -86,7 +90,6 @@ public class Parser {
                 
                 voteDif = upv1-downv1;
       
-                User u = new User();
                 u.setUserID(id1);
                 u.setName(name1);
                 u.setBio(bio1);
@@ -98,9 +101,8 @@ public class Parser {
 
                 
             }
-            System.out.println("-------------------------------------------");                
-                System.out.println(users.getUser(2L).getName());
-
+            System.out.println("USERS INSERIDOS");
+            
         } catch (SAXException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -134,11 +136,10 @@ public class Parser {
             doc.getDocumentElement().normalize();
             NodeList nodeList = doc.getElementsByTagName("row");
 
-            String type=null;
+            String type;//=null;
             
             //Pergunta
             Node idP, dateP, scoreP, ownerIDp, title, tags, nrComsP;
-            idP=dateP=scoreP=ownerIDp=title=tags=nrComsP=null;
 
             Long id1, owner1;
             int score1, nrComs1;
@@ -146,17 +147,28 @@ public class Parser {
             
             //Resposta
             Node idR, parentID, dateR, scoreR, ownerIDr, nrComsR;
-            idR=parentID=dateR=scoreR=ownerIDr=nrComsR=null;
 
             Long id2, owner2, parent2;
             int score2, nrComs2;
             String date2;
 
-            for(int x=0,size = nodeList.getLength(); x<size; x++) {
-                
+            Pergunta p = null;
+            Resposta r = null;
+
+            	type=null;
+            	idP=dateP=scoreP=ownerIDp=title=tags=nrComsP=null;
+            	idR=parentID=dateR=scoreR=ownerIDr=nrComsR=null;
+
+
                 id1=id2=owner1=owner2=parent2=null;
                 score1=score2=nrComs1=nrComs2=0;
                 date1=date2=title1=tags1=null;
+
+            for(int x=0,size = nodeList.getLength(); x<size; x++) {
+                
+
+                p = new Pergunta();
+                r = new Resposta();
 
                 type = nodeList.item(x).getAttributes().getNamedItem("PostTypeId").getNodeValue();
 
@@ -190,7 +202,6 @@ public class Parser {
                     if(nrComsP!=null)
                         nrComs1 = Integer.parseInt(nrComsP.getNodeValue());
 
-                    Pergunta p = new Pergunta();
                     p.setPergID(id1);
                     p.setPergDate(convertDate(date1));
                     p.setScoreP(score1);
@@ -221,7 +232,7 @@ public class Parser {
                         parent2 = Long.valueOf(parentID.getNodeValue());
 
                     if(dateR!=null)
-                        date2 = dateP.getNodeValue();
+                        date2 = dateR.getNodeValue();
 
                     if(scoreR!=null)
                         score2 = Integer.parseInt(scoreR.getNodeValue());
@@ -232,20 +243,20 @@ public class Parser {
                     if(nrComsR!=null)
                         nrComs2 = Integer.parseInt(nrComsR.getNodeValue());
 
-                    Resposta r = new Resposta();
                     r.setRespID(id2);
                     r.setParentID(parent2);
                     r.setRespDate(convertDate(date2));
                     r.setScoreR(score2);
                     r.setOwnerIDr(owner2);
                     r.setCommentsR(nrComs2);
+                    r.setRate(calcRate(users,owner2,score2,nrComs2));
                     resps.insereResp(r);
                     
                     
 
                     
-                    //INSERIR NA TreeMap
-                    Pergunta p = pergs.getPergunta(parent2);
+                    //INSERIR NA LIST
+                    p = pergs.getPergunta(parent2);
                     if(p!=null)
                     p.setResposta(r);
 
@@ -253,12 +264,13 @@ public class Parser {
                 	users.getUser(owner2).incNrPosts();
 
                     //CALCULAR RATE
+
+
                 }
 
                 
             }
-            System.out.println("-------------------------------------------");                
-                System.out.println(users.getUser(10L).getNrPosts());
+            System.out.println("POSTS INSERIDOS");
 
         } catch (SAXException e) {
             e.printStackTrace();
@@ -269,6 +281,11 @@ public class Parser {
         }
 
 
+    }
+
+    public static double calcRate(CatUsers users, Long oid, int score, int cCount){
+        int repUser = users.getUser(oid).getRep();
+        return (double) ((score*0.65) + (repUser*0.25) + (cCount*0.1));
     }
 
     public static LocalDate convertDate(String date) {
