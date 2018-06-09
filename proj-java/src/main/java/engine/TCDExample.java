@@ -106,24 +106,23 @@ public class TCDExample implements TADCommunity {
         .collect(Collectors.toCollection(ArrayList :: new));
         return list;
     }
-/*
+
     // Query 3
     public Pair<Long,Long> totalPosts(LocalDate begin, LocalDate end) {
         long perg, resp;
         perg=resp=0;
-        for (Pergunta p : this.perguntas.entrySet().getValue()){
-            if(p.getPergDate().compareTo(begin)>0 && p.getPergDate().compareTo(end)<0)
+        for (Pergunta p : this.perguntas.getCatPerg().values()){
+            if(p.getPergDate().compareTo(begin)>=0 && p.getPergDate().compareTo(end)<=0)
                 perg++;
         }
         
-        for (Resposta r : this.respostas.entrySet().getValue()){
-            if(r.getRespDate().compareTo(begin)>0 && r.getRespDate().compareTo(end)<0)
+        for (Resposta r : this.respostas.getCatResp().values()){
+            if(r.getRespDate().compareTo(begin)>=0 && r.getRespDate().compareTo(end)<=0)
                 resp++;
         }
         return new Pair<>(perg,resp);
-        //return new Pair<>(3667L,4102L);
     }
-*/
+
     // Query 4
     public List<Long> questionsWithTag(String tag, LocalDate begin, LocalDate end) {
         Comparator<Map.Entry<Long,Pergunta>> comparador = new ComparadorDates();
