@@ -69,7 +69,7 @@ public class Pergunta implements Serializable {
 		return this.score;
 	}
 
-	public long getOwnerIDp() {
+	public Long getOwnerIDp() {
 		return this.ownerID;
 	}
 

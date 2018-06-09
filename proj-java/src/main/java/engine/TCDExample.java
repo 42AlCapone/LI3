@@ -50,49 +50,51 @@ public class TCDExample implements TADCommunity {
        
 
     }
-/*
+  /*
     // Query 1
     public Pair<String,String> infoFromPost(long id) {
         String title, name;
         title=name=null;
-        
+        Long id1 = new Long(id);
 
-        Pair <String,String> pair = new Pair(null,null);
-        Long objLong = new Long(id);
-        Pergunta p1 = null;
-        Pergunta p2 = null;
-        Resposta r = null;
-        User u = null;
-        p1 = this.perguntas.getPergunta(objLong);
-        
+        //Pergunta p = this.perguntas.getCatperg().getPergunta(id);
+        Pergunta p;
             //System.out.println(title);
-        r = this.respostas.getResp(objLong);
+        //r = this.respostas.getResp(objLong);
+        Resposta r;
+        User u;
         
-        if(p1!=null){
-            u = this.users.getUser(p1.getOwnerIDp());
-            title = p1.getTitle();
+
+        if(this.perguntas.getCatPerg().containsKey(id1)){
+            p = this.perguntas.getCatPerg().entrySet().stream().map(e->e.getValue())
+            .filter(e->(e.getPergID()==id1)).ifPresent(s->s.get());
+
+            u = this.users.getCatUsers().entrySet().stream().map(e->e.getValue())
+            .filter(e->(e.getUserID()==p.getOwnerIDp())).ifPresent(s->s.get());
+
+            title = p.getTitle();
             name = u.getName();
-            pair.setFst(title);
-            pair.setSecond(name);
         }
 
-        else if (r!=null){
+        else if (this.respostas.getCatResp().containsKey(id1)){
+            r = this.respostas.getCatResp().entrySet().stream().map(e->e.getValue())
+            .filter(e->(e.getRespID()==id1)).ifPresent(s->s.get());
+        
+            p = this.perguntas.getCatPerg().entrySet().stream().map(e->e.getValue())
+            .filter(e->(e.getPergID()==r.getParentID())).ifPresent(s->s.get());
             
-            
-            p2 = this.perguntas.getPergunta(r.getParentID());  
-            u = this.users.getUser(r.getOwnerIDr());
-            title = p2.getTitle();
-            name = u.getName();
-            pair.setFst(title);
-            pair.setSecond(name);
-            
+            u = this.users.getCatUsers().entrySet().stream().map(e->e.getValue())
+            .filter(e->(e.getUserID()==r.getOwnerIDr())).ifPresent(s->s.get());
 
+            title = p.getTitle();
+            name = u.getName();
         }
-        return pair;
+
+        return new Pair<>(title,name);
         //return pair;
     }
     */
-
+    
     // Query 2
     public List<Long> topMostActive(int N) {
         Comparator<Map.Entry<Long,User>> comparador = new ComparadorNrPosts();
@@ -107,7 +109,19 @@ public class TCDExample implements TADCommunity {
 /*
     // Query 3
     public Pair<Long,Long> totalPosts(LocalDate begin, LocalDate end) {
-        return new Pair<>(3667L,4102L);
+        long perg, resp;
+        perg=resp=0;
+        for (Pergunta p : this.perguntas.entrySet().getValue()){
+            if(p.getPergDate().compareTo(begin)>0 && p.getPergDate().compareTo(end)<0)
+                perg++;
+        }
+        
+        for (Resposta r : this.respostas.entrySet().getValue()){
+            if(r.getRespDate().compareTo(begin)>0 && r.getRespDate().compareTo(end)<0)
+                resp++;
+        }
+        return new Pair<>(perg,resp);
+        //return new Pair<>(3667L,4102L);
     }
 */
     // Query 4
@@ -122,18 +136,51 @@ public class TCDExample implements TADCommunity {
         return list;
     }
 
-/*
+
     // Query 5
     public Pair<String, List<Long>> getUserInfo(long id) {
-        String shortBio = "<p>Coder. JS, Perl, Python, Basic<br>Books/movies: SF+F.<br>Dead:" +
-                "dell 9300<br>Dead: dell 1720 as of may 10th 2011.</p>\n" +
-                "<p>Current system: Acer Aspire 7750G.<br>\n" +
-                "Works OOTB as of Ubuntu 12.04.<br></p>";
-        List<Long> ids = Arrays.asList(982507L,982455L,980877L,980197L,980189L,976713L,974412L,
-                974359L,973895L,973838L);
-        return new Pair<>(shortBio,ids);
+        String bio;
+        Comparator<Map.Entry<Long,Pergunta>> comparadorP = new ComparadorDates();
+        Comparator<Map.Entry<Long,Resposta>> comparadorR = new ComparadorDatesR();
+        
+        bio = this.users.getCatUsers().get(id).getBio();
+        
+        List<Pergunta> pergs = new ArrayList<Pergunta>();
+        pergs = this.perguntas.getCatPerg().entrySet().stream()
+        .filter(e->e.getValue().getOwnerIDp()==id)
+        .sorted(comparadorP)
+        .limit(10)
+        .map(e->e.getValue())
+        .collect(Collectors.toCollection(ArrayList :: new));
+
+        List<Resposta> resps = new ArrayList<Resposta>();
+        resps = this.respostas.getCatResp().entrySet().stream()
+        .filter(e->e.getValue().getOwnerIDr()==id)
+        .sorted(comparadorR)
+        .limit(10)
+        .map(e->e.getValue())
+        .collect(Collectors.toCollection(ArrayList :: new));
+
+        List<Long> top10 = new ArrayList<Long>();
+        for (Pergunta p : pergs) {
+            for (Resposta r : resps) {
+                if(p.getPergDate().compareTo(r.getRespDate())>0)
+                    if(top10.contains(p.getPergID()))
+                        break;
+                    else    
+                        top10.add(p.getPergID());
+                else 
+                    if(top10.contains(r.getRespID()))
+                        break;
+                    else
+                        top10.add(r.getRespID());
+
+            }
+        }
+        
+        return new Pair<>(bio,top10);
     }
-*/
+
     // Query 6
     public List<Long> mostVotedAnswers(int N, LocalDate begin, LocalDate end) {
         Comparator<Map.Entry<Long,Resposta>> comparador = new ComparadorScore();
