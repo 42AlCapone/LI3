@@ -1,2 +1,5 @@
 snaps/
 *.o
+results.txt
+target/
+times.txt

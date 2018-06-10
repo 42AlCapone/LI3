@@ -3,9 +3,8 @@ package engine;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Month;
-import java.util.List;
-import java.util.ArrayList;
 import java.util.Set;
+import java.util.HashSet;
 import java.util.Comparator;
 import java.lang.Long;
 
@@ -17,7 +16,7 @@ public class Pergunta implements Serializable {
 	private String title;
 	private String tags;
 	private int nrComments;
-	private List<Resposta> respostas;
+	private Set<Resposta> respostas;
 
 
 	public Pergunta() {
@@ -28,11 +27,11 @@ public class Pergunta implements Serializable {
 		this.title = "";
 		this.tags = "";
 		this.nrComments = 0;
-		this.respostas = new ArrayList<Resposta>();
+		this.respostas = new HashSet<Resposta>();
 	}
 
 	public Pergunta(Long id, LocalDate creationDate, int score, Long ownerID, String title, 
-						String tags, int nrComments, List<Resposta> respostas) {
+						String tags, int nrComments, Set<Resposta> respostas) {
 		this.id = id;
 		this.creationDate = creationDate;
 		this.score = score;
@@ -85,7 +84,7 @@ public class Pergunta implements Serializable {
 		return this.nrComments;
 	}
 
-	public List<Resposta> getRespostas() {
+	public Set<Resposta> getRespostas() {
 		return this.respostas;
 	}
 
@@ -123,7 +122,7 @@ public class Pergunta implements Serializable {
 		this.nrComments = nrComments;
 	}
 
-	public void setTreeResp(List<Resposta> respostas) {
+	public void setResp(Set<Resposta> respostas) {
 		this.respostas = respostas;
 	}
 
