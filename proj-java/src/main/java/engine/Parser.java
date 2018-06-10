@@ -101,7 +101,7 @@ public class Parser {
 
                 
             }
-            System.out.println("USERS INSERIDOS");
+            System.out.println("USERS INSERIDOS!");
             
         } catch (SAXException e) {
             e.printStackTrace();
@@ -113,6 +113,7 @@ public class Parser {
 
 	}
 
+    
 
 
 	public static void parsePosts(String dump, CatUsers users, CatPerguntas pergs, CatRespostas resps) {
@@ -136,7 +137,7 @@ public class Parser {
             doc.getDocumentElement().normalize();
             NodeList nodeList = doc.getElementsByTagName("row");
 
-            String type;//=null;
+            String type;
             
             //Pergunta
             Node idP, dateP, scoreP, ownerIDp, title, tags, nrComsP;
@@ -165,10 +166,6 @@ public class Parser {
                 date1=date2=title1=tags1=null;
 
             for(int x=0,size = nodeList.getLength(); x<size; x++) {
-                
-
-                p = new Pergunta();
-                r = new Resposta();
 
                 type = nodeList.item(x).getAttributes().getNamedItem("PostTypeId").getNodeValue();
 
@@ -202,6 +199,7 @@ public class Parser {
                     if(nrComsP!=null)
                         nrComs1 = Integer.parseInt(nrComsP.getNodeValue());
 
+                    p = new Pergunta();
                     p.setPergID(id1);
                     p.setPergDate(convertDate(date1));
                     p.setScoreP(score1);
@@ -243,6 +241,7 @@ public class Parser {
                     if(nrComsR!=null)
                         nrComs2 = Integer.parseInt(nrComsR.getNodeValue());
 
+                    r = new Resposta();
                     r.setRespID(id2);
                     r.setParentID(parent2);
                     r.setRespDate(convertDate(date2));
@@ -252,10 +251,7 @@ public class Parser {
                     r.setRate(calcRate(users,owner2,score2,nrComs2));
                     resps.insereResp(r);
                     
-                    
-
-                    
-                    //INSERIR NA LIST
+                    //INSERIR NO SET A RESPOSTA
                     p = pergs.getPergunta(parent2);
                     if(p!=null)
                     p.setResposta(r);
@@ -268,9 +264,8 @@ public class Parser {
 
                 }
 
-                
             }
-            System.out.println("POSTS INSERIDOS");
+            System.out.println("POSTS INSERIDOS!");
 
         } catch (SAXException e) {
             e.printStackTrace();
@@ -299,6 +294,64 @@ public class Parser {
     	return localdate;
     }
 
+
+    public static void parseTags(String dump,CatTags tags){
+        
+        String xml,file;
+        xml = "Tags.xml";
+        file = dump.concat(xml);
+
+
+        File inputFile = new File(file);
+        try {
+
+        DocumentBuilderFactory dbFactory
+                = DocumentBuilderFactory.newInstance();
+
+        DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+
+        Document doc = null;
+
+            doc = dBuilder.parse(inputFile);
+            doc.getDocumentElement().normalize();
+            NodeList nodeList = doc.getElementsByTagName("row");
+
+            Node idNode, nameNode;
+            idNode=nameNode=null;
+
+            Long id;
+            String name;
+        
+            
+            for(int x=0,size = nodeList.getLength(); x<size; x++) {
+            
+                id=null;
+                name=null;
+                
+                idNode = nodeList.item(x).getAttributes().getNamedItem("Id");
+                nameNode = nodeList.item(x).getAttributes().getNamedItem("TagName");
+                                
+                if(idNode!=null)
+                    id = Long.valueOf(idNode.getNodeValue());
+                
+                if(nameNode!=null)
+                    name = nameNode.getNodeValue();
+                
+                tags.insereTag(name,id);
+
+                
+            }
+            System.out.println("TAGS INSERIDAS!");
+            
+        } catch (SAXException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ParserConfigurationException e) {
+            e.printStackTrace();
+        }
+
+    }
 
 }
 
