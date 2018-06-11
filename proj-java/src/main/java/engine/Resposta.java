@@ -97,6 +97,13 @@ public class Resposta implements Serializable {
 	 *                   da resposta <code>resp</code>.
 	 * @param rate parâmetro <code>double</code> inicializado igual a <code>double rate</code>
 	 *             da resposta <code>resp</code>.
+	 * @see getRespID()
+	 * @see getParentID()
+	 * @see getRespDate()
+	 * @see getScoreR()
+	 * @see getOwnerIDr()
+	 * @see getCommentsR()
+	 * @see getRate()
 	 * @see time.LocalDate
 	 * @see lang.Long
 	 * @see engine

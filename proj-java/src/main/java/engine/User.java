@@ -1,5 +1,6 @@
 /**
  * Classe de utilizadores User contedo a informação relativa a um user.
+ *
  * @author António Gomes
  * @author João Vieira
  * @author Rui Vieira
@@ -22,6 +23,8 @@ public class User implements Serializable {
 
 	/**
 	 * Construtor por omissão da classe User.
+	 * <p>
+	 * Inicializa todos os parâmetros do objecto <code>User</code> associado a um valor default.
 	 *
 	 * @param id Parâmetro <code>Long</code> correspondente ao idêntificador do user.
 	 *           inicializado a <code>null</code> de forma a evitar leitura de "falsos" <code>id</code>
@@ -91,7 +94,7 @@ public class User implements Serializable {
 	 * Construtor por cópia da classe User.
 	 * <p>
 	 * Inicializa cada parâmetro de um objecto como sendo iguais aos parâmetros de um objecto
-	 * <code>User user</code> passado por argumento.
+	 * <code>User user</code> passado por argumento, utiliza os métodos get da cpasse User.
 	 *
 	 * @param id Parâmetro <code>Long</code> correspondente ao idêntificador do user, 
 	 *           inicializado como sendo igual ao <code>id</code> do objecto <code>User user</code>
@@ -110,6 +113,13 @@ public class User implements Serializable {
 	 * @param nrPosts Parâmetro <code>int</code> correspondente ao número total de posts
 	 *                efetuados pelo user, inicializado igual ao <code>nrPosts</code>
 	 *                do objecto <code>User user</code> passado por argumento.
+	 * @see #getUserID()
+	 * @see #getName()
+	 * @see #getBio()
+	 * @see #getRep()
+	 * @see #getViews()
+	 * @see #getVotes()
+	 * @see #getNrPosts()
 	 * @see lang.Long
 	 * @see lang.String
 	 * @see engine
@@ -296,8 +306,11 @@ public class User implements Serializable {
 	 * @return <code>false</code> se o objecto não for da classe User.
 	 * @return <code>true</code> caso todos os parâmetros do objecto passado como
 	 *         parâmetro forem iguais aos parâmetros do user ao qual este é comparado.
+	 * @see lang.Object#getClass()
+	 * @see lang.String#equals()
 	 * @see lang.Long
 	 * @see lang.String
+	 * @see lang.Object
 	 */
 	public boolean equals(Object obj) {
 		if (obj == this)
