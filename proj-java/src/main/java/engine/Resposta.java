@@ -24,18 +24,20 @@ public class Resposta implements Serializable {
 
 
 	/**
-	 * Declarador por omissão da classe Resposta.
+	 * Construtor por omissão da classe Resposta.
+	 *
 	 * Inicializa cada parametro da classe resposta a <code>null</code>.
+	 *  ou a um valor default.
 	 * 
 	 * @version 1.1
 	 * @param id Parâmetro <code>Long</code> inicializado a <code>null</code> para 
-	 *           evitar leituras de ids "falsos" nas respectivas <code></code>.
+	 *           evitar leituras de ids "falsos" na respectiva <code>HashMap</code>.
 	 * @param parentID Parâmetro <code>Long</code> inicializado a <code>null</code> para
-	 *                 evitar leituras de ids "falsos" nas respectivas <code></code>.
+	 *                 evitar leituras de ids "falsos" na respectiva <code>HashMap</code>.
 	 * @param creationDate Data sob o formato da classe {@link LocalDate} nativa do java.
 	 * @param score parâmetro <code>int</code> inicializado a 0 (valor mínimo possível)
 	 * @param ownerID Parâmetro <code>Long</code> ininializado a <code>null</code> para
-	 *                evitar a leitura de ids "falsos" nas respectivas <code></code>.
+	 *                evitar a leitura de ids "falsos" na respectiva <code>HashMap</code>.
 	 * @param nrComments Parâmetro <code>int</code> inicializado a 0 (valor mínimo possível)
 	 * @param rate Parâmetro <code>double</code> inicializado a 0.0 (valor mínimo possível)
 	 * @see time.LocalDate
@@ -53,7 +55,7 @@ public class Resposta implements Serializable {
 	}
 
 	/**
-	 * Declarador parameterizado da classe Resposta.
+	 * Construtor parameterizado da classe Resposta.
 	 * Inicializa cada parâmetro da classe resposta segundo um parâmetro do mesmo tipo
 	 *  pasado por argumento.
 	 * 
@@ -79,7 +81,7 @@ public class Resposta implements Serializable {
 	}
 
 	/**
-	 * Declarador por cópia da classe Resposta.
+	 * Construtor por cópia da classe Resposta.
 	 * Inicializa cada parametro da classe resposta a <code>null</code>.
 	 * 
 	 * @param id Parâmetro <code>Long</code> inicializado igual a <code>id</code> 
@@ -95,6 +97,13 @@ public class Resposta implements Serializable {
 	 *                   da resposta <code>resp</code>.
 	 * @param rate parâmetro <code>double</code> inicializado igual a <code>double rate</code>
 	 *             da resposta <code>resp</code>.
+	 * @see getRespID()
+	 * @see getParentID()
+	 * @see getRespDate()
+	 * @see getScoreR()
+	 * @see getOwnerIDr()
+	 * @see getCommentsR()
+	 * @see getRate()
 	 * @see time.LocalDate
 	 * @see lang.Long
 	 * @see engine
