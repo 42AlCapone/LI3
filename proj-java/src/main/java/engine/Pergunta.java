@@ -14,7 +14,7 @@ public class Pergunta implements Serializable {
 	private int score;
 	private Long ownerID;
 	private String title;
-	private String tags;
+	private Set<String> tags;
 	private int nrComments;
 	private Set<Resposta> respostas;
 
@@ -25,13 +25,13 @@ public class Pergunta implements Serializable {
 		this.score = 0;
 		this.ownerID = null;
 		this.title = "";
-		this.tags = "";
+		this.tags = new HashSet<String>();
 		this.nrComments = 0;
 		this.respostas = new HashSet<Resposta>();
 	}
 
 	public Pergunta(Long id, LocalDate creationDate, int score, Long ownerID, String title, 
-						String tags, int nrComments, Set<Resposta> respostas) {
+						HashSet<String> tags, int nrComments, Set<Resposta> respostas) {
 		this.id = id;
 		this.creationDate = creationDate;
 		this.score = score;
@@ -76,7 +76,7 @@ public class Pergunta implements Serializable {
 		return this.title;
 	}
 
-	public String getTags() {
+	public Set<String> getTags() {
 		return this.tags;
 	}
 
@@ -114,9 +114,14 @@ public class Pergunta implements Serializable {
 		this.title = title;
 	}
 
-	public void setTags(String tags) {
+	public void setHashTags(HashSet<String> tags) {
 		this.tags = tags;
 	}
+
+	public void setTag (String tag){
+		this.tags.add(tag);
+	}
+
 
 	public void setCommentsP(int nrComments) {
 		this.nrComments = nrComments;

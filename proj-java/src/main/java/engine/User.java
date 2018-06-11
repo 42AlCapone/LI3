@@ -2,6 +2,8 @@ package engine;
 
 import java.io.Serializable;
 import java.lang.Long;
+import java.util.Map;
+import java.util.HashMap;
 
 public class User implements Serializable {
 	private Long id;
@@ -11,7 +13,6 @@ public class User implements Serializable {
 	private int views;
 	private int voteDif;
 	private int nrPosts;
-
 
 	public User() {
 		this.id = null;
@@ -103,7 +104,7 @@ public class User implements Serializable {
 	public void incNrPosts() {
 		this.nrPosts++;
 	}
-
+	
 
 	public boolean equals(Object obj) {
 		if (obj == this)

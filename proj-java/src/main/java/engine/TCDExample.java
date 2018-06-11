@@ -19,7 +19,7 @@ import java.util.List;
 import java.lang.System;
 import java.util.stream.Collectors;
 import java.util.Map;
-import java.util.TreeMap;
+import java.util.HashMap;
 import java.util.Set;
 import java.util.HashSet;
 import java.util.Comparator;
@@ -28,8 +28,6 @@ import java.util.Collections;
 
 
 public class TCDExample implements TADCommunity {
-
-    //private MyLog qelog;
 
     private CatUsers users;
     private CatPerguntas perguntas;
@@ -134,6 +132,7 @@ public class TCDExample implements TADCommunity {
         
         Comparator<Map.Entry<Long,Pergunta>> comparadorP = new ComparadorDatesP();
         Comparator<Map.Entry<Long,Resposta>> comparadorR = new ComparadorDatesR();
+        Comparator<Map.Entry<Long,LocalDate>> comparadorL = new ComparadorDatesL();
         
         String bio = this.users.getCatUsers().get(id).getBio();
              
@@ -153,21 +152,20 @@ public class TCDExample implements TADCommunity {
         .map(e->e.getValue())
         .collect(Collectors.toCollection(ArrayList :: new));
 
+        Map<Long,LocalDate> map = new HashMap<Long,LocalDate>();
+        for (Pergunta p : pergs)
+            map.put(p.getPergID(),p.getPergDate());
+        for (Resposta r : resps)
+            map.put(r.getRespID(),r.getRespDate());
+        
+
         List<Long> top10 = new ArrayList<Long>();
-        for (Pergunta p : pergs) {
-            for (Resposta r : resps) {
-                if(p.getPergDate().compareTo(r.getRespDate())>0)
-                    if(top10.contains(p.getPergID()))
-                        break;
-                    else    
-                        top10.add(p.getPergID());
-                else 
-                    if(top10.contains(r.getRespID()))
-                        break;
-                    else
-                        top10.add(r.getRespID());
-            }
-        }
+        top10 = map.entrySet().stream().
+        sorted(comparadorL)
+        .limit(10)
+        .map(e->e.getKey())
+        .collect(Collectors.toCollection(ArrayList :: new));
+
         return new Pair<>(bio,top10);
     }
 
@@ -235,12 +233,83 @@ public class TCDExample implements TADCommunity {
         return list;
     }
 
-/*
+
     // Query 9
     public List<Long> bothParticipated(int N, long id1, long id2) {
-        return Arrays.asList(594L);
+        
+
+        //Perguntas user1
+        List<Pergunta> pergsUser1 = this.perguntas.getCatPerg().entrySet().stream()
+        .filter(e->e.getValue().getOwnerIDp()==id1)
+        .map(e->e.getValue())
+        .collect(Collectors.toCollection(ArrayList :: new));
+
+        //Perguntas user2
+        List<Pergunta> pergsUser2 = this.perguntas.getCatPerg().entrySet().stream()
+        .filter(e->e.getValue().getOwnerIDp()==id2)
+        .map(e->e.getValue())
+        .collect(Collectors.toCollection(ArrayList :: new));
+
+        Map<Long,Pergunta> map = new HashMap<Long,Pergunta>();
+        Set<Resposta> set1;
+        Set<Resposta> set2;
+
+        //User1 na pergunta e user2 na resposta
+        for(Pergunta p : pergsUser1){
+            
+            set1 = p.getRespostas();
+            for(Resposta r : set1){
+
+                if(r.getOwnerIDr()==id2){    
+                    map.put(p.getPergID(),p);
+                    break;  
+                }
+            }
+        }
+
+        //User2 na pergunta e user1 na resposta
+        for(Pergunta p : pergsUser2){
+            
+            set2 = p.getRespostas();
+            for(Resposta r : set2){
+
+                if(r.getOwnerIDr()==id1){
+                    map.put(p.getPergID(),p); 
+                    break;
+                }
+            }
+        }
+
+        Set<Resposta> set3;
+        int flag=0;
+        
+        //dois users em respostas
+        for(Map.Entry<Long,Pergunta> entry : this.perguntas.getCatPerg().entrySet()){
+            set3 = entry.getValue().getRespostas();
+            flag=0;
+            for(Resposta r : set3){
+                if(flag==2) break;
+                else if(flag==1)
+                    if(r.getOwnerIDr()==id1 || r.getOwnerIDr()==id2){
+                        flag++;
+                        map.put(entry.getValue().getPergID(),entry.getValue()); 
+                    }
+                else if(r.getOwnerIDr()==id1 || r.getOwnerIDr()==id2) flag++;
+
+                
+            }
+
+        }
+
+        Comparator<Map.Entry<Long,Pergunta>> comparador = new ComparadorDatesP();
+        List<Long> list = new ArrayList<Long>();
+        list = map.entrySet().stream().sorted(comparador)
+        .map(e->e.getValue().getPergID())
+        .collect(Collectors.toCollection(ArrayList :: new));
+
+        return list;
     }
-  */
+
    
     // Query 10
     public long betterAnswer(long id) {
@@ -261,12 +330,113 @@ public class TCDExample implements TADCommunity {
         return bestID;
     }
 
-/*
+        /*
+
     // Query 11
     public List<Long> mostUsedBestRep(int N, LocalDate begin, LocalDate end) {
-        return Arrays.asList(6L,29L,72L,163L,587L);
+        
+        Comparator<Map.Entry<Long,User>> comparador1 = new ComparadorRep();
+        List<Long> listUsers = new ArrayList<Long>();
+        listUsers = this.users.getCatUsers().entrySet().stream()
+        .sorted(comparador1)
+        .limit(N)
+        .map(e->e.getKey())
+        .collect(Collectors.toCollection(ArrayList :: new));
+        List<Pergunta> listPerg = new ArrayList<Pergunta>();
+        listPerg = this.perguntas.getCatPerg().entrySet().stream()
+        .filter(e->e.getPergDate().compareTo(begin)>=0 && e.getPergDate().compareTo(end)<=0)
+        .map(e->e.clone())
+        .collect(Collectors.toCollection(ArrayList :: new));
+
+        User user;
+        for(Pergunta p : listPerg) {
+            user = p.get
+        }
+
+
+        List<Pergunta> list;
+        
+        Map<String,Tag> best_tags = new HashMap<String,Tag>();
+        for(Long u : listUsers) {
+            
+            list = new ArrayList<Pergunta>();
+            int novo=0;
+            for(Map.Entry<Long,Pergunta> p : perguntas.getCatPerg().entrySet()){
+                if (p.getValue().getOwnerIDp()==449L)
+                    {
+                        System.out.println(u);
+                        novo ++;
+                        System.out.println(novo);
+                    }
+                    else break;
+                
+
+            }
+
+            list = this.perguntas.getCatPerg().entrySet().stream()
+            .filter(e->(e.getValue().getPergDate().compareTo(begin)>=0 
+                && e.getValue().getPergDate().compareTo(end)<=0 
+                && e.getValue().getOwnerIDp()==u.getUserID()))
+            .map(e->e.getValue())
+            .collect(Collectors.toCollection(ArrayList :: new));
+
+            Tag tag;
+            Map<String,Tag> map_tags = new HashMap<String,Tag>();
+            
+            for(Pergunta set : list){
+                System.out.println(set.getTitle());
+        
+                if(set!=null)
+                for(String tagName : set){
+                
+                    System.out.println(tagName);
+                    if(map_tags.containsKey(tagName)){
+                        map_tags.get(tagName).incTagUse();                        
+                    }
+                    else {
+                        tag = new Tag();
+                        //tag.setName(tag);
+                        tag.incTagUse();
+                        map_tags.put(tagName,tag);
+                    }
+                }
+                
+            }
+
+            String maxTag=null;
+            Tag tagObj = null;
+            long maxUses = 0;
+            for(Map.Entry<String,Tag> entry : map_tags.entrySet()){
+                if (entry.getValue().getTagUses()>maxUses){
+                    tagObj = entry.getValue();
+                    maxTag = entry.getKey();
+                    maxUses = entry.getValue().getTagUses();
+                }
+            }
+            best_tags.put(maxTag,tagObj);
+
+        }
+        Comparator<Map.Entry<String,Tag>> comparador2 = new ComparadorTags();
+        //ordena por uses
+        List<String> list_ord = new ArrayList<String>();
+        list_ord = best_tags.entrySet().stream()
+                              .sorted(comparador2)
+                              .map(e->e.getKey())
+                              .collect(Collectors.toCollection(ArrayList :: new));
+                            
+        List<Long> list_final = new ArrayList<Long>();
+        for(String str : list_ord){
+            Long id;
+            id = this.tags.getCatTags().get(str);
+                                          
+            list_final.add(id);
+        }                       
+
+        return list_final;
+        //return Arrays.asList(6L,29L,72L,163L,587L);
     }
-    */
+        */
+    
 
     public void clear(){
         this.users.clearCatUsers();
