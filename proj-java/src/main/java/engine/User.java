@@ -126,66 +126,179 @@ public class User implements Serializable {
 
 
 	// Getters
-
+	/**
+	 * Método de acesso ao parâmetro <code>id</code> do tipo <code>Long</code>.
+	 * @return o <code>id</code> da corrente classe para que outros métodos de outras
+	 *         classes o possam aceder.
+	 * @see lang.Long
+	 */
 	public Long getUserID() {
 		return this.id;
 	}
 
+	/**
+	 * Método de acesso ao parâmetro <code>name</code> do tipo <code>String</code>.
+	 * @return o <code>name</code> da corrente classe para que outros métodos de outras
+	 *         classes o possam aceder.
+	 * @see lang.String
+	 */
 	public String getName() {
 		return this.name;
 	}
 
+	/**
+	 * Método de acesso ao parâmetro <code>bio</code> do tipo <code>String</code>.
+	 * @return o <code>bio</code> da corrente classe para que outros métodos de outras
+	 *         classes o possam aceder.
+	 * @see lang.String
+	 */
 	public String getBio() {
 		return this.bio;
 	}
 
+	/**
+	 * Método de acesso ao parâmetro <code>rep</code> do tipo <code>int</code>.
+	 * @return o <code>rep</code> da corrente classe para que outros métodos de outras
+	 *         classes o possam aceder.
+	 */
 	public int getRep() {
 		return this.rep;
 	}
 
+	/**
+	 * Método de acesso ao parâmetro <code>views</code> do tipo <code>int</code>.
+	 * @return o <code>views</code> da corrente classe para que outros métodos de outras
+	 *         classes o possam aceder.
+	 */
 	public int getViews() {
 		return this.views;
 	}
 
+	/**
+	 * Método de acesso ao parâmetro <code>voteDif</code> do tipo <code>int</code>.
+	 * @return o <code>voteDif</code> da corrente classe para que outros métodos de outras
+	 *         classes o possam aceder.
+	 */
 	public int getVotes() {
 		return this.voteDif;
 	}
 
+	/**
+	 * Método de acesso ao parâmetro <code>nrPosts</code> do tipo <code>int</code>.
+	 * @return o <code>nrPosts</code> da corrente classe para que outros métodos de outras
+	 *         classes o possam aceder.
+	 */
 	public int getNrPosts() {
 		return this.nrPosts;
 	}
 
 	// Setters
-
+	/**
+	 * Método de escrita do parâmetro <code>id</code> do tipo <code>Long</code>.
+	 * <p>
+	 * Recebe um parâmetro do tipo <code>Long</code> como argumento e iguala o <code>id</code>
+	 *  da classe corrente ao parâmetro recebido por argumento.
+	 *
+	 * @param id Parâmetro do tipo <code>Long</code> passado por argumento.
+	 * @see lang.Long
+	 */
 	public void setUserID(Long id) {
 		this.id = id;
 	}
 
+	/**
+	 * Método de escrita do parâmetro <code>name</code> do tipo <code>String</code>.
+	 * <p>
+	 * Recebe um parâmetro do tipo <code>String</code> como argumento e iguala o <code>name</code>
+	 *  da classe corrente ao parâmetro recebido por argumento.
+	 *
+	 * @param name Parâmetro do tipo <code>String</code> passado por argumento.
+	 * @see lang.String
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 
+	/**
+	 * Método de escrita do parâmetro <code>bio</code> do tipo <code>String</code>.
+	 * <p>
+	 * Recebe um parâmetro do tipo <code>String</code> como argumento e iguala o <code>bio</code>
+	 *  da classe corrente ao parâmetro recebido por argumento.
+	 *
+	 * @param bio Parâmetro do tipo <code>String</code> passado por argumento correspondente
+	 *            a uma pequena descrição dada pelo utilizador sobre si mesmo.
+	 * @see lang.String
+	 */
 	public void setBio(String bio) {
 		this.bio = bio;
 	}
 
+	/**
+	 * Método de escrita do parâmetro <code>rep</code> do tipo <code>int</code>.
+	 * <p>
+	 * Recebe um parâmetro do tipo <code>int</code> como argumento e iguala a <code>rep</code>
+	 *  da classe corrente ao parâmetro recebido por argumento.
+	 *
+	 * @param rep Parâmetro do tipo <code>int</code> passado por argumento.
+	 */
 	public void setRep(int rep) {
 		this.rep = rep;
 	}
 
+	/**
+	 * Método de escrita do parâmetro <code>views</code> do tipo <code>int</code>.
+	 * <p>
+	 * Recebe um parâmetro do tipo <code>int</code> como argumento e iguala as <code>views</code>
+	 *  da classe corrente ao parâmetro recebido por argumento.
+	 *
+	 * @param views Parâmetro do tipo <code>int</code> passado por argumento.
+	 */
 	public void setViews(int views) {
 		this.views = views;
 	}
 
+	/**
+	 * Método de escrita do parâmetro <code>voteDif</code> do tipo <code>int</code>.
+	 * <p>
+	 * Recebe um parâmetro do tipo <code>int</code> como argumento e iguala as <code>voteDif</code>
+	 *  da classe corrente ao parâmetro recebido por argumento.
+	 *
+	 * @param voteDif Parâmetro do tipo <code>int</code> passado por argumento, correspondente
+	 *                à diferença entre upvotes e downvotes do user.
+	 */
 	public void setVotes(int voteDif) {
 		this.voteDif = voteDif;
 	}
 
+	/**
+	 * Método de escrita do parâmetro <code>nrPosts</code> do tipo <code>int</code>.
+	 * <p>
+	 * Recebe um parâmetro do tipo <code>int</code> como argumento e iguala os <code>nrPosts</code>
+	 *  da classe corrente ao parâmetro recebido por argumento.
+	 *
+	 * @param nrPosts Parâmetro do tipo <code>int</code> passado por argumento.
+	 */
 	public void incNrPosts() {
 		this.nrPosts++;
 	}
 
-
+	/**
+	 * Método de comparação da classe User.
+	 * <p>
+	 * Recebe como argumento um objecto de qualquer tipo que será o alvo da comparação
+	 * com um user retornando um <code>boolean</code> como resultado da comparação.
+	 * 
+	 * @param obj Objecto que pode pertencer a qualquer classe. Este objecto será
+	 *            o alvo da comparação.
+	 * @return <code>true</code> caso os objectos sejam o mesmo (se ambos tiverem o mesmo
+	 *         endereço de memória / apontador).
+	 * @return <code>false</code> caso o objecto tenha apontador <code>null</code>.
+	 * @return <code>false</code> se o objecto não for da classe User.
+	 * @return <code>true</code> caso todos os parâmetros do objecto passado como
+	 *         parâmetro forem iguais aos parâmetros do user ao qual este é comparado.
+	 * @see lang.Long
+	 * @see lang.String
+	 */
 	public boolean equals(Object obj) {
 		if (obj == this)
 			return true;
@@ -201,6 +314,14 @@ public class User implements Serializable {
 		&& u.getVotes() == this.voteDif;
 	}
 
+	/**
+	 * Método de cópia da classe user.
+	 * Utiliza o construtor por cópia da classe para criar um novo User como sendo igual ao
+	 *  <code>User</code> associado e retorna a cópia.
+	 *
+	 * @return um <code>user</code> que é uma cópia do <code>user</code> associado.
+	 * @see #User(User)
+	 */
 	public User clone() {
 		return new User(this);
 	}
