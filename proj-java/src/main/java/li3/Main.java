@@ -105,7 +105,7 @@ public class Main {
          //  Query 7
         before = System.currentTimeMillis();
         List<Long> q7 = qe.mostAnsweredQuestions(10, LocalDate.of(2014,Month.AUGUST,1),
-                LocalDate.of(2014,Month.AUGUST,10));
+                LocalDate.of(2014,Month.AUGUST,11));
         after = System.currentTimeMillis();
         logtime.writeLog("Query 7 -> "+(after-before)+" ms");
         log.writeLog("Query 7 -> "+q7);
@@ -135,9 +135,7 @@ public class Main {
         logtime.writeLog("Query 10 -> "+(after-before)+" ms");
         log.writeLog("Query 10 -> "+q10);
         
-
         
-        /*
         //    Query 11
         before = System.currentTimeMillis();
         List<Long> q11 = qe.mostUsedBestRep(5, LocalDate.of(2013,Month.NOVEMBER,01),
@@ -146,7 +144,7 @@ public class Main {
         logtime.writeLog("Query 11 -> "+(after-before)+" ms");
         log.writeLog("Query 11 -> "+q11);
         
-        */
+        
 
         /*
             CLEAN PHASE
