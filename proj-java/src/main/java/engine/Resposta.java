@@ -28,21 +28,25 @@ public class Resposta implements Serializable {
 	 *
 	 * Inicializa cada parametro da classe resposta a <code>null</code>.
 	 *  ou a um valor default.
-	 * 
-	 * @version 1.1
-	 * @param id Parâmetro <code>Long</code> inicializado a <code>null</code> para 
+	 * <p>
+	 * id Parâmetro <code>Long</code> inicializado a <code>null</code> para 
 	 *           evitar leituras de ids "falsos" na respectiva <code>HashMap</code>.
-	 * @param parentID Parâmetro <code>Long</code> inicializado a <code>null</code> para
+	 * <p>
+	 * parentID Parâmetro <code>Long</code> inicializado a <code>null</code> para
 	 *                 evitar leituras de ids "falsos" na respectiva <code>HashMap</code>.
-	 * @param creationDate Data sob o formato da classe {@link LocalDate} nativa do java.
-	 * @param score parâmetro <code>int</code> inicializado a 0 (valor mínimo possível)
-	 * @param ownerID Parâmetro <code>Long</code> ininializado a <code>null</code> para
+	 * <p>
+	 * creationDate Data sob o formato da classe {@link LocalDate} nativa do java.
+	 * <p>
+	 * score parâmetro <code>int</code> inicializado a 0 (valor mínimo possível)
+	 * <p>
+	 * ownerID Parâmetro <code>Long</code> ininializado a <code>null</code> para
 	 *                evitar a leitura de ids "falsos" na respectiva <code>HashMap</code>.
-	 * @param nrComments Parâmetro <code>int</code> inicializado a 0 (valor mínimo possível)
-	 * @param rate Parâmetro <code>double</code> inicializado a 0.0 (valor mínimo possível)
-	 * @see time.LocalDate
-	 * @see lang.Long
-	 * @see engine
+	 * <p>
+	 * nrComments Parâmetro <code>int</code> inicializado a 0 (valor mínimo possível)
+	 * <p>
+	 * rate Parâmetro <code>double</code> inicializado a 0.0 (valor mínimo possível)
+	 * @see java.time.LocalDate
+	 * @see java.lang.Long
 	 */
 	public Resposta() {
 		this.id = null;
@@ -61,14 +65,13 @@ public class Resposta implements Serializable {
 	 * 
 	 * @param id Parâmetro <code>Long</code> inicializado a <code>Long id</code>.
 	 * @param parentID Parâmetro <code>Long</code> inicializado a <code>Long ParentID</code>.
-	 * @param creationDate Data sob o formato da classe {@link time.LocalDate} nativa do java.
+	 * @param creationDate Data sob o formato da classe {@link java.time.LocalDate} nativa do java.
 	 * @param score Parâmetro <code>int</code> inicializado a <code>int score</code>.
 	 * @param ownerID Valor<code>Long</code> ininializado a <code>Long ownerID</code>.
 	 * @param nrComments Valor <code>int</code> inicializado a <code>int nrComments</code>.
 	 * @param rate Valor <code>double</code> inicializado a <code>double rate</code>.
-	 * @see time.LocalDate
-	 * @see lang.Long
-	 * @see engine
+	 * @see java.time.LocalDate
+	 * @see java.lang.Long
 	 */
 	public Resposta(Long id, Long parentID, LocalDate creationDate, int score, Long ownerID, int nrComments, double rate) {
 		this.id = id;
@@ -83,30 +86,36 @@ public class Resposta implements Serializable {
 	/**
 	 * Construtor por cópia da classe Resposta.
 	 * Inicializa cada parametro da classe resposta a <code>null</code>.
-	 * 
-	 * @param id Parâmetro <code>Long</code> inicializado igual a <code>id</code> 
+	 * <p>
+	 * id Parâmetro <code>Long</code> inicializado igual a <code>id</code> 
 	 *           da resposta <code>resp</code>.
-	 * @param parentID Parâmetro <code>Long</code> inicializado igual a <code>ParentID</code>
+	 * <p> 
+	 * parentID Parâmetro <code>Long</code> inicializado igual a <code>ParentID</code>
 	 *                 da resposta <code>resp</code>.
-	 * @param creationDate Data sob o formato da classe {@link time.LocalDate} nativa do java.
-	 * @param score Parâmetro <code>int</code> inicializado igual a <code>score</code>
+	 * <p>
+	 * creationDate Data sob o formato da classe {@link java.time.LocalDate} nativa do java.
+	 * <p>
+	 * score Parâmetro <code>int</code> inicializado igual a <code>score</code>
 	 *              da resposta <code>resp</code>.
-	 * @param ownerID Parâmetro <code>Long</code> ininializado igual a <code>ownerID</code>
+	 * <p>
+	 * ownerID Parâmetro <code>Long</code> ininializado igual a <code>ownerID</code>
 	 *                da resposta <code>resp</code>.
-	 * @param nrComments Parâmetro <code>int</code> inicializado igual a <code>nrComments</code>
+	 * <p>
+	 * nrComments Parâmetro <code>int</code> inicializado igual a <code>nrComments</code>
 	 *                   da resposta <code>resp</code>.
-	 * @param rate parâmetro <code>double</code> inicializado igual a <code>double rate</code>
+	 * <p>
+	 * rate parâmetro <code>double</code> inicializado igual a <code>double rate</code>
 	 *             da resposta <code>resp</code>.
-	 * @see getRespID()
-	 * @see getParentID()
-	 * @see getRespDate()
-	 * @see getScoreR()
-	 * @see getOwnerIDr()
-	 * @see getCommentsR()
-	 * @see getRate()
-	 * @see time.LocalDate
-	 * @see lang.Long
-	 * @see engine
+	 * @param resp resposta alvo da cópia.
+	 * @see #getRespID()
+	 * @see #getParentID()
+	 * @see #getRespDate()
+	 * @see #getScoreR()
+	 * @see #getOwnerIDr()
+	 * @see #getCommentsR()
+	 * @see #getRate()
+	 * @see java.time.LocalDate
+	 * @see java.lang.Long
 	 *
 	 */
 	public Resposta(Resposta resp) {
@@ -125,9 +134,9 @@ public class Resposta implements Serializable {
 	/**
 	 * Método de acesso ao parâmetro <code>id</code>.
 	 *
-	 * @returns o <code>id</code> da corrente classe para que métodos 
+	 * @return o <code>id</code> da corrente classe para que métodos 
 	 *          de outras classes o possam aceder.
-	 * @see lang.Long
+	 * @see java.lang.Long
 	 */
 	public Long getRespID() {
 		return this.id;
@@ -136,9 +145,9 @@ public class Resposta implements Serializable {
 	/**
 	 * Método de acesso ao parâmetro <code>parentID</code>.
 	 *
-	 * @returns o <code>parentID</code> da corrente classe para que métodos 
+	 * @return o <code>parentID</code> da corrente classe para que métodos 
 	 *          de outras classes o possam aceder.
-	 * @see lang.Long
+	 * @see java.lang.Long
 	 */
 	public Long getParentID() {
 		return this.parentID;
@@ -147,9 +156,9 @@ public class Resposta implements Serializable {
 	/**
 	 * Método de acesso ao parâmetro <code>creationDate</code>.
 	 *
-	 * @returns a <code>creationDate</code> da corrente classe para que métodos 
+	 * @return a <code>creationDate</code> da corrente classe para que métodos 
 	 *          de outras classes o possam aceder.
-	 * @see time.creationDate
+	 * @see java.time.LocalDate
 	 */
 	public LocalDate getRespDate() {
 		return this.creationDate;
@@ -158,7 +167,7 @@ public class Resposta implements Serializable {
 	/**
 	 * Método de acesso ao parâmetro <code>score</code>.
 	 *
-	 * @returns o <code>score</code> da corrente classe para que métodos 
+	 * @return o <code>score</code> da corrente classe para que métodos 
 	 *          de outras classes o possam aceder.
 	 */
 	public int getScoreR() {
@@ -168,9 +177,9 @@ public class Resposta implements Serializable {
 	/**
 	 * Método de acesso ao parâmetro <code>ownerID</code>.
 	 *
-	 * @returns o <code>ownerID da corrente classe para que métodos
+	 * @return o <code>ownerID da corrente classe para que métodos
 	 *          de outras classes o possam aceder.
-	 * @see lang.Long
+	 * @see java.lang.Long
 	 */
 	public Long getOwnerIDr() {
 		return this.ownerID;
@@ -179,8 +188,8 @@ public class Resposta implements Serializable {
 	/**
 	 * Método de acesso ao parâmetro <code>nrComments</code>.
 	 *
-	 * @returns o <code>nrComments</code> da corrente classe para que métodos
-	 *          de outras classes o possam aceder.
+	 * @return o <code>nrComments</code> da corrente classe para que métodos
+	 *          de outras c\\lasses o possam aceder.
 	 */
 	public int getCommentsR() {
 		return this.nrComments;
@@ -189,7 +198,7 @@ public class Resposta implements Serializable {
 	/**
 	 * Método de acesso ao parâmetro <code>rate</code>.
 	 *
-	 * @returns o <code>rate</code> da corrente classe para que métodos
+	 * @return o <code>rate</code> da corrente classe para que métodos
 	 *          de outras classes o possam aceder.
 	 */
 	public double getRate() {
@@ -205,7 +214,7 @@ public class Resposta implements Serializable {
 	 *  corrente como sendo igual a este parâmetro.
 	 *
 	 * @param id Parâmetro <code>Long</code> passado por argumento.
-	 * @see lang.Long
+	 * @see java.lang.Long
 	 */
 	public void setRespID(Long id) {
 		this.id = id;
@@ -217,8 +226,8 @@ public class Resposta implements Serializable {
 	 * Recebe <code>Long parentID</code> como parâmetro e define o <code>parentID</code> 
 	 *  da resposta corrente como sendo igual a este parâmetro.
 	 *
-	 * @param id Parâmetro <code>Long</code> passado por argumento.
-	 * @see lang.Long
+	 * @param parentID Parâmetro <code>Long</code> passado por argumento.
+	 * @see java.lang.Long
 	 */
 	public void setParentID(Long parentID) {
 		this.parentID = parentID;
@@ -231,7 +240,7 @@ public class Resposta implements Serializable {
 	 *  da resposta corrente como sendo igual a este parâmetro.
 	 *
 	 * @param creationDate Parâmetro da classe <code>LocalDate</code> passado por argumento.
-	 * @see time.LocalDate
+	 * @see java.time.LocalDate
 	 */
 	public void setRespDate(LocalDate creationDate) {
 		this.creationDate = creationDate;
@@ -256,7 +265,7 @@ public class Resposta implements Serializable {
 	 *  corrente como sendo igual a este parâmetro.
 	 *
 	 * @param ownerID Parâmetro <code>Long</code> passado por argumento.
-	 * @see lang.Long
+	 * @see java.lang.Long
 	 */
 	public void setOwnerIDr(Long ownerID) {
 		this.ownerID = ownerID;
@@ -298,8 +307,8 @@ public class Resposta implements Serializable {
 	 * @return false caso obj seja igual a <code>null</code>
 	 *  ou no caso de ambos os objectos serem de classes diferentes.
 	 * @return true no caso de todas as comparações entre parâmetros serem true.
-	 * @see lang.Long
-	 * @see time.LocalDate
+	 * @see java.lang.Long
+	 * @see java.time.LocalDate
 	 */
 	public boolean equals(Object obj) {
 		if (obj == this)
