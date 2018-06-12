@@ -44,17 +44,17 @@ public class Main {
             System.out.println("Deve passar o caminho do dump como argumento.");
         }
         
-        /*
-           //Query 1
+        
+        //  Query 1
         before = System.currentTimeMillis();
         Pair<String,String> q1 = qe.infoFromPost(801049);
         after = System.currentTimeMillis();
         logtime.writeLog("Query 1: -> "+(after-before)+" ms");
         log.writeLog("Query1 -> " + q1);
-        */
         
         
-          // Query 2
+        
+        //   Query 2
         before = System.currentTimeMillis();
         List<Long> q2 = qe.topMostActive(10);
         after = System.currentTimeMillis();
@@ -101,7 +101,7 @@ public class Main {
         log.writeLog("Query6 -> " + q6);
         
 
-        /*
+        
          //  Query 7
         before = System.currentTimeMillis();
         List<Long> q7 = qe.mostAnsweredQuestions(10, LocalDate.of(2014,Month.AUGUST,1),
@@ -109,7 +109,7 @@ public class Main {
         after = System.currentTimeMillis();
         logtime.writeLog("Query 7 -> "+(after-before)+" ms");
         log.writeLog("Query 7 -> "+q7);
-        */
+        
 
         
         //   Query 8
@@ -120,14 +120,12 @@ public class Main {
         log.writeLog("Query 8 -> " + q8);
         
 
-        /*
-           Query 9
+        //   Query 9
         before = System.currentTimeMillis();
         List<Long> q9 = qe.bothParticipated(10, 87, 5691);
         after = System.currentTimeMillis();
         logtime.writeLog("Query9 -> " + (after - before) + " ms");
         log.writeLog("Query 9 -> " + q9);
-        */
 
         
         //   Query 10
@@ -138,14 +136,16 @@ public class Main {
         log.writeLog("Query 10 -> "+q10);
         
 
+        
         /*
-            Query 11
+        //    Query 11
         before = System.currentTimeMillis();
         List<Long> q11 = qe.mostUsedBestRep(5, LocalDate.of(2013,Month.NOVEMBER,01),
                 LocalDate.of(2013,Month.NOVEMBER,30));
         after = System.currentTimeMillis();
         logtime.writeLog("Query 11 -> "+(after-before)+" ms");
         log.writeLog("Query 11 -> "+q11);
+        
         */
 
         /*

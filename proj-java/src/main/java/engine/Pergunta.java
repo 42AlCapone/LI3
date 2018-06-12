@@ -23,7 +23,7 @@ public class Pergunta implements Serializable {
 	private int score;
 	private Long ownerID;
 	private String title;
-	private String tags;
+	private Set<String> tags;
 	private int nrComments;
 	private Set<Resposta> respostas;
 
@@ -58,7 +58,7 @@ public class Pergunta implements Serializable {
 		this.score = 0;
 		this.ownerID = null;
 		this.title = "";
-		this.tags = "";
+		this.tags = new HashSet<String>();
 		this.nrComments = 0;
 		this.respostas = new HashSet<Resposta>();
 	}
@@ -96,7 +96,7 @@ public class Pergunta implements Serializable {
 	 * @see util.HashSet
 	 */
 	public Pergunta(Long id, LocalDate creationDate, int score, Long ownerID, String title, 
-						String tags, int nrComments, Set<Resposta> respostas) {
+						HashSet<String> tags, int nrComments, Set<Resposta> respostas) {
 		this.id = id;
 		this.creationDate = creationDate;
 		this.score = score;
@@ -215,6 +215,7 @@ public class Pergunta implements Serializable {
 		return this.title;
 	}
 
+
 	/**
 	 * Método de acesso ao parâmetro <code>tag</code> do tipo <code>String</code> da classe Pergunta.
 	 * <p>
@@ -224,7 +225,7 @@ public class Pergunta implements Serializable {
 	 * @return as <code>tags</code> do objecto associado.
 	 * @see lang.String
 	 */
-	public String getTags() {
+	public Set<String> getTags() {
 		return this.tags;
 	}
 
@@ -336,6 +337,11 @@ public class Pergunta implements Serializable {
 		this.title = title;
 	}
 
+
+	public void setHashTags(HashSet<String> tags) {
+		this.tags = tags;
+	}
+
 	/**
 	 * Método de escrita do parâmetro <code>tags</code> do tipo <code>String</code>.
 	 * <p>
@@ -346,8 +352,8 @@ public class Pergunta implements Serializable {
 	 *             pergunta estão na mesma string.
 	 * @see lang.String
 	 */
-	public void setTags(String tags) {
-		this.tags = tags;
+	public void setTag (String tag){
+		this.tags.add(tag);
 	}
 
 	/**
@@ -358,6 +364,7 @@ public class Pergunta implements Serializable {
 	 *
 	 * @param nrComments Parâmetro do tipo <code>int</code> passado por argumento.
 	 */
+
 	public void setCommentsP(int nrComments) {
 		this.nrComments = nrComments;
 	}

@@ -16,6 +16,8 @@ import java.lang.Long;
 import java.lang.String;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.ArrayList;
 
 public class Parser {
 
@@ -153,6 +155,7 @@ public class Parser {
             int score2, nrComs2;
             String date2;
 
+            
             Pergunta p = null;
             Resposta r = null;
 
@@ -205,13 +208,28 @@ public class Parser {
                     p.setScoreP(score1);
                     p.setOwnerIDp(owner1);
                     p.setTitle(title1);
-                    p.setTags(tags1);
                     p.setCommentsP(nrComs1);
+                    
+                    for(String tag : strToTag(tags1))
+                        p.setTag(tag);
+                    
                     pergs.inserePerg(p);
-
+                    
                     //INCREMENTAR NRPOSTS
                     users.getUser(owner1).incNrPosts();
 
+                    /*
+                    u = users.getUser(owner1);
+
+                    List<String> list = new ArrayList<String>();
+                    list = parseTags(tags1);
+                    for (String tag : list){
+                        if (u.getUserTags().containsKey(tag))
+                            u.incrTagUse(tag);
+                        else
+                            u.setUserTag(tag);
+                    }
+                    */
                 }
 
                 else if (type.equals("2")){
@@ -259,9 +277,6 @@ public class Parser {
                     //INCREMENTAR nrPOSTS
                 	users.getUser(owner2).incNrPosts();
 
-                    //CALCULAR RATE
-
-
                 }
 
             }
@@ -294,6 +309,15 @@ public class Parser {
     	return localdate;
     }
 
+    public static List<String> strToTag(String tags) {
+        
+        String[] tokens = tags.split("<|\\><|\\>");
+        List<String> list = new ArrayList<String>();
+        for(String tag : tokens)
+            list.add(tag);
+
+        return list;
+    }
 
     public static void parseTags(String dump,CatTags tags){
         

@@ -11,6 +11,8 @@ package engine;
 
 import java.io.Serializable;
 import java.lang.Long;
+import java.util.Map;
+import java.util.HashMap;
 
 public class User implements Serializable {
 	private Long id;
@@ -20,6 +22,7 @@ public class User implements Serializable {
 	private int views;
 	private int voteDif;
 	private int nrPosts;
+
 
 	/**
 	 * Construtor por omissão da classe User.
@@ -44,6 +47,7 @@ public class User implements Serializable {
 	 * @see java.lang.Long
 	 * @see java.lang.String
 	 */
+
 	public User() {
 		this.id = null;
 		this.name = "";
@@ -292,6 +296,7 @@ public class User implements Serializable {
 		this.nrPosts++;
 	}
 
+
 	/**
 	 * Método de comparação da classe User.
 	 * <p>
@@ -312,6 +317,7 @@ public class User implements Serializable {
 	 * @see java.lang.String
 	 * @see java.lang.Object
 	 */
+
 	public boolean equals(Object obj) {
 		if (obj == this)
 			return true;
