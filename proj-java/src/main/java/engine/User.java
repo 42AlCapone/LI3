@@ -41,8 +41,8 @@ public class User implements Serializable {
 	 *                e os downvotes, inicializado a 0 (valor default).
 	 * @param nrPosts Parâmetro <code>int</code> correspondente ao número total
 	 *                de posts efetuados pelo user, inicializado a 0 (valor mínimo possível).
-	 * @see lang.Long
-	 * @see lang.String
+	 * @see java.lang.Long
+	 * @see java.lang.String
 	 */
 	public User() {
 		this.id = null;
@@ -76,8 +76,8 @@ public class User implements Serializable {
 	 * @param nrPosts Parâmetro <code>int nrPosts </code> correspondente ao número total de posts
 	 *                efetuados pelo user, inicializado a 0 pois estes têm o objectivo de serem
 	 *                incrementados atravéz de um método desta classe.
-	 * @see lang.Long
-	 * @see lang.String
+	 * @see java.lang.Long
+	 * @see java.lang.String
 	 * @see engine
 	 */
 	public User(Long id, String name, String bio, int rep, int views, int voteDif) {
@@ -120,8 +120,8 @@ public class User implements Serializable {
 	 * @see #getViews()
 	 * @see #getVotes()
 	 * @see #getNrPosts()
-	 * @see lang.Long
-	 * @see lang.String
+	 * @see java.lang.Long
+	 * @see java.lang.String
 	 * @see engine
 	 */
 	public User(User user) {
@@ -140,7 +140,7 @@ public class User implements Serializable {
 	 * Método de acesso ao parâmetro <code>id</code> do tipo <code>Long</code>.
 	 * @return o <code>id</code> da corrente classe para que outros métodos de outras
 	 *         classes o possam aceder.
-	 * @see lang.Long
+	 * @see java.lang.Long
 	 */
 	public Long getUserID() {
 		return this.id;
@@ -150,7 +150,7 @@ public class User implements Serializable {
 	 * Método de acesso ao parâmetro <code>name</code> do tipo <code>String</code>.
 	 * @return o <code>name</code> da corrente classe para que outros métodos de outras
 	 *         classes o possam aceder.
-	 * @see lang.String
+	 * @see java.lang.String
 	 */
 	public String getName() {
 		return this.name;
@@ -160,7 +160,7 @@ public class User implements Serializable {
 	 * Método de acesso ao parâmetro <code>bio</code> do tipo <code>String</code>.
 	 * @return o <code>bio</code> da corrente classe para que outros métodos de outras
 	 *         classes o possam aceder.
-	 * @see lang.String
+	 * @see java.lang.String
 	 */
 	public String getBio() {
 		return this.bio;
@@ -210,7 +210,7 @@ public class User implements Serializable {
 	 *  da classe corrente ao parâmetro recebido por argumento.
 	 *
 	 * @param id Parâmetro do tipo <code>Long</code> passado por argumento.
-	 * @see lang.Long
+	 * @see java.lang.Long
 	 */
 	public void setUserID(Long id) {
 		this.id = id;
@@ -223,7 +223,7 @@ public class User implements Serializable {
 	 *  da classe corrente ao parâmetro recebido por argumento.
 	 *
 	 * @param name Parâmetro do tipo <code>String</code> passado por argumento.
-	 * @see lang.String
+	 * @see java.lang.String
 	 */
 	public void setName(String name) {
 		this.name = name;
@@ -237,7 +237,7 @@ public class User implements Serializable {
 	 *
 	 * @param bio Parâmetro do tipo <code>String</code> passado por argumento correspondente
 	 *            a uma pequena descrição dada pelo utilizador sobre si mesmo.
-	 * @see lang.String
+	 * @see java.lang.String
 	 */
 	public void setBio(String bio) {
 		this.bio = bio;
@@ -306,11 +306,11 @@ public class User implements Serializable {
 	 * @return <code>false</code> se o objecto não for da classe User.
 	 * @return <code>true</code> caso todos os parâmetros do objecto passado como
 	 *         parâmetro forem iguais aos parâmetros do user ao qual este é comparado.
-	 * @see lang.Object#getClass()
-	 * @see lang.String#equals()
-	 * @see lang.Long
-	 * @see lang.String
-	 * @see lang.Object
+	 * @see java.lang.Object#getClass()
+	 * @see java.lang.String#equals()
+	 * @see java.lang.Long
+	 * @see java.lang.String
+	 * @see java.lang.Object
 	 */
 	public boolean equals(Object obj) {
 		if (obj == this)

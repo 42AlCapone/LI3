@@ -40,8 +40,8 @@ public class Resposta implements Serializable {
 	 *                evitar a leitura de ids "falsos" na respectiva <code>HashMap</code>.
 	 * @param nrComments Parâmetro <code>int</code> inicializado a 0 (valor mínimo possível)
 	 * @param rate Parâmetro <code>double</code> inicializado a 0.0 (valor mínimo possível)
-	 * @see time.LocalDate
-	 * @see lang.Long
+	 * @see java.time.LocalDate
+	 * @see java.lang.Long
 	 * @see engine
 	 */
 	public Resposta() {
@@ -66,8 +66,8 @@ public class Resposta implements Serializable {
 	 * @param ownerID Valor<code>Long</code> ininializado a <code>Long ownerID</code>.
 	 * @param nrComments Valor <code>int</code> inicializado a <code>int nrComments</code>.
 	 * @param rate Valor <code>double</code> inicializado a <code>double rate</code>.
-	 * @see time.LocalDate
-	 * @see lang.Long
+	 * @see java.time.LocalDate
+	 * @see java.lang.Long
 	 * @see engine
 	 */
 	public Resposta(Long id, Long parentID, LocalDate creationDate, int score, Long ownerID, int nrComments, double rate) {
@@ -97,15 +97,15 @@ public class Resposta implements Serializable {
 	 *                   da resposta <code>resp</code>.
 	 * @param rate parâmetro <code>double</code> inicializado igual a <code>double rate</code>
 	 *             da resposta <code>resp</code>.
-	 * @see getRespID()
-	 * @see getParentID()
-	 * @see getRespDate()
-	 * @see getScoreR()
-	 * @see getOwnerIDr()
-	 * @see getCommentsR()
-	 * @see getRate()
-	 * @see time.LocalDate
-	 * @see lang.Long
+	 * @see #getRespID()
+	 * @see #getParentID()
+	 * @see #getRespDate()
+	 * @see #getScoreR()
+	 * @see #getOwnerIDr()
+	 * @see #getCommentsR()
+	 * @see #getRate()
+	 * @see java.time.LocalDate
+	 * @see java.lang.Long
 	 * @see engine
 	 *
 	 */
@@ -127,7 +127,7 @@ public class Resposta implements Serializable {
 	 *
 	 * @returns o <code>id</code> da corrente classe para que métodos 
 	 *          de outras classes o possam aceder.
-	 * @see lang.Long
+	 * @see java.lang.Long
 	 */
 	public Long getRespID() {
 		return this.id;
@@ -138,7 +138,7 @@ public class Resposta implements Serializable {
 	 *
 	 * @returns o <code>parentID</code> da corrente classe para que métodos 
 	 *          de outras classes o possam aceder.
-	 * @see lang.Long
+	 * @see java.lang.Long
 	 */
 	public Long getParentID() {
 		return this.parentID;
@@ -149,7 +149,7 @@ public class Resposta implements Serializable {
 	 *
 	 * @returns a <code>creationDate</code> da corrente classe para que métodos 
 	 *          de outras classes o possam aceder.
-	 * @see time.creationDate
+	 * @see java.time.creationDate
 	 */
 	public LocalDate getRespDate() {
 		return this.creationDate;
@@ -170,7 +170,7 @@ public class Resposta implements Serializable {
 	 *
 	 * @returns o <code>ownerID da corrente classe para que métodos
 	 *          de outras classes o possam aceder.
-	 * @see lang.Long
+	 * @see java.lang.Long
 	 */
 	public Long getOwnerIDr() {
 		return this.ownerID;
@@ -218,7 +218,7 @@ public class Resposta implements Serializable {
 	 *  da resposta corrente como sendo igual a este parâmetro.
 	 *
 	 * @param id Parâmetro <code>Long</code> passado por argumento.
-	 * @see lang.Long
+	 * @see java.lang.Long
 	 */
 	public void setParentID(Long parentID) {
 		this.parentID = parentID;
@@ -231,7 +231,7 @@ public class Resposta implements Serializable {
 	 *  da resposta corrente como sendo igual a este parâmetro.
 	 *
 	 * @param creationDate Parâmetro da classe <code>LocalDate</code> passado por argumento.
-	 * @see time.LocalDate
+	 * @see java.time.LocalDate
 	 */
 	public void setRespDate(LocalDate creationDate) {
 		this.creationDate = creationDate;
@@ -256,7 +256,7 @@ public class Resposta implements Serializable {
 	 *  corrente como sendo igual a este parâmetro.
 	 *
 	 * @param ownerID Parâmetro <code>Long</code> passado por argumento.
-	 * @see lang.Long
+	 * @see java.lang.Long
 	 */
 	public void setOwnerIDr(Long ownerID) {
 		this.ownerID = ownerID;
@@ -298,8 +298,8 @@ public class Resposta implements Serializable {
 	 * @return false caso obj seja igual a <code>null</code>
 	 *  ou no caso de ambos os objectos serem de classes diferentes.
 	 * @return true no caso de todas as comparações entre parâmetros serem true.
-	 * @see lang.Long
-	 * @see time.LocalDate
+	 * @see java.lang.Long
+	 * @see java.time.LocalDate
 	 */
 	public boolean equals(Object obj) {
 		if (obj == this)
