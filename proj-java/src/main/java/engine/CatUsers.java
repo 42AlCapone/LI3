@@ -88,8 +88,8 @@ public class CatUsers {
 	 *  value atravéz do método <code>clone</code> da classe <code>User</code>.
 	 *
 	 * @return um <code>HashMap<Long,User></code> correspondente a uma cópia de <code>catUsers</code>.
-	 * @see java.util.map#entrySet()
-	 * @see java.util.Stream#stream()
+	 * @see java.util.Map#entrySet()
+	 * @see java.util.stream#stream()
 	 * @see java.util.stream.Collectors#collect
 	 * @see java.util.stream.Collectors#toMap
 	 * @see java.util.Map#getKey()
@@ -150,7 +150,8 @@ public class CatUsers {
 	 * <code>e -> e.getValue().clone()</code> extrai o value do tipo <code>User</code> e clona esse
 	 *  value atravéz do método <code>clone</code> da classe <code>User</code>.
 	 * <p>
-	 * this.catUsers = ... iguala <code>catUsers</code> ao resultado do processo anterior.
+	 * this.catUsers = ... iguala <code>catUsers</code> ao resultado do processo anterior após à sua
+	 * conversão em <code>HashMap</code>
 	 *
 	 * @see java.util.map#entrySet()
 	 * @see java.util.Stream#stream()
