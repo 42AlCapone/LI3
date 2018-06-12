@@ -66,7 +66,7 @@ public class CatPerguntas {
 		catPerg.putAll(cat.getCatPerg());
 	}
 
- 	/**
+	 	/**
 	 * Método de acesso do parâmetro <code>catPerg</code> de <code>CatPerguntas</code>.
 	 * <p>
 	 * Este método retorna uma cópia de catPerg.
