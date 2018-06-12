@@ -1,3 +1,12 @@
+/**
+ * Classe de armazenamento de Respostas sob a forma de um HashMap de id - Resposta
+ *
+ * @author António Gomes
+ * @author João Vieira
+ * @author Rui Vieira
+ * @version 1.1
+ */
+
 package engine;
 
 import java.util.Map;
@@ -28,7 +37,7 @@ public class CatRespostas {
 	 * Construtor parametrizado da classe CatRespostas.
 	 * <p>
 	 * Utiliza o método <code>setCatResp(HashMap<Long,Resposta>) para defenir cat como sendo
-	 * a catResposta do objecto associado.
+	 * a catResp do objecto associado.
 	 *
 	 * @param cat HashMap ao qual catResp será igual.
 	 * @see #setCatResp(HashMap<Long,Resposta>)
@@ -40,8 +49,8 @@ public class CatRespostas {
 	/**
 	 * Construtor por cópia da classe CatRespostas.
 	 * <p>
-	 * Cria uma nova HashResposta<Long,Resposta> que será catResposta do objecto associado.
-	 * De seguida utiliza o método putAll para inserir todos os elementos de cat na nova catResposta.
+	 * Cria uma nova HashMap<Long,Resposta> que será catPerg do objecto associado.
+	 * De seguida utiliza o método putAll para inserir todos os elementos de cat na nova catResp.
 	 * <p>
 	 * putAll recebe como argumento o resultado de getCatResp que é a catResposta do objecto associado
 	 * cat.
@@ -63,7 +72,7 @@ public class CatRespostas {
 	 * Este método retorna uma cópia de catResp.
 	 * <p>
 	 * <code>this.catResp.entrySet()</code> cria um set iterável a partir de
-	 *  <code>HashMap<Long,Resposta> catRespostas</code>.
+	 *  <code>HashMap<Long,Resposta> catResp</code>.
 	 * <p>
 	 * <code>stream()</code> alimenta os métodos seguintes com cada elemtento do <code>entrySet</code>
 	 *  um a um (em stream).
@@ -127,7 +136,7 @@ public class CatRespostas {
 	 * Este método iguala catResp a uma cópia de cat passado por argumento.
 	 * <p>
 	 * <code>this.catResp.entrySet()</code> cria um set iterável a partir de
-	 *  <code>HashMap<Long,Resposta> catRespostas</code>.
+	 *  <code>HashMap<Long,Resposta> catResp</code>.
 	 * <p>
 	 * <code>stream()</code> alimenta os métodos seguintes com cada elemtento do <code>entrySet</code>
 	 *  um a um (em stream).
