@@ -26,7 +26,7 @@ public class CatPerguntas {
 	 * <p>
 	 * Neste HashMap a chave é o id da Pergunta e o Valor é a Pergunta em si.
 	 * 
-	 * @see java.util.HashMap#HashMap<k,v>()
+	 * @see java.util.HashMap#HashMap()
 	 * @see java.util.HashMap
 	 * @see engine.Resposta
 	 */
@@ -41,7 +41,7 @@ public class CatPerguntas {
 	 * a catPerg do objecto associado.
 	 *
 	 * @param cat HashMap ao qual catResp será igual.
-	 * @see #setCatPerg(HashMap<Long,Pergunta>)
+	 * @see #setCatPerg
 	 */
 	public CatPerguntas(HashMap<Long,Pergunta> cat) {
 		setCatPerg(cat);
@@ -89,13 +89,7 @@ public class CatPerguntas {
 	 *  value atravéz do método <code>clone</code> da classe <code>Pergunta</code>.
 	 *
 	 * @return Uma cópia de catPerg gerada pelo mecanismo acima descrito.
-	 * @see java.util.Map#entrySet()
-	 * @see java.util.stream#stream()
-	 * @see java.util.stream.Collectors#collect
-	 * @see java.util.stream.Collectors#toMap
-	 * @see java.util.Map#getKey()
-	 * @see java.util.Map#getValue()
-	 * @see engine.Pergunta.clone()
+	 * @see engine.Pergunta#clone()
 	 */
 	public Map<Long,Pergunta> getCatPerg() {
 		return this.catPerg.entrySet().stream().collect(Collectors.toMap(e->e.getKey(),e->e.getValue().clone()));
@@ -155,13 +149,7 @@ public class CatPerguntas {
 	 * catPerg é igualada à cópia criada pelo processo acima descrito após a sua conversão em HashMap.
 	 *
 	 * @param cat HashMap a inserir em catPerg.
-	 * @see java.util.Map#entrySet()
-	 * @see java.util.stream#stream()
-	 * @see java.util.stream.Collectors#collect
-	 * @see java.util.stream.Collectors#toMap
-	 * @see java.util.Map#getKey()
-	 * @see java.util.Map#getValue()
-	 * @see engine.Pergunta.clone()
+	 * @see engine.Pergunta#clone()
 	 */
 	public void setCatPerg(HashMap<Long,Pergunta> cat) {
 		this.catPerg = (HashMap<Long,Pergunta>) cat.entrySet().stream().collect(Collectors.toMap(c->c.getKey(),c->c.getValue().clone()));
@@ -176,7 +164,7 @@ public class CatPerguntas {
 	 * <p>
 	 * Value é a resposta em si.
 	 *
-	 * @param r resposta a inserir.
+	 * @param p Pergunta a inserir.
 	 * @see engine.Pergunta#getPergID()
 	 * @see java.util.HashMap#put
 	 */

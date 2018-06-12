@@ -23,10 +23,10 @@ public class CatUsers {
 	 * <p>
 	 * Utiliza o construtor por omissao da classe <code>HashMap</code> de forma a inicializar o
 	 *  parâmetro catUsers.
-	 *
-	 * @param catUsers <code>HashMap<Long, User></code> sendo a chave o id do utilizador.
-	 * @see util.HashMap
-	 * @see lang.Long
+	 * <p>
+	 * catUsers <code>HashMap<Long, User></code> sendo a chave o id do utilizador.
+	 * @see java.util.HashMap
+	 * @see java.lang.Long
 	 */
 	public CatUsers() {
 		this.catUsers = new HashMap<Long,User>();
@@ -35,11 +35,11 @@ public class CatUsers {
 	/** 
 	 * Construtor parameterizado da classe <code>CatUsers</code>.
 	 * <p>
-	 * Utiliza o método {@link setCatUsers(HashMap<Long, User> cat)} (ver abaixo).
+	 * Utiliza o método {@link #setCatUsers} (ver abaixo).
 	 *
-	 * @param cat <code>HashMap<Long, User></code> contedo cada user mapeado segundo o seu id.
-	 * @see setCatUsers(cat)
-	 * @see util.HashMap
+	 * @param cat <code>HashMap</code> contedo cada user mapeado segundo o seu id.
+	 * @see #setCatUsers
+	 * @see java.util.HashMap
 	 */
 	public CatUsers(HashMap<Long,User> cat) {
 		setCatUsers(cat);
@@ -55,7 +55,7 @@ public class CatUsers {
 	 *  <code>HashMap<Long, User></code> e insere-os em <code>catUsers</code>
 	 *
 	 * @param cat Objecto da classe <code>CatUsers</code> correspondente ao objecto que se pretende copiar.
-	 * @see getCatUsers(cat)
+	 * @see #getCatUsers
 	 * @see java.util.HashMap#HashMap()
 	 * @see java.util.HashMap
 	 */
@@ -87,14 +87,7 @@ public class CatUsers {
 	 * <code>e -> e.getValue().clone()</code> extrai o value do tipo <code>User</code> e clona esse
 	 *  value atravéz do método <code>clone</code> da classe <code>User</code>.
 	 *
-	 * @return um <code>HashMap<Long,User></code> correspondente a uma cópia de <code>catUsers</code>.
-	 * @see java.util.Map#entrySet()
-	 * @see java.util.stream#stream()
-	 * @see java.util.stream.Collectors#collect
-	 * @see java.util.stream.Collectors#toMap
-	 * @see java.util.Map#getKey()
-	 * @see java.util.Map#getValue()
-	 * @see engine.Users.clone()
+	 * @return um <code>HashMap<Long,User></code> correspondente a uma cópia de <code>catUsers</code>.d	     * @see engine.Users.clone()
 	 */
 	public Map<Long,User> getCatUsers() {
 		return this.catUsers.entrySet().stream().collect(Collectors.toMap(e->e.getKey(),e->e.getValue().clone()));
@@ -108,7 +101,7 @@ public class CatUsers {
 	 *
 	 * @param id id do user que se pretende mapear.
 	 * @return O user cuja chave (id) corresponde ao id de argumento.
-	 * @see java.util.HashMap#get(key)
+	 * @see java.util.HashMap#get
 	 */
 	public User getUser(Long id) {
 		return this.catUsers.get(id);
@@ -130,11 +123,11 @@ public class CatUsers {
  	/**
 	 * Método de escrita do parâmetro <code>catUsers</code> de <code>CatUsers</code>.
 	 * <p>
-	 * Atravéz de um mecanismo semelhante ao descrito no método {@link getCatUsers(HashMap<Long,User> cat)}
+	 * Atravéz de um mecanismo semelhante ao descrito no método {@link #getCatUsers}
 	 * este método iguala <code>catUsers</code> a uma cópia gerada a partir do <code>HashMap</code> cat.
 	 * <p>
 	 * <code>this.catUsers.entrySet()</code> cria um set iterável a partir de
-	 *  <code>HashMap<Long, User> catUsers</code>.
+	 *  <code>HashMap catUsers</code>.
 	 * <p>
 	 * <code>stream()</code> alimenta os métodos seguintes com cada elemtento do <code>entrySet</code>
 	 *  um a um (em stream).
@@ -152,14 +145,6 @@ public class CatUsers {
 	 * <p>
 	 * this.catUsers = ... iguala <code>catUsers</code> ao resultado do processo anterior após à sua
 	 * conversão em <code>HashMap</code>
-	 *
-	 * @see java.util.map#entrySet()
-	 * @see java.util.Stream#stream()
-	 * @see java.util.stream.Collectors#collect
-	 * @see java.util.stream.Collectors#toMap
-	 * @see java.util.Map#getKey()
-	 * @see java.util.Map#getValue()
-	 * @see engine.Users.clone()
 	 */
 	public void setCatUsers(HashMap<Long,User> cat) {
 		this.catUsers = (HashMap<Long,User>) cat.entrySet().stream().collect(Collectors.toMap(c->c.getKey(),c->c.getValue().clone()));
@@ -173,8 +158,6 @@ public class CatUsers {
 	 * o <code>User u</code>, inserindo este elemento no <code>HashMap<Long,User> catUsers</code>
 	 *
 	 * @param u Utilizador a inseir.
-	 * @see engine.Users#getUserID
-	 * @see java.util.HashMap#put
 	 */
 	public void insereUser(User u) {
 		this.catUsers.put(u.getUserID(),u);
@@ -200,8 +183,6 @@ public class CatUsers {
 	 * Método de limpeza de catClears.
 	 * <p>
 	 * Aplica o método <code>clear()</code> a catUsers.
-	 *
-	 * @see java.util.map#clear()
 	 */
 	public void clearCatUsers() {
 		this.catUsers.clear();

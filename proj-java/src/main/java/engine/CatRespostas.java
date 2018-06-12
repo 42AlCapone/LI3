@@ -25,7 +25,7 @@ public class CatRespostas {
 	 * <p>
 	 * Neste HashMap a chave é o id da Resposta e o Valor é a resposta em si.
 	 * 
-	 * @see java.util.HashMap#HashMap<k,v>()
+	 * @see java.util.HashMap#HashMap()
 	 * @see java.util.HashMap
 	 * @see engine.Resposta
 	 */
@@ -40,7 +40,7 @@ public class CatRespostas {
 	 * a catResp do objecto associado.
 	 *
 	 * @param cat HashMap ao qual catResp será igual.
-	 * @see #setCatResp(HashMap<Long,Resposta>)
+	 * @see #setCatResp
 	 */
 	public CatRespostas(HashMap<Long,Resposta> cat) {
 		setCatResp(cat);
@@ -89,13 +89,7 @@ public class CatRespostas {
 	 *  value atravéz do método <code>clone</code> da classe <code>Resposta</code>.
 	 *
 	 * @return Uma cópia de catResp gerada pelo mecanismo acima descrito.
-	 * @see java.util.Map#entrySet()
-	 * @see java.util.stream#stream()
-	 * @see java.util.stream.Collectors#collect
-	 * @see java.util.stream.Collectors#toMap
-	 * @see java.util.Map#getKey()
-	 * @see java.util.Map#getValue()
-	 * @see engine.Resposta.clone()
+	 * @see engine.Resposta#clone()
 	 */
 	public Map<Long,Resposta> getCatResp() {
 		return this.catResp.entrySet().stream().collect(Collectors.toMap(e->e.getKey(),e->e.getValue().clone()));
@@ -155,13 +149,7 @@ public class CatRespostas {
 	 * catResp é igualada à cópia criada pelo processo acima descrito após a sua conversão em HashMap.
 	 *
 	 * @param cat HashMap a inserir em catResp.
-	 * @see java.util.Map#entrySet()
-	 * @see java.util.stream#stream()
-	 * @see java.util.stream.Collectors#collect
-	 * @see java.util.stream.Collectors#toMap
-	 * @see java.util.Map#getKey()
-	 * @see java.util.Map#getValue()
-	 * @see engine.Resposta.clone()
+	 * @see engine.Resposta#clone()
 	 */
 	public void setCatResp(HashMap<Long,Resposta> cat) {
 		this.catResp = (HashMap<Long,Resposta>) cat.entrySet().stream().collect(Collectors.toMap(c->c.getKey(),c->c.getValue().clone()));

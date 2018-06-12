@@ -31,26 +31,32 @@ public class Pergunta implements Serializable {
 	 * Construtor por ommissão da classe <code>Pergunta</code>.
 	 * <p>
 	 * Inicializa todos os parâmetros do objecto da classe Pergunta a um valor default.
-	 *
-	 * @param id Parâmetro do tipo <code>Long</code> inicializado a <code>null</code>
+	 * <p>
+	 * id Parâmetro do tipo <code>Long</code> inicializado a <code>null</code>
 	 * de forma a evitar leituras falsas na respectiva <code>HashMap</code>.
-	 * @param creationDate Parâmetro do tipo <code>LocalDate</code> inicializado a <code>null</code>.
-	 * @param score Parâmetro <code>int</code> inicializado a 0 (valor mínimo).
-	 * @param onwerID Parâmetro <code>Long</code> inicializado a <code>null</code> de forma
+	 * <p>
+	 * creationDate Parâmetro do tipo <code>LocalDate</code> inicializado a <code>null</code>.
+	 * <p>
+	 * score Parâmetro <code>int</code> inicializado a 0 (valor mínimo).
+	 * onwerID Parâmetro <code>Long</code> inicializado a <code>null</code> de forma
 	 *                a evitar leituras falsas na respectiva <code>HashMap</code>.
-	 * @param title Parâmetro do tipo <code>String</code> correspondente ao título da pergunta,
+	 * <p>
+	 * title Parâmetro do tipo <code>String</code> correspondente ao título da pergunta,
 	 *              inicializado a uma <code>String</code> vazia.
-	 * @param tags Parâmetro correspondente às tags associadas à pergunta, as tags são armazenadas
+	 * <p>
+	 * tags Parâmetro correspondente às tags associadas à pergunta, as tags são armazenadas
 	 *             na mesma <code>String</code>, esta é inicializada a uma <code>String</code> vazia.
-	 * @param nrComments Parâmetro do tipo <code>int</code> correspondente ao total de comentários
+	 * <p>
+	 * nrComments Parâmetro do tipo <code>int</code> correspondente ao total de comentários
 	 *                   que a pergunta recebeu, inicializado a 0 (valor mínimo).
-	 * @param respostas Parâmetro do tipo <code>HashSet</code> de objectos <code>Resposta</code>
-	 *                  inicializado atravéz do construtor {@link util.HashSet#Hashset<Resposta>()}, 
+	 * <p>
+	 * respostas Parâmetro do tipo <code>HashSet</code> de objectos <code>Resposta</code>
+	 *                  inicializado atravéz do construtor {@link java.util.HashSet#HashSet}, 
 	 *                  construtor por omissão da classe <code>HashSet</code>.
-	 * @see lang.Long
-	 * @see lang.String
-	 * @see util.Set
-	 * @see util.HashSet
+	 * @see java.lang.Long
+	 * @see java.lang.String
+	 * @see java.util.Set
+	 * @see java.util.HashSet
 	 */
 	public Pergunta() {
 		this.id = null;
@@ -75,7 +81,7 @@ public class Pergunta implements Serializable {
 	 *                     uma <code>LocalDate creationDate</code> passada por argumento.
 	 * @param score Parâmetro <code>int</code> inicializado igual a um <code>int score</code>
 	 *              passado por argumento.
-	 * @param onwerID Parâmetro <code>Long</code> inicializado a um <code>Long ownerID</code>
+	 * @param ownerID Parâmetro <code>Long</code> inicializado a um <code>Long ownerID</code>
 	 *                pasado por argumento.
 	 * @param title Parâmetro do tipo <code>String</code> correspondente ao título da pergunta,
 	 *              inicializado igual a um <code>String title</code> passado por argumento.
@@ -90,10 +96,10 @@ public class Pergunta implements Serializable {
 	 *                  esta igualdade torna o apontador para o parâmetro respostas do objecto
 	 *                  pergunta associado igual ao apontador de <code>Set<Resposta> respostas</code>
 	 *                  passado por argumento.
-	 * @see lang.Long
-	 * @see lang.String
-	 * @see util.Set
-	 * @see util.HashSet
+	 * @see java.lang.Long
+	 * @see java.lang.String
+	 * @see java.util.Set
+	 * @see java.util.HashSet
 	 */
 	public Pergunta(Long id, LocalDate creationDate, int score, Long ownerID, String title, 
 						HashSet<String> tags, int nrComments, Set<Resposta> respostas) {
@@ -113,26 +119,33 @@ public class Pergunta implements Serializable {
 	 * Inicializa todos os parâmetros do objecto da classe Pergunta igual aos parâmetros
 	 *  de uma Pergunta passada por argumento. utiliza os métodos get da classe para aceder aos
 	 *  parâmetros da pergunta de argumento.
-	 *
-	 * @param id Parâmetro do tipo <code>Long</code> inicializado a um <code>Long id</code>,
+	 * <p>
+	 * id Parâmetro do tipo <code>Long</code> inicializado a um <code>Long id</code>,
 	 *           parâmetro do objecto <code>Pergunta perg</code> passado por argumento.
-	 * @param creationDate Parâmetro do tipo <code>LocalDate</code> inicializado igual a 
+	 * <p>
+	 * creationDate Parâmetro do tipo <code>LocalDate</code> inicializado igual a 
 	 *                     uma <code>LocalDate creationDate</code>, parâmetro da do objecto
 	 *                     <code>Pergunta perg</code> passado por argumento.
-	 * @param score Parâmetro <code>int</code> inicializado igual a um <code>int score</code>,
+	 * <p>
+	 * score Parâmetro <code>int</code> inicializado igual a um <code>int score</code>,
 	 *              parâmetro do objecto <code>Pergunta perg</code> passado por argumento.
-	 * @param onwerID Parâmetro <code>Long</code> inicializado a um <code>Long ownerID</code>,
+	 * <p>
+	 * onwerID Parâmetro <code>Long</code> inicializado a um <code>Long ownerID</code>,
 	 *                parâmetro do objecto <code>Pergunta perg</code> pasado por argumento.
-	 * @param title Parâmetro do tipo <code>String</code> correspondente ao título da pergunta,
+	 * <p>
+	 * title Parâmetro do tipo <code>String</code> correspondente ao título da pergunta,
 	 *              inicializado igual a um <code>String title</code>, parâmetro do objecto
 	 *              <code>Pergunta perg</code> passado por argumento.
-	 * @param tags Parâmetro correspondente às tags associadas à pergunta, as tags são armazenadas
+	 * <p>
+	 * tags Parâmetro correspondente às tags associadas à pergunta, as tags são armazenadas
 	 *             na mesma <code>String</code>, esta é inicializada a uma <code>String tags</code>,
 	 *             parâmetro do objecto <code>Pergunta perg</code> passada por argumento.
-	 * @param nrComments Parâmetro do tipo <code>int</code> correspondente ao total de comentários
+	 * <p>
+	 * nrComments Parâmetro do tipo <code>int</code> correspondente ao total de comentários
 	 *                   que a pergunta recebeu, inicializado igual a um <code>int nrComments</code>,
 	 *                   parâmetro do objecto <code>Pergunta perg</code> passado por argumento.
-	 * @param respostas Parâmetro do tipo <code>HashSet</code> de objectos <code>Resposta</code>
+	 * <p>
+	 * respostas Parâmetro do tipo <code>HashSet</code> de objectos <code>Resposta</code>
 	 *                  inicializado igual a um <code>set<Resposta></code>, parâmetro do objecto
 	 *                  <code>Pergunta perg</code> passada por arguemnto.
 	 *
@@ -144,10 +157,10 @@ public class Pergunta implements Serializable {
 	 * @see #getTags()
 	 * @see #getCommentsP()
 	 * @see #getRespostas()
-	 * @see lang.Long
-	 * @see lang.String
-	 * @see util.Set
-	 * @see util.HashSet
+	 * @see java.lang.Long
+	 * @see java.lang.String
+	 * @see java.util.Set
+	 * @see java.util.HashSet
 	 */
 	public Pergunta(Pergunta perg) {
 		this.id = perg.getPergID();
@@ -167,7 +180,7 @@ public class Pergunta implements Serializable {
 	 * Retorna o um <code>Long</code> correspondente ao <code>id</code> relativo ao objecto associado.
 	 *
 	 * @return o <code>id</code> do objecto associado.
-	 * @see lang.Long
+	 * @see java.lang.Long
 	 */
 	public Long getPergID() {
 		return this.id;
@@ -181,7 +194,7 @@ public class Pergunta implements Serializable {
 	 * ao objecto associado.
 	 *
 	 * @return o <code>creationDate</code> do objecto associado.
-	 * @see lang.LocalDate
+	 * @see java.time.LocalDate
 	 */
 	public LocalDate getPergDate() {
 		return this.creationDate;
@@ -197,7 +210,7 @@ public class Pergunta implements Serializable {
 	 * Retorna o um <code>Long</code> correspondente ao <code>ownerID</code> relativo ao objecto associado.
 	 *
 	 * @return o <code>ownerID</code> do objecto associado.
-	 * @see lang.Long
+	 * @see java.lang.Long
 	 */
 	public Long getOwnerIDp() {
 		return this.ownerID;
@@ -209,7 +222,7 @@ public class Pergunta implements Serializable {
 	 * Retorna o uma <code>String</code> correspondente ao <code>title</code> relativo ao objecto associado.
 	 *
 	 * @return o <code>title</code> do objecto associado.
-	 * @see lang.String
+	 * @see java.lang.String
 	 */
 	public String getTitle() {
 		return this.title;
@@ -223,7 +236,7 @@ public class Pergunta implements Serializable {
 	 *  ao objecto associado, esta string contém todas as tags associadas à pergunta.
 	 *
 	 * @return as <code>tags</code> do objecto associado.
-	 * @see lang.String
+	 * @see java.lang.String
 	 */
 	public Set<String> getTags() {
 		return this.tags;
@@ -249,8 +262,8 @@ public class Pergunta implements Serializable {
 	 * objecto associado. 
 	 *
 	 * @return o set <code>respostas</code> do objecto associado, o set é do tipo <code>HashSet</code>.
-	 * @see util.Set
-	 * @see util.HashSet
+	 * @see java.util.Set
+	 * @see java.util.HashSet
 	 */
 	public Set<Resposta> getRespostas() {
 		return this.respostas;
@@ -264,8 +277,8 @@ public class Pergunta implements Serializable {
 	 *
 	 * @return Um <code>int</code> correspondente ao resultado de <code>size()</code> aplicado ao set
 	 *         <code>respostas</code>
-	 * @see util.Set
-	 * @see util.HashSet
+	 * @see java.util.Set
+	 * @see java.util.HashSet
 	 */
 	public int getNrResp(){
 		return this.respostas.size();
@@ -280,7 +293,7 @@ public class Pergunta implements Serializable {
 	 *  associada igual a este.
 	 *
 	 * @param id Parâmetro do tipo <code>Long</code> passado por argumento.
-	 * @see lang.Long
+	 * @see java.lang.Long
 	 */
 	public void setPergID(Long id) {
 		this.id = id;
@@ -293,7 +306,7 @@ public class Pergunta implements Serializable {
 	 * da pergunta associada igual a este.
 	 *
 	 * @param creationDate Parâmetro do tipo <code>LocalDate</code> passado por argumento.
-	 * @see lang.LocalDate
+	 * @see java.time.LocalDate
 	 */
 	public void setPergDate(LocalDate creationDate) {
 		this.creationDate = creationDate;
@@ -318,7 +331,7 @@ public class Pergunta implements Serializable {
 	 *  associada igual a este.
 	 *
 	 * @param ownerID Parâmetro do tipo <code>Long</code> passado por argumento.
-	 * @see lang.Long
+	 * @see java.lang.Long
 	 */
 	public void setOwnerIDp(Long ownerID) {
 		this.ownerID = ownerID;
@@ -331,7 +344,7 @@ public class Pergunta implements Serializable {
 	 *  associada igual a este.
 	 *
 	 * @param title Parâmetro do tipo <code>String</code> passado por argumento.
-	 * @see lang.String
+	 * @see java.lang.String
 	 */
 	public void setTitle(String title) {
 		this.title = title;
@@ -348,9 +361,9 @@ public class Pergunta implements Serializable {
 	 * Recebe uma <code>String tags</code> como argumento e torna as <code>tags</code> da pergunta 
 	 *  associada igual a esta.
 	 *
-	 * @param tags Parâmetro do tipo <code>String</code> passado por argumento. Todas as tags da
+	 * @param tag Parâmetro do tipo <code>String</code> passado por argumento. Todas as tags da
 	 *             pergunta estão na mesma string.
-	 * @see lang.String
+	 * @see java.lang.String
 	 */
 	public void setTag (String tag){
 		this.tags.add(tag);
@@ -376,8 +389,8 @@ public class Pergunta implements Serializable {
 	 *  pergunta associada igual a este.
 	 *
 	 * @param respostas Parâmetro do tipo <code>Set<Resposta> respostas</code> passado por argumento.
-	 * @see util.Set
-	 * @see util.HashSet
+	 * @see java.util.Set
+	 * @see java.util.HashSet
 	 */
 	public void setResp(Set<Resposta> respostas) {
 		this.respostas = respostas;
@@ -390,9 +403,9 @@ public class Pergunta implements Serializable {
 	 *  ao parâmetro <code>respostas</code> do objecto associado.
 	 *
 	 * @param r <code>Resposta</code> passada como parâmetro.
-	 * @see util.HashSet#add(Obj)
-	 * @see util.HashSet
-	 * @see util.Set
+	 * @see java.util.HashSet#add
+	 * @see java.util.HashSet
+	 * @see java.util.Set
 	 */
 	public void setResposta(Resposta r) {
 		this.respostas.add(r);	
@@ -412,14 +425,12 @@ public class Pergunta implements Serializable {
 	 *         de <code>obj</code>.
 	 * @return <code>false</code> caso <code>obj</code> seja nulo ou caso <code>obj</code> pertença
 	 *         a uma classe diferente de pergunta.
-	 * @return <code>false</code> caso alguma das comparações entre parâmetros retornar <code>false</code>
-	 * @see lang.Object#getClass(Object)
-	 * @see lang.String#equals(String)
-	 * @see lang.Long
-	 * @see lang.String
-	 * @see lang.Object
-	 * @see util.Set
-	 * @see util.HashSet
+	 * @return <code>false</code> caso alguma das comparações entre parâmetros retornar <code>false</code>  	 
+	 * @see java.lang.Long
+	 * @see java.lang.String
+	 * @see java.lang.Object
+	 * @see java.util.Set
+	 * @see java.util.HashSet
 	 */
 	public boolean equals(Object obj) {
 		if (obj == this)
@@ -439,7 +450,7 @@ public class Pergunta implements Serializable {
 	/**
 	 * Método de cópia da classe pergunta.
 	 * <p>
-	 * Utiliza o construtor por cópia {@link Pergunta(Pergunta)} para criar uma pergunta que é uma
+	 * Utiliza o construtor por cópia {@link #Pergunta(Pergunta)} para criar uma pergunta que é uma
 	 *  cópia da pergunta associada.
 	 *
 	 * @return <code>Pergunta(this)</code> sendo uma cópia da pergunta associada.

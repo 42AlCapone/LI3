@@ -28,22 +28,29 @@ public class User implements Serializable {
 	 * Construtor por omissão da classe User.
 	 * <p>
 	 * Inicializa todos os parâmetros do objecto <code>User</code> associado a um valor default.
-	 *
-	 * @param id Parâmetro <code>Long</code> correspondente ao idêntificador do user.
+	 * <p>
+	 * id Parâmetro <code>Long</code> correspondente ao idêntificador do user.
 	 *           inicializado a <code>null</code> de forma a evitar leitura de "falsos" <code>id</code>
 	 *           na sua respectiva <code>HashMap</code>.
-	 * @param name Parâmetro <code>String</code> correspondente ao username, inicializado
+	 * <p>
+	 * name Parâmetro <code>String</code> correspondente ao username, inicializado
 	 *             a uma <code>String</code> vazia.
-	 * @param bio Parâmetro <code>String</code> correspondente ao bio, inicializado
+	 * <p>
+	 * bio Parâmetro <code>String</code> correspondente ao bio, inicializado
 	 *            a uma <code>String</code> vazia.
-	 * @param rep Parâmetro <code>int</code> correspondente à reputação do user, inicializado
+	 * <p>
+	 * rep Parâmetro <code>int</code> correspondente à reputação do user, inicializado
 	 *            a 0 (valor mínimo possível).
-	 * @param views Parâmetro <code>int</code> correspondente às views, inicializado
+	 * <p>
+	 * views Parâmetro <code>int</code> correspondente às views, inicializado
 	 *            a 0 (valor mínimo possível).
-	 * @param voteDif Parâmetro <code>int</code> correspodente à diferença entre os upvotes
+	 * <p>
+	 * voteDif Parâmetro <code>int</code> correspodente à diferença entre os upvotes
 	 *                e os downvotes, inicializado a 0 (valor default).
-	 * @param nrPosts Parâmetro <code>int</code> correspondente ao número total
+	 * <p>
+	 * nrPosts Parâmetro <code>int</code> correspondente ao número total
 	 *                de posts efetuados pelo user, inicializado a 0 (valor mínimo possível).
+	 *
 	 * @see java.lang.Long
 	 * @see java.lang.String
 	 */
@@ -63,26 +70,32 @@ public class User implements Serializable {
 	 * <p>
 	 * Inicializa cada parâmetro de um objecto da classe User segundo um conjunto de argumetos
 	 * do mesmo tipo.
-	 *
-	 * @param id Parâmetro <code>Long</code> correspondente ao idêntificador do user, 
+	 * <p>
+	 * id Parâmetro <code>Long</code> correspondente ao idêntificador do user, 
 	 *           inicializado como sendo igual a <code>Long id</code> passado por argumento.
-	 * @param name Parâmetro <code>String</code> correspondente ao username, inicializado
+	 * <p>
+	 * name Parâmetro <code>String</code> correspondente ao username, inicializado
 	 *             igual a uma <code>String name</code> passada por argumento.
-	 * @param bio Parâmetro <code>String</code> correspondente ao bio, inicializado
+	 * <p>
+	 * bio Parâmetro <code>String</code> correspondente ao bio, inicializado
 	 *            igual a uma <code>String bio</code> passada por argumento.
-	 * @param rep Parâmetro <code>int</code> correspondente à reputação do user, inicializado
+	 * <p>
+	 * rep Parâmetro <code>int</code> correspondente à reputação do user, inicializado
 	 *            igual a um <code>int</code> passado por argumento.
-	 * @param views Parâmetro <code>int</code> correspondente às views, inicializado
+	 * <p>
+	 * views Parâmetro <code>int</code> correspondente às views, inicializado
 	 *            igual a um <code>int views</code> passado por argumento.
-	 * @param voteDif Parâmetro <code>int voteDif</code> correspodente à diferença entre os upvotes
+	 * <p>
+	 * voteDif Parâmetro <code>int voteDif</code> correspodente à diferença entre os upvotes
 	 *                e os downvotes inicializado igual a um <code>int voteDif</code>
 	 *                passado por argumento.
-	 * @param nrPosts Parâmetro <code>int nrPosts </code> correspondente ao número total de posts
+	 * <p>
+	 * nrPosts Parâmetro <code>int nrPosts </code> correspondente ao número total de posts
 	 *                efetuados pelo user, inicializado a 0 pois estes têm o objectivo de serem
 	 *                incrementados atravéz de um método desta classe.
+	 *
 	 * @see java.lang.Long
 	 * @see java.lang.String
-	 * @see engine
 	 */
 	public User(Long id, String name, String bio, int rep, int views, int voteDif) {
 		this.id = id;
@@ -99,24 +112,29 @@ public class User implements Serializable {
 	 * <p>
 	 * Inicializa cada parâmetro de um objecto como sendo iguais aos parâmetros de um objecto
 	 * <code>User user</code> passado por argumento, utiliza os métodos get da cpasse User.
-	 *
-	 * @param id Parâmetro <code>Long</code> correspondente ao idêntificador do user, 
+	 * <p>
+	 * id Parâmetro <code>Long</code> correspondente ao idêntificador do user, 
 	 *           inicializado como sendo igual ao <code>id</code> do objecto <code>User user</code>
 	 *           passado por argumento.
-	 * @param name Parâmetro <code>String</code> correspondente ao username, inicializado
+	 * <p>
+	 * name Parâmetro <code>String</code> correspondente ao username, inicializado
 	 *             igual ao <code>name</code> do objecto <code>User user</code> passado por argumento.
-	 * @param bio Parâmetro <code>String</code> correspondente ao bio, inicializado
+	 * <p>
+	 * bio Parâmetro <code>String</code> correspondente ao bio, inicializado
 	 *            igual ao <code>bio</code> do objecto <code>User user</code> passado por arguemento.
-	 * @param rep Parâmetro <code>int</code> correspondente à reputação do user, inicializado
+	 * <p>
+	 * rep Parâmetro <code>int</code> correspondente à reputação do user, inicializado
 	 *            igual à <code>rep</code> do objecto <code>User user</code> passado por argumento.
-	 * @param views Parâmetro <code>int</code> correspondente às views, inicializado
+	 * <p>
+	 * views Parâmetro <code>int</code> correspondente às views, inicializado
 	 *            igual às <code>views</code> do objecto <code>User user</code> passado por argumento.
-	 * @param voteDif Parâmetro <code>int</code> correspodente à diferença entre os upvotes
+	 * <p>voteDif Parâmetro <code>int</code> correspodente à diferença entre os upvotes
 	 *                e os downvotes inicializado igual a <code>voteDif</code> do objecto
 	 *                <code>User user</code> passado por argumento.
-	 * @param nrPosts Parâmetro <code>int</code> correspondente ao número total de posts
+	 * <p>nrPosts Parâmetro <code>int</code> correspondente ao número total de posts
 	 *                efetuados pelo user, inicializado igual ao <code>nrPosts</code>
 	 *                do objecto <code>User user</code> passado por argumento.
+	 *
 	 * @see #getUserID()
 	 * @see #getName()
 	 * @see #getBio()
@@ -126,7 +144,6 @@ public class User implements Serializable {
 	 * @see #getNrPosts()
 	 * @see java.lang.Long
 	 * @see java.lang.String
-	 * @see engine
 	 */
 	public User(User user) {
 		this.id = user.getUserID();
@@ -289,8 +306,8 @@ public class User implements Serializable {
 	 * <p>
 	 * Recebe um parâmetro do tipo <code>int</code> como argumento e iguala os <code>nrPosts</code>
 	 *  da classe corrente ao parâmetro recebido por argumento.
-	 *
-	 * @param nrPosts Parâmetro do tipo <code>int</code> passado por argumento.
+	 * <p>
+	 * nrPosts Parâmetro do tipo <code>int</code> passado por argumento.
 	 */
 	public void incNrPosts() {
 		this.nrPosts++;
@@ -311,8 +328,8 @@ public class User implements Serializable {
 	 * @return <code>false</code> se o objecto não for da classe User.
 	 * @return <code>true</code> caso todos os parâmetros do objecto passado como
 	 *         parâmetro forem iguais aos parâmetros do user ao qual este é comparado.
-	 * @see java.lang.Object#getClass()
-	 * @see java.lang.String#equals()
+	 * @see java.lang.Object#getClass
+	 * @see java.lang.String#equals
 	 * @see java.lang.Long
 	 * @see java.lang.String
 	 * @see java.lang.Object

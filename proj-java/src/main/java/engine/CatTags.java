@@ -25,9 +25,8 @@ public class CatTags {
 	 * <p>
 	 * Neste HashMap a chave é o id da tag e o Valor é a tag em si.
 	 * 
-	 * @see java.util.HashMap#HashMap<k,v>()
+	 * @see java.util.HashMap#HashMap()
 	 * @see java.util.HashMap
-	 * @see engine.Tags
 	 */
 	public CatTags() {
 		this.catTags = new HashMap<String,Long>();
@@ -36,11 +35,11 @@ public class CatTags {
 	/**
 	 * Construtor parametrizado da classe CatTags.
 	 * <p>
-	 * Utiliza o método <code>setCatTag(HashMap<String,Long>) para defenir cat como sendo
+	 * Utiliza o método <code>setCatTaga</code> para defenir cat como sendo
 	 * a catTags do objecto associado.
 	 *
 	 * @param cat HashMap ao qual catTags será igual.
-	 * @see #setCatTag(HashMap<String,Long>)
+	 * @see #setCatTags
 	 */
 	public CatTags(HashMap<String,Long> cat) {
 		setCatTags(cat);
@@ -87,12 +86,6 @@ public class CatTags {
 	 * <code>e -> e.getValue()</code> extrai o value do tipo <code>Long</code>.
 	 *
 	 * @return Uma cópia de catPerg gerada pelo mecanismo acima descrito.
-	 * @see java.util.Map#entrySet()
-	 * @see java.util.stream#stream()
-	 * @see java.util.stream.Collectors#collect
-	 * @see java.util.stream.Collectors#toMap
-	 * @see java.util.Map#getKey()
-	 * @see java.util.Map#getValue()
 	 */
 	public Map<String,Long> getCatTags() {
 		return this.catTags.entrySet().stream().collect(Collectors.toMap(e->e.getKey(),e->e.getValue()));
@@ -104,7 +97,7 @@ public class CatTags {
 	 * Utiliza o método get associado a catTags para ober o id da tag passada por arguemnto.
 	 * @param tag  tag a ser procurada.
 	 * @return o id da tag procurada.
-	 * @see java.util.HashMap#get(value)
+	 * @see java.util.HashMap#get
 	 */
 	public Long getIDTag(String tag) {
 		return this.catTags.get(tag);
@@ -146,12 +139,6 @@ public class CatTags {
 	 * catTags é igualada à cópia criada pelo processo acima descrito após a sua conversão em HashMap.
 	 *
 	 * @param cat HashMap a inserir em catTags.
-	 * @see java.util.Map#entrySet()
-	 * @see java.util.stream#stream()
-	 * @see java.util.stream.Collectors#collect
-	 * @see java.util.stream.Collectors#toMap
-	 * @see java.util.Map#getKey()
-	 * @see java.util.Map#getValue()
 	 */ 	
 	public void setCatTags(HashMap<String,Long> cat) {
 		this.catTags = (HashMap<String,Long>) cat.entrySet().stream().collect(Collectors.toMap(c->c.getKey(),c->c.getValue()));
@@ -164,7 +151,6 @@ public class CatTags {
 	 *
 	 * @param tag tag a ser inseirda como chave.
 	 * @param id Long a ser inserido com valor.
-	 * @see java.util.HashMap#put(key, value).
 	 */
 	public void insereTag(String tag, Long id) {
 		this.catTags.put(tag,id);
